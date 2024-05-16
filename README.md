@@ -3,8 +3,23 @@ Gestão de stocks e de clientes de uma Adega
 
 ## Setup do Projeto
 
-Siga os passos abaixo para configurar o projeto localmente:
+Faz isto para ver algo mesmo giro:
 
 ### 1. Clone o repositório
 ```bash
 git clone https://github.com/henriqueft04/QuintaBarreirosBD
+python -m venv venv
+venv/Scripts/activate
+pip install -r backend/requirements.txt
+python backend/main.py
+```
+## Evaluation
+To be determined
+
+## Authors
+* [Henrique Teixeira] - [@henriqueft04]
+* [Maria Linhares] - [@MariaLinhares]
+
+---
+
+Universidade de Aveiro, Ano letivo 2023/2024
