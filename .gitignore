@@ -1,0 +1,16 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore Tailwind CSS generated files and directories
+/tailwind.config.js
+/postcss.config.js
+/dist/
+.css-cache/
+
+# Ignore config.py
+config.py
+
+# Ignore package-lock.json
+package-lock.json
+package.json
+tailwind.config.js
