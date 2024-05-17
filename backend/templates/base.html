@@ -5,11 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Meu Projeto{% endblock %}</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='navbar.css') }}">
     <script src="https://unpkg.com/htmx.org"></script>
 </head>
 <body>
+    <nav class="bg-white shadow dark:bg-gray-800">
+        <div class="container mx-auto flex flex-wrap items-center justify-center py-4 text-gray-600 capitalize dark:text-gray-300">
+            {% block navbar %}
+            <a href="index.html" class="nav-link">
+                <i class="fas fa-home"></i> 
+                <span>Home</span>
+            </a>
+            <a href="clientes.html" class="nav-link">
+                <i class="fas fa-users"></i> 
+                <span>Clientes</span>
+            </a>
+            <a href="fornecedores.html" class="nav-link">
+                <i class="fas fa-truck"></i> 
+                <span>Fornecedores</span>
+            </a>
+            <a href="nova-encomenda.html" class="nav-link">
+                <i class="fas fa-plus-circle"></i> 
+                <span>Nova Encomenda</span>
+            </a>
+            <a href="encomendas.html" class="nav-link">
+                <i class="fas fa-box"></i> 
+                <span>Encomendas</span>
+            </a>
+            <a href="engarrafamentos.html" class="nav-link">
+                <i class="fas fa-wine-bottle"></i> 
+                <span>Engarrafamentos</span>
+            </a>
+            <a href="stock.html" class="nav-link">
+                <i class="fas fa-warehouse"></i> 
+                <span>Stock</span>
+            </a>
+            {% endblock %}
+        </div>
+    </nav>
     <div class="container mx-auto">
         {% block content %}{% endblock %}
     </div>
 </body>
 </html>
+

@@ -11,7 +11,7 @@ git clone https://github.com/henriqueft04/QuintaBarreirosBD
 python -m venv venv
 venv/Scripts/activate
 pip install -r backend/requirements.txt
-python backend/main.py
+python backend/app.py
 ```
 ## Evaluation
 To be determined

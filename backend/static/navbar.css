@@ -1,0 +1,30 @@
+/* navbar.css */
+
+.nav-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #1f2937; /* Tailwind text-gray-800 */
+    border-bottom: 2px solid transparent;
+    margin: 0 0.5rem; /* Tailwind mx-0.5 */
+    border-radius: 0.375rem; /* Tailwind rounded-md */
+    width: 8.5rem; /* Tailwind w-24 */
+    height: 3rem; /* Tailwind h-12 */
+    transition: color 0.3s, border-color 0.3s, background-color 0.3s; /* Smooth transition for hover effects */
+}
+
+.nav-link:hover {
+    color: #1f2937; /* Tailwind hover:text-gray-800 */
+    border-color: #c6f6d5; /* Tailwind hover:border-green-200 */
+    background-color: #f0fff4; /* Tailwind hover:bg-green-50 */
+}
+
+.dark .nav-link {
+    color: #e5e7eb; /* Tailwind dark:text-gray-200 */
+}
+
+.dark .nav-link:hover {
+    color: #e5e7eb; /* Tailwind dark:hover:text-gray-200 */
+}

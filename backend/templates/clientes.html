@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Clientes{% endblock %}
 
 {% block navbar %}
-<a href="{{ url_for('index') }}" class="nav-link" style="color: #1f2937; border-bottom-color: #c6f6d5; background-color: #f0fff4;">
+<a href="{{ url_for('index') }}" class="nav-link">
     <i class="fas fa-home"></i> 
     <span>Home</span>
 </a>
-<a href="{{ url_for('clientes') }}" class="nav-link">
+<a href="{{ url_for('clientes') }}" class="nav-link" style="color: #1f2937; border-bottom-color: #c6f6d5; background-color: #f0fff4;">
     <i class="fas fa-users"></i> 
     <span>Clientes</span>
 </a>
@@ -35,24 +35,7 @@
 
 {% block content %}
 <h1 class="text-3xl font-bold underline mt-6">
-    Hello, Tailwind CSS!
+    Clientes
 </h1>
-<div id="result" class="mt-4"></div>
-<button hx-get="/data" hx-target="#result" class="mt-4 p-2 bg-blue-500 text-white rounded">
-    Carregar Dados <i class="fas fa-download"></i>
-</button>
-
-<script>
-    document.addEventListener('htmx:afterOnLoad', function(evt) {
-        var response = evt.detail.xhr.response;
-        var resultDiv = document.getElementById('result');
-        var data = JSON.parse(response);
-        var content = `<p>${data.message}</p><ul>`;
-        data.items.forEach(function(item) {
-            content += `<li>${item}</li>`;
-        });
-        content += `</ul>`;
-        resultDiv.innerHTML = content;
-    });
-</script>
+<!-- Conteúdo específico para Clientes -->
 {% endblock %}
