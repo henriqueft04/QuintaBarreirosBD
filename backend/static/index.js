@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
             // Exemplo de atualização de conteúdo:
             const modalContent = modal.querySelector('p');
-            modalContent.textContent = `Detalhes da encomenda ${orderId}`;
+            modalContent.textContent = `Items da encomenda ${orderId}`;
 
             modal.classList.remove('hidden');
         });
