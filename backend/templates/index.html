@@ -34,7 +34,6 @@
 {% endblock %}
 
 {% block content %}
-
 <div class="container border border-l rounded-xl p-12 pt-8">
     <h1 class="text-3xl font-bold mb-5">
         Encomendas mais recentes
@@ -45,39 +44,32 @@
             <div>
                 <div class="flex items-center gap-x-3">
                     <h2 class="text-lg font-medium text-gray-800 dark:text-white">Clientes</h2>
-
                     <span class="px-3 py-1 text-xs text-green-600 bg-green-100 rounded-full dark:bg-gray-800 dark:text-green-400">240 clientes</span>
                 </div>
-
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">Estas pessoas compraram na ultima semana.</p>
             </div>
-
         </div>
 
         <div class="mt-6 md:flex md:items-center md:justify-between">
-
             <div class="relative flex items-center mt-4 md:mt-0">
                 <span class="absolute">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mx-3 text-gray-400 dark:text-gray-600">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                     </svg>
                 </span>
-
                 <input type="text" placeholder="Search" class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-green-400 dark:focus:border-green-300 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40">
             </div>
             <div class="relative flex items-center gap-x-3">
-                <button class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-green-600 font-semibold hover:text-white transition-colors duration-200 bg-green-200 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-green-600 dark:hover:bg-green-500 dark:bg-green-600">
+                <button class="action-button green">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-
                     <span>Adicionar Encomenda</span>
                 </button>
-                <button class="flex items-center justify-center w-1/2 px-5 py-2 text-sm tracking-wide text-green-600 font-semibold hover:text-white transition-colors duration-200 bg-green-200 rounded-lg shrink-0 sm:w-auto gap-x-2 hover:bg-green-600 dark:hover:bg-green-500 dark:bg-green-600">
+                <button class="action-button green">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-
                     <span>Adicionar Cliente</span>
                 </button>
             </div>
@@ -90,29 +82,21 @@
                         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                             <thead class="bg-gray-50 dark:bg-gray-800">
                                 <tr>
-                                    <th scope="col" class="py-3.5 px-4 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                        <button class="flex items-center gap-x-3 focus:outline-none">
-                                            <span>Cliente</span>
-                                        </button>
+                                    <th scope="col" class="table-header">
+                                        <span class="table-header mr-2" style="padding: 0;">Cliente</span>
+                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
                                     </th>
-
-                                    <th scope="col" class="px-12 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <th scope="col" class="table-header">
                                         Estado
                                     </th>
-
-                                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                    <th scope="col" class="table-header">
                                         Notas
                                     </th>
-
-                                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Valor</th>
-
-                                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Data</th>
-
-                                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Número</th>
-
-                                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Faturada</th>
-
-                                    <th scope="col" class="px-4 py-3.5 text-sm font-normal text-left rtl:text-right text-gray-500 dark:text-gray-400">Editar</th>
+                                    <th scope="col" class="table-header">Valor</th>
+                                    <th scope="col" class="table-header">Data</th>
+                                    <th scope="col" class="table-header">Número</th>
+                                    <th scope="col" class="table-header">Faturada</th>
+                                    <th scope="col" class="table-header">Editar</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
@@ -123,10 +107,10 @@
                                             <p class="text-sm font-normal text-gray-600 dark:text-gray-400">1</p>
                                         </div>
                                     </td>
-                                    <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                        <div class="inline px-3 py-1 text-md font-semibold text-green-500 bg-green-50 rounded-full dark:text-gray-400 gap-x-2 dark:bg-gray-800">
+                                    <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                        <button class="status-button pago">
                                             Pago
-                                        </div>
+                                        </button>
                                     </td>
                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
                                         <div>
@@ -139,25 +123,21 @@
                                             <span class="text-sm font-normal text-gray-500 dark:text-gray-400">€</span>
                                         </div>
                                     </td>
-
                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
                                         <div class="flex items-center">
                                             <h1>2024-05-10</h1>
                                         </div>
                                     </td>
-
                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
                                         <div class="flex items-center">
                                             <h1>1</h1>
                                         </div>
                                     </td>
-
                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
                                         <div class="flex items-center">
                                             <h1>Sim</h1>
                                         </div>
                                     </td>
-
                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
                                         <button class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
                                             <i class="fas fas fa-pencil-alt text-black"></i>
@@ -165,17 +145,17 @@
                                     </td>
                                 </tr>
 
-                                <tr>
+                                <tr class="bg-gray-50">
                                     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                         <div class="flex flex-col justify-between">
                                             <h2 class="font-medium text-gray-800 dark:text-white ">Alta Bêbado</h2>
                                             <p class="text-sm font-normal text-gray-600 dark:text-gray-400">1</p>
                                         </div>
                                     </td>
-                                    <td class="px-12 py-4 text-sm font-medium whitespace-nowrap">
-                                        <div class="inline px-3 py-1 text-md font-semibold text-red-600 bg-red-200 rounded-full dark:text-gray-400 gap-x-2 dark:bg-gray-800">
+                                    <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                        <button class="status-button por-pagar ">
                                             Por Pagar
-                                        </div>
+                                        </button>
                                     </td>
                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
                                         <div>
@@ -188,25 +168,21 @@
                                             <span class="text-sm font-normal text-gray-500 dark:text-gray-400">€</span>
                                         </div>
                                     </td>
-
                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
                                         <div class="flex items-center">
                                             <h1>2024-05-10</h1>
                                         </div>
                                     </td>
-
                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
                                         <div class="flex items-center">
                                             <h1>1</h1>
                                         </div>
                                     </td>
-
                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
                                         <div class="flex items-center">
                                             <h1>Sim</h1>
                                         </div>
                                     </td>
-
                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
                                         <button class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
                                             <i class="fas fas fa-pencil-alt text-black"></i>
@@ -224,23 +200,15 @@
             <div class="text-sm text-gray-500 dark:text-gray-400">
                 Page <span class="font-medium text-gray-700 dark:text-gray-100">1 of 10</span> 
             </div>
-
             <div class="flex items-center mt-4 gap-x-4 sm:mt-0">
-                <a href="#" class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
+                <a href="#" class="nav-button">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
                     </svg>
-
-                    <span>
-                        previous
-                    </span>
+                    <span>Previous</span>
                 </a>
-
-                <a href="#" class="flex items-center justify-center w-1/2 px-5 py-2 text-sm text-gray-700 capitalize transition-colors duration-200 bg-white border rounded-md sm:w-auto gap-x-2 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-200 dark:border-gray-700 dark:hover:bg-gray-800">
-                    <span>
-                        Next
-                    </span>
-
+                <a href="#" class="nav-button">
+                    <span>Next</span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
                     </svg>
@@ -248,6 +216,5 @@
             </div>
         </div>
     </section>
-
 </div>
 {% endblock %}
