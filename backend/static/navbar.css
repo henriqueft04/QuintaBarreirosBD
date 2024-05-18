@@ -18,13 +18,17 @@
 .nav-link:hover {
     color: #1f2937; /* Tailwind hover:text-gray-800 */
     border-color: #c6f6d5; /* Tailwind hover:border-green-200 */
-    background-color: #f0fff4; /* Tailwind hover:bg-green-50 */
+    /* bg-green 50 */
+    background-color: rgba(198, 246, 213, 0.3); /* Tailwind hover:bg-green-50 */
 }
 
 .dark .nav-link {
     color: #e5e7eb; /* Tailwind dark:text-gray-200 */
+
 }
 
 .dark .nav-link:hover {
     color: #e5e7eb; /* Tailwind dark:hover:text-gray-200 */
+    border-color: #c6f6d5; /* Tailwind dark:hover:border-green-200 */
+    background-color: rgba(198, 246, 213, 1); /* Tailwind dark:hover:bg-green-200 */
 }
