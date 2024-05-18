@@ -91,8 +91,8 @@
                         <div class="py-1 text-gray-700 dark:text-gray-400 text-sm" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
                             <a href="#" @click="open = false" class="block px-4 py-2  hover:bg-gray-100 dark:hover:bg-[#161d2a]" role="menuitem">Mais Recentes</a>
                             <a href="#" @click="open = false" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#161d2a]" role="menuitem">Mais Antigos</a>
-                            <a href="#" @click="open = false" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#161d2a]" role="menuitem">Maior Desconto</a>
-                            <a href="#" @click="open = false" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#161d2a]" role="menuitem">Menor Desconto</a>
+                            <a href="#" @click="open = false" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#161d2a]" role="menuitem">Maior Consumo</a>
+                            <a href="#" @click="open = false" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#161d2a]" role="menuitem">Menor Consumo</a>
                         </div>
                     </div>
                 </div>
@@ -120,9 +120,9 @@
                                     <th scope="col" class="table-header">Telemóvel</th>
                                     <th scope="col" class="table-header">NIF</th>
                                     <th scope="col" class="table-header">Morada</th>
-                                    <th scope="col" class="table-header">Desconto</th>
-                                    <th scope="col" class="table-header">Rótulos <i class="fa-solid fa-arrow-up-right-from-square"></i></th>
+                                    <th scope="col" class="table-header">Total <i class="fas fas fa-wine-bottle ml-1 mt-1"></i></th>
                                     <th scope="col" class="table-header">Editar</th>
+                                    <th scope="col" class="table-header">Encomendas</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
@@ -155,17 +155,17 @@
                                     </td>
                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
                                         <div class="flex items-center">
-                                            <h1>null</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>Não</h1>
+                                            <h1>100</h1>
                                         </div>
                                     </td>
                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
                                         <button class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
                                             <i class="fas fas fa-pencil-alt text-black"></i>
+                                        </button>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm whitespace-nowrap flex justify-center mt-2">
+                                        <button class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
+                                            <i class="fas fas fas fas fa-expand-alt text-black"></i>
                                         </button>
                                     </td>
                                 </tr>
@@ -199,17 +199,17 @@
                                     </td>
                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
                                         <div class="flex items-center">
-                                            <h1>2</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>Sim</h1>
+                                            <h1>100</h1>
                                         </div>
                                     </td>
                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
                                         <button class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
                                             <i class="fas fas fa-pencil-alt text-black"></i>
+                                        </button>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm whitespace-nowrap flex justify-center mt-2">
+                                        <button class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
+                                            <i class="fas fas fas fas fa-expand-alt text-black"></i>
                                         </button>
                                     </td>
                                 </tr>
@@ -243,17 +243,17 @@
                                     </td>
                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
                                         <div class="flex items-center">
-                                            <h1>2</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>Sim</h1>
+                                            <h1>100</h1>
                                         </div>
                                     </td>
                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
                                         <button class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
                                             <i class="fas fas fa-pencil-alt text-black"></i>
+                                        </button>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm whitespace-nowrap flex justify-center mt-2">
+                                        <button class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
+                                            <i class="fas fas fas fas fa-expand-alt text-black"></i>
                                         </button>
                                     </td>
                                 </tr>
@@ -269,15 +269,15 @@
                 Page <span class="font-medium text-gray-700 dark:text-gray-100">1 of 10</span> 
             </div>
             <div class="flex items-center mt-4 gap-x-4 sm:mt-0">
-                <a href="#" class="nav-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
+                <a href="#" class="nav-button flex">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100 mt-1 ml-2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
                     </svg>
                     <span>Previous</span>
                 </a>
-                <a href="#" class="nav-button">
+                <a href="#" class="nav-button flex">
                     <span>Next</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100 mt-1 mr-2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
                     </svg>
                 </a>

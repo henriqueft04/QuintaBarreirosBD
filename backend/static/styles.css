@@ -77,3 +77,8 @@
     color: #9ca3af; /* dark:text-gray-400 */
     background-color: #1f2937; /* dark:bg-gray-800 */
 }
+
+#orderModal.hidden {
+    display: none;
+}
+

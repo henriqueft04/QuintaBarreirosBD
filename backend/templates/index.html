@@ -96,6 +96,7 @@
                                     <th scope="col" class="table-header">Data</th>
                                     <th scope="col" class="table-header">Número</th>
                                     <th scope="col" class="table-header">Faturada</th>
+                                    <th scope="col" class="table-header flex">Total <i class="ml-1 fas fas fa-wine-bottle mt-1"></i></th>
                                     <th scope="col" class="table-header">Editar</th>
                                 </tr>
                             </thead>
@@ -137,6 +138,13 @@
                                         <div class="flex items-center">
                                             <h1>Sim</h1>
                                         </div>
+                                    </td>
+                                    
+                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                        <button data-order-id="11" class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100 open-modal">
+                                            <a class="space-x-1">10</a>
+                                            <i class="fas fas fa-expand-alt text-gray-600"></i>
+                                        </button>
                                     </td>
                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
                                         <button class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
@@ -184,6 +192,12 @@
                                         </div>
                                     </td>
                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
+                                        <button data-order-id="10" class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100 open-modal">
+                                            <a class="space-x-1">10</a>
+                                            <i class="fas fas fa-expand-alt text-gray-600"></i>
+                                        </button>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
                                         <button class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
                                             <i class="fas fas fa-pencil-alt text-black"></i>
                                         </button>
@@ -191,6 +205,14 @@
                                 </tr>
                             </tbody>
                         </table>
+                        <!-- Modal -->  
+                        <div id="orderModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+                            <div class="bg-white rounded-lg p-8">
+                                <h2 class="text-xl mb-4">Detalhes da Encomenda</h2>
+                                <p>Aqui vão os detalhes da encomenda...</p>
+                                <button id="closeModal" class="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">Fechar</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -201,15 +223,15 @@
                 Page <span class="font-medium text-gray-700 dark:text-gray-100">1 of 10</span> 
             </div>
             <div class="flex items-center mt-4 gap-x-4 sm:mt-0">
-                <a href="#" class="nav-button">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
+                <a href="#" class="nav-button flex flex-row space-x-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100 mt-1">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
                     </svg>
                     <span>Previous</span>
                 </a>
-                <a href="#" class="nav-button">
+                <a href="#" class="nav-button flex flex-row space-x-1">
                     <span>Next</span>
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100 mt-1">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
                     </svg>
                 </a>
@@ -217,4 +239,6 @@
         </div>
     </section>
 </div>
+
+
 {% endblock %}

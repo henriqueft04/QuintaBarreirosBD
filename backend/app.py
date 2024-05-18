@@ -30,5 +30,41 @@ def engarrafamentos():
 def stock():
     return render_template('stock.html')
 
+@app.route('/apply-filters', methods=['POST'])
+def apply_filters():
+    data = request.json
+    selected_day = data.get('day')
+    selected_week = data.get('week')
+    selected_month = data.get('month')
+    selected_year = data.get('year')
+
+    # Conecte-se ao seu banco de dados
+    conn = sqlite3.connect('database.db')  # Substitua pelo seu banco de dados
+    cursor = conn.cursor()
+
+    # Crie uma consulta SQL com base nos filtros recebidos
+    query = "SELECT * FROM encomendas WHERE 1=1"
+    params = []
+
+    if selected_day:
+        query += " AND strftime('%d-%m-%Y', data) = ?"
+        params.append(selected_day)
+    if selected_week:
+        query += " AND strftime('%W-%m-%Y', data) = ?"
+        params.append(selected_week)
+    if selected_month:
+        query += " AND strftime('%m-%Y', data) = ?"
+        params.append(selected_month)
+    if selected_year:
+        query += " AND strftime('%Y', data) = ?"
+        params.append(selected_year)
+
+    cursor.execute(query, params)
+    results = cursor.fetchall()
+    conn.close()
+
+    # Retorne os resultados como JSON
+    return jsonify(results)
+
 if __name__ == "__main__":
     app.run(debug=True)
