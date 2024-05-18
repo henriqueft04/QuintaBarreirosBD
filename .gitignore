@@ -14,3 +14,6 @@ config.py
 package-lock.json
 package.json
 tailwind.config.js
+
+#macOs
+.DS_Store
