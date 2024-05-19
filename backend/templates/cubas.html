@@ -1,3 +1,4 @@
+
 {% extends "base.html" %}
 
 {% block title %}Stock{% endblock %}
@@ -27,12 +28,12 @@
     <i class="fas fa-wine-bottle"></i> 
     <span>Engarrafamentos</span>
 </a>
-<a href="{{ url_for('stock') }}" class="nav-link bg-green-50" style="color: #1f2937; border-bottom-color: #c6f6d5;">
+<a href="{{ url_for('stock') }}" class="nav-link">
     <i class="fas fa-warehouse"></i> 
     <span>Stock</span>
 </a>
-<a href="{{ url_for('cubas') }}" class="nav-link">
-    <i class="fas fas fa-database"></i>
+<a href="{{ url_for('cubas') }}" class="nav-link bg-green-50" style="color: #1f2937; border-bottom-color: #c6f6d5;">
+    <i class="fas fa-database"></i>
     <span>Cubas</span>
 </a>
 {% endblock %}
@@ -43,7 +44,7 @@
 
 <div class="container border border-l rounded-xl p-12 pt-8">
     <h1 class="text-3xl font-bold mb-5">
-        Stocks
+        Cubas
     </h1>
     <!-- component -->
     <section class="container px-4 mx-auto">
@@ -51,7 +52,7 @@
             <div>
                 <div class="flex items-center gap-x-3">
                     <h2 class="text-lg font-medium text-gray-800 dark:text-white">Total</h2>
-                    <span class="px-3 py-1 text-xs text-green-600 bg-green-100 rounded-full dark:bg-gray-800 dark:text-green-400">22 garafas</span>
+                    <span class="px-3 py-1 text-xs text-green-600 bg-green-100 rounded-full dark:bg-gray-800 dark:text-green-400">22 cubas</span>
                 </div>
             </div>
         </div>
@@ -79,10 +80,10 @@
 
                     <div x-show="open" @click.away="open = false" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 scale-95" x-transition:enter-end="opacity-100 scale-100" x-transition:leave="transition ease-in duration-150" x-transition:leave-start="opacity-100 scale-100" x-transition:leave-end="opacity-0 scale-95" class="absolute z-50 mt-2 w-full rounded-md   shadow-lg bg-white border border-gray-200 dark:bg-[#20293A] dark:border-slate-700">
                         <div class="py-1 text-gray-700 dark:text-gray-400 text-sm" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                            <a href="#" @click="open = false" class="block px-4 py-2  hover:bg-gray-100 dark:hover:bg-[#161d2a]" role="menuitem">Mais Garrafas</a>
-                            <a href="#" @click="open = false" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#161d2a]" role="menuitem">Menos Garrafas</a>
-                            <a href="#" @click="open = false" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#161d2a]" role="menuitem">Mais Encubado</a>
-                            <a href="#" @click="open = false" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#161d2a]" role="menuitem">Menos Encubado</a>
+                            <a href="#" @click="open = false" class="block px-4 py-2  hover:bg-gray-100 dark:hover:bg-[#161d2a]" role="menuitem">Maior Litragem</a>
+                            <a href="#" @click="open = false" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#161d2a]" role="menuitem">Menor Litragem</a>
+                            <a href="#" @click="open = false" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#161d2a]" role="menuitem">Mais Recente</a>
+                            <a href="#" @click="open = false" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#161d2a]" role="menuitem">Mais Antigo</a>
                             <a href="#" @click="open = false" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-[#161d2a]" role="menuitem">ID</a>
                         </div>
                     </div>
@@ -100,7 +101,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <span>Adicionar Tipo de Vinho</span>
+                    <span>Adicionar Cuba</span>
                 </button>
             </div>
         </div>
@@ -112,13 +113,14 @@
                         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                             <thead class="bg-gray-50 dark:bg-gray-800">
                                 <tr>
-                                    <th scope="col" class="table-header">Tipo de Vinho</th>
-                                    <th scope="col" class="table-header">Garrafas</th>
-                                    <th scope="col" class="table-header">Caixas</th>
-                                    <th scope="col" class="table-header">Garrafões</th>
-                                    <th scope="col" class="table-header">Cuba</th>
-                                    <th scope="col" class="table-header">Total <i class="fas fas fa-wine-bottle"></i></th>
-                                    <th scope="col" class="table-header">Detalhes</th>
+                                    <th scope="col" class="table-header">ID</th>
+                                    <th scope="col" class="table-header">Volume L</th>
+                                    <th scope="col" class="table-header">Tipo Vinho</th>
+                                    <th scope="col" class="table-header">Data</th>
+                                    <th scope="col" class="table-header">Descrição</th>
+                                    <th scope="col" class="table-header">Refrigerada</th>
+                                    <th scope="col" class="table-header">Térmica</th>
+                                    <th scope="col" class="table-header">Editar</th>
                                 </tr>
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
@@ -126,80 +128,87 @@
                                     
                                     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                         <div class="flex flex-col justify-between">
-                                            <h2 class="font-medium text-gray-800 dark:text-white ">QB Branco</h2>
                                             <p class="text-sm font-normal text-gray-600 dark:text-gray-400">1</p>
                                         </div>
                                     </td>
                                     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                         <div class="flex flex-col justify-between">
-                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">10</p>
+                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">1000</p>
                                         </div>
                                     </td>
                                     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                         <div class="flex flex-col justify-between">
-                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">2</p>
+                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">QB Branco</p>
                                         </div>
                                     </td>
                                     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                         <div class="flex flex-col justify-between">
-                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">0</p>
+                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">1/1/2024</p>
                                         </div>
                                     </td>
                                     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                         <div class="flex flex-col justify-between">
-                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">3000L</p>
+                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">É das de Travanca</p>
                                         </div>
                                     </td>
                                     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                         <div class="flex flex-col justify-between">
-                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">22</p>
+                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">Sim</p>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                        <div class="flex flex-col justify-between">
+                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">Não</p>
                                         </div>
                                     </td>
 
                                     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap flex justify-center mt-2 mr-6">
                                         <button data-order-id="Total" class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100 open-modal">
-                                            <i class="fas fas fa-expand-alt text-gray-600"></i>
+                                            <i class="fas fas fas fa-pen text-gray-600"></i>
                                         </button>
                                     </td>
 
                                 </tr>
                                 <tr class="bg-gray-50">
-                                    
                                     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                         <div class="flex flex-col justify-between">
-                                            <h2 class="font-medium text-gray-800 dark:text-white ">QB Branco</h2>
                                             <p class="text-sm font-normal text-gray-600 dark:text-gray-400">1</p>
                                         </div>
                                     </td>
                                     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                         <div class="flex flex-col justify-between">
-                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">10</p>
+                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">1000</p>
                                         </div>
                                     </td>
                                     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                         <div class="flex flex-col justify-between">
-                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">2</p>
+                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">QB Branco</p>
                                         </div>
                                     </td>
                                     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                         <div class="flex flex-col justify-between">
-                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">0</p>
+                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">1/1/2024</p>
                                         </div>
                                     </td>
                                     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                         <div class="flex flex-col justify-between">
-                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">3000L</p>
+                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">É das de Travanca</p>
                                         </div>
                                     </td>
                                     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                         <div class="flex flex-col justify-between">
-                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">22</p>
+                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">Sim</p>
+                                        </div>
+                                    </td>
+                                    <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                        <div class="flex flex-col justify-between">
+                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">Não</p>
                                         </div>
                                     </td>
 
                                     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap flex justify-center mt-2 mr-6">
                                         <button data-order-id="Total" class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100 open-modal">
-                                            <i class="fas fas fa-expand-alt text-gray-600"></i>
+                                            <i class="fas fas fas fa-pen text-gray-600"></i>
                                         </button>
                                     </td>
 

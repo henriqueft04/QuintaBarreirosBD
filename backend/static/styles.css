@@ -34,6 +34,10 @@
     background-color: #fde68a; /* bg-yellow-200 */
 }
 
+.status-button.espumante {
+    color: #d97706; /* text-orange-600 */
+    background-color: #fbd38d; /* bg-orange-200 */
+}
 
 /* Botões de ação */
 .action-button {
