@@ -1,22 +1,53 @@
 INSERT INTO QB.casta (nome, id) VALUES
-('Cabernet Sauvignon', 1),
-('Almafra', 2),
-('Alvar', 3),
-('Azal', 4),
-('Malvasia Babosa', 5),
-('Rabigato', 6)
+('Alvarinho', 1),
+('Avesso', 2),
+('Espadeiro', 3),
+('Padeiro', 4),
+('Loureiro', 5),
+('Arinto', 6),
+('Trajadura', 7),
+('Padeiro de Bastos', 8),
+('Verdelho', 9),
+('Azal', 10),
+('Arinto', 11),
+(N'Vinhão', 12);
 
 INSERT INTO QB.tipoVinho (notacao, denominacao, id, acidez, ano_colheita, teor_alcoolico, sub-regiao) VALUES
-('Red1', 'Douro DOC', 101, 5.5, 2018, 13.5, 'Douro'),
-('Red2', 'Douro DAC', 102, 5.7, 2020, 12.5, 'Lixa');
+('Grande Escolha', 'Vinho Verde Branco', 101, 6.1, 2021, 12, 'Sousa'),
+('Grande Escolha', 'Vinho Verde Rosado', 102, 6.7, 2021, 11, 'Sousa'),
+(NULL, 'Vinho Frisante Branco', 103, 6.5, 2021, 11, 'Sousa'),
+(NULL, N'Frisante Rosé', 104, 6.9, 2021, 11, 'Sousa'),
+('Vinhos de Mesa', 'Vinho Branco Tradicional', 105, 6.5, 2021, 11, 'Sousa'),
+('Vinhos de Mesa', N'Vinho Rosé Tradicional', 106, 7, 2021, 10.8, 'Sousa'),
+('Vinhos de Mesa', 'Vinho Tinto Tradicional', 107, 6.5, 2021, 11.5, 'Sousa');
+
 
 INSERT INTO QB.casta_tipoVinho (id_tipoVinho, id_casta) VALUES
 (101, 1),
-(102, 4);
+(101, 2),
+(102, 3),
+(102, 4),
+(103, 2),
+(103, 5),
+(103, 6),
+(103, 7),
+(104, 3),
+(104, 8),
+(104, 9),
+(105, 10),
+(105, 2),
+(105, 11),
+(105, 7),
+(105, 5),
+(106, 3),
+(106, 4),
+(106, 9),
+(107, 12);
 
 INSERT INTO QB.cuba (codigo, id_TipoVinho, dataArmazenado, descricao, volume, refrigerada, termica) VALUES
-(2001, 101, '2020-05-21', 'Stainless steel tank', 5000, 1, 0),
-(2002, 102, '2020-05-21', NULL, 3500, 1, 1);
+(1, 101, '2020-05-21', NULL, 5000, 1, 0),
+(2, 102, '2020-05-21', NULL, 5000, 1, 1),
+(3, 103, 2020-12-4, NULL, 2500, 0, 0);
 
 INSERT INTO QB.cuba_engarrafamento (codigo_Cuba, dataEngarrafamento) VALUES
 (2001, '2021-12-10'),

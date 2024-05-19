@@ -15,8 +15,8 @@ CREATE TABLE [QB].[casta_tipoVinho] (
 GO
 
 CREATE TABLE [QB].[tipoVinho] (
-  [notacao] varchar(255) UNIQUE,
-  [denominacao] varchar(255),
+  [notacao] varchar(255),
+  [denominacao] varchar(255) UNIQUE,
   [id] int PRIMARY KEY,
   [acidez] decimal,
   [ano_colheita] int,
