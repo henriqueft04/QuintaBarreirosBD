@@ -31,6 +31,7 @@ CREATE TABLE [QB].[cuba] (
   [dataArmazenado] date,
   [descricao] varchar(255),
   [volume] int,
+  [volumeOcupado] int,
   [refrigerada] bit,
   [termica] bit
 )
@@ -55,7 +56,6 @@ CREATE TABLE [QB].[cliente] (
   [nome] varchar(255),
   [telemovel] int,
   [tipo] varchar(255),
-  [desconto] int
 )
 GO
 
@@ -63,7 +63,7 @@ CREATE TABLE [QB].[fornecedor] (
   [NIF] int PRIMARY KEY,
   [morada] varchar(255),
   [nome] varchar(255),
-  [telemovel] int
+  [telemovel] int,
 )
 GO
 
@@ -80,6 +80,7 @@ GO
 CREATE TABLE [QB].[stock] (
   [id_tipoVinho] int,
   [id] int PRIMARY KEY,
+  [quantidade] int,
   [peso_liquido] decimal,
   [peso_bruto] decimal,
   [preco] decimal
@@ -88,7 +89,7 @@ GO
 
 CREATE TABLE [QB].[item] (
   [quantidadeItems] int,
-  [id_stock] int PRIMARY KEY,
+  [id_stock] int ,
   [numero_encomenda] int
 )
 GO
@@ -100,7 +101,7 @@ CREATE TABLE [QB].[garrafao] (
 GO
 
 CREATE TABLE [QB].[garrafa] (
-  [id_tipoVinho] int UNIQUE,
+  [id_tipoVinho] int,
   [id_stock] int UNIQUE,
   [dataEng] date
 )
@@ -189,7 +190,7 @@ GO
 ALTER TABLE [QB].[item] ADD FOREIGN KEY ([numero_encomenda]) REFERENCES [QB].[encomenda] ([numero])
 GO
 
-ALTER TABLE [QB].[stock] ADD FOREIGN KEY ([id]) REFERENCES [QB].[item] ([id_stock])
+ALTER TABLE [QB].[item] ADD FOREIGN KEY ([id_stock]) REFERENCES [QB].[stock] ([id])
 GO
 
 ALTER TABLE [QB].[caixa] ADD FOREIGN KEY ([id_stock]) REFERENCES [QB].[stock] ([id])
@@ -216,7 +217,7 @@ GO
 ALTER TABLE [QB].[certificados] ADD FOREIGN KEY ([id_componente]) REFERENCES [QB].[componente] ([id])
 GO
 
-ALTER TABLE [QB].[rolha] ADD FOREIGN KEY ([id_componente]) REFERENCES [QB].[tipoRolha] ([id])
+ALTER TABLE [QB].[rolha] ADD FOREIGN KEY ([id_tipoRolha]) REFERENCES [QB].[tipoRolha] ([id])
 GO
 
 ALTER TABLE [QB].[tipoRolha_fornecedor] ADD FOREIGN KEY ([id_tipoRolha]) REFERENCES [QB].[tipoRolha] ([id])

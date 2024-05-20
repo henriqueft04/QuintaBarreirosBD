@@ -12,7 +12,7 @@ INSERT INTO QB.casta (nome, id) VALUES
 ('Arinto', 11),
 (N'Vinhão', 12);
 
-INSERT INTO QB.tipoVinho (notacao, denominacao, id, acidez, ano_colheita, teor_alcoolico, sub-regiao) VALUES
+INSERT INTO QB.tipoVinho (notacao, denominacao, id, acidez, ano_colheita, teor_alcoolico, "sub-regiao") VALUES
 ('Grande Escolha', 'Vinho Verde Branco', 101, 6.1, 2021, 12, 'Sousa'),
 ('Grande Escolha', 'Vinho Verde Rosado', 102, 6.7, 2021, 11, 'Sousa'),
 (NULL, 'Vinho Frisante Branco', 103, 6.5, 2021, 11, 'Sousa'),
@@ -44,70 +44,229 @@ INSERT INTO QB.casta_tipoVinho (id_tipoVinho, id_casta) VALUES
 (106, 9),
 (107, 12);
 
-INSERT INTO QB.cuba (codigo, id_TipoVinho, dataArmazenado, descricao, volume, refrigerada, termica) VALUES
-(1, 101, '2020-05-21', NULL, 5000, 1, 0),
-(2, 102, '2020-05-21', NULL, 5000, 1, 1),
-(3, 103, 2020-12-4, NULL, 2500, 0, 0);
+INSERT INTO QB.cuba (codigo, id_TipoVinho, dataArmazenado, descricao, volume, volumeOcupado, refrigerada, termica) VALUES
+(1, 101, '2020-05-21', NULL, 5000, 5000, 1, 0),
+(2, 102, '2020-05-21', NULL, 5000, 4000, 1, 1),
+(3, 103, '2020-12-04', NULL, 2500, 2000, 0, 0),
+(4, NULL, NULL, NULL, 2500, 0, 0, 0),
+(5, NULL, NULL, NULL, 2500, 0, 0, 0),
+(6, NULL, NULL, NULL, 5000, 0, 0, 0),
+(7, NULL, NULL, NULL, 2500, 0, 0, 0),
+(8, NULL, NULL, NULL, 2500, 0, 0, 0),
+(9, NULL, NULL, NULL, 2500, 0, 0, 0),
+(10, NULL, NULL, NULL, 1500, 0, 0, 0),
+(11, NULL, NULL, NULL, 1500, 0, 0, 0),
+(12, NULL, NULL, NULL, 1500, 0, 0, 0),
+(13, NULL, NULL, NULL, 2000, 0, 0, 0),
+(14, NULL, NULL, NULL, 1500, 0, 0, 0),
+(15, NULL, NULL, NULL, 1500, 0, 0, 0),
+(16, NULL, NULL, NULL, 5000, 0, 0, 0),
+(17, NULL, NULL, NULL, 1000, 0, 0, 0),
+(18, NULL, NULL, NULL, 500, 0, 0, 0),
+(19, NULL, NULL, NULL, 1000, 0, 0, 0),
+(20, NULL, NULL, NULL, 1000, 0, 0, 0),
+(21, NULL, NULL, NULL, 5000, 0, 0, 0),
+(22, NULL, NULL, NULL, 1000, 0, 0, 0),
+(23, NULL, NULL, NULL, 1000, 0, 0, 0),
+(24, NULL, NULL, NULL, 500, 0, 0, 0),
+(25, NULL, NULL, NULL, 500, 0, 0, 0),
+(26, NULL, NULL, NULL, 500, 0, 0, 0),
+(27, NULL, NULL, NULL, 500, 0, 0, 0),
+(28, NULL, NULL, NULL, 500, 0, 0, 0),
+(29, NULL, NULL, NULL, 500, 0, 0, 0),
+(30, NULL, NULL, NULL, 250, 0, 0, 0),
+(31, NULL, NULL, NULL, 16000, 0, 0, 0),
+(32, NULL, NULL, NULL, 16000, 0, 0, 0),
+(33, NULL, NULL, NULL, 16000, 0, 0, 0),
+(34, NULL, NULL, NULL, 16000, 0, 0, 0),
+(35, NULL, NULL, NULL, 16000, 0, 0, 0),
+(36, NULL, NULL, NULL, 5000, 0, 0, 0),
+(37, NULL, NULL, NULL, 5000, 0, 0, 0),
+(38, NULL, NULL, NULL, 16000, 0, 0, 0),
+(39, NULL, NULL, NULL, 16000, 0, 0, 0),
+(40, NULL, NULL, NULL, 16000, 0, 0, 0),
+(41, NULL, NULL, NULL, 20000, 0, 0, 0),
+(42, NULL, NULL, NULL, 20000, 0, 0, 0),
+(43, NULL, NULL, NULL, 10000, 0, 0, 0),
+(44, NULL, NULL, NULL, 10000, 0, 0, 0),
+(45, NULL, NULL, NULL, 250, 0, 0, 0);
+
+INSERT INTO QB.engarrafamento (dataEng, litragemEng, quantidade) VALUES ('2020-12-29', 1000, 1333);
+INSERT INTO QB.engarrafamento (dataEng, litragemEng, quantidade) VALUES ('2022-01-21', 500, 666);
+INSERT INTO QB.engarrafamento (dataEng, litragemEng, quantidade) VALUES ('2022-02-02', 2500, 3333);
+INSERT INTO QB.engarrafamento (dataEng, litragemEng, quantidade) VALUES ('2022-02-10', 5000, 6666);
+INSERT INTO QB.engarrafamento (dataEng, litragemEng, quantidade) VALUES ('2022-02-28', 1500, 2000);
+INSERT INTO QB.engarrafamento (dataEng, litragemEng, quantidade) VALUES ('2022-03-12', 2500, 3333);
+INSERT INTO QB.engarrafamento (dataEng, litragemEng, quantidade) VALUES ('2022-04-20', 500, 666);
+INSERT INTO QB.engarrafamento (dataEng, litragemEng, quantidade) VALUES ('2022-05-21', 250, 333);
+
 
 INSERT INTO QB.cuba_engarrafamento (codigo_Cuba, dataEngarrafamento) VALUES
-(2001, '2021-12-10'),
-(2002, '2022-05-21');
+(2, '2020-12-29'),
+(3, '2022-01-21'),
+(4, '2022-02-02'),
+(6, '2022-02-10'),
+(12, '2022-02-28'),
+(8, '2022-03-12'),
+(25, '2022-04-20'),
+(45, '2022-05-21');
 
-INSERT INTO QB.engarrafamento (dataEng, litragemEng, quantidade) VALUES
-('2021-12-10', 750, 5000),
-('2022-05-21', 500, 1000);
-
-INSERT INTO QB.cliente (NIF, morada, nome, telemovel, tipo, desconto) VALUES
-(123456789, 'Rua das Flores, 123', 'Maria Silva', 912345678, 'Privado', 10),
-(222333444, NULL, 'Antonio José', NULL, 'Privado', 15),
-(223344567, 'Rua Do Restaurante, N7', 'Restaurante da Esquina', 271299566, 'Restaurante', 20);
+INSERT INTO QB.cliente (NIF, morada, nome, telemovel, tipo) VALUES
+(123456789, 'Rua da Tasca', 'Tasca do Bôzo', 961234567, 'Restaurante'),
+(987654321, 'Avenida dos Vinhos, 321', 'FineTaste', 961255467, 'Restaurante'),
+(256986703, 'Rua das Rolhas, N12', 'Dias, LDA', 932560433, 'Distribuidor'),
+(234567890, 'Rua da Pega', 'Berto Barreiros', 913456789, 'Particular'),
+(345678901, 'Rua do Vinho', 'Emídio', 912345678, 'Particular'),
+(456789677, 'Rua Principal, 8', 'Dino, LDA', 914567890, 'Distribuidor'),
+(567890123, 'Rua do Convento', 'Pedro Pereira', 912345877, 'Particular'),
+(678901234, 'Rua das Pinhas', 'Zé Carlos', 933345678, 'Particular'),
+(789012345, 'Avenida dos Croquis', 'Croquis em Marcha', 912345678, 'Restaurante'),
+(890123456, 'Rua da Bomba', 'Fonseca Bomba', 912225678, 'Particular'),
+(901234567, 'Rua das Tempestades', 'Miguel Trovoada', 912345578, 'Particular'),
+(234567880, 'Rua da Ribeira', 'Ribeiro Paredes', 912345677, 'Particular'),
+(345672901, 'Rua do Emigrante', 'Taberna de Paris', 912345678, 'Restaurante'),
+(456789657, 'Rua da Amargura', 'Daniela Asstir', 913345678, 'Particular'),
+(567890133, 'Rua dos Deslocados', 'Fernando Aveiro', 912335678, 'Particular'),
+(678901434, 'Rua do Desconhecidos', 'Lassan Segmento', 2112345678, 'Distribuidor'),
+(789012343, 'Rua do Prego', 'Menina Caíde Rei', 212335678, 'Restaurante'),
+(890122456, 'Rua dos Bombeiros', 'Tesla Angola', 912345456, 'Particular'),
+(901235567, 'Rua do Descobrimentos', 'Carioca', 912345666, 'Particular'),
+(123457788, 'Rua dos Caçadorea', 'Pacheco', 912344678, 'Particular'),
+(234561890, 'Rua do Café', 'Café Anize', 912345628, 'Restaurante'),
+(345678902, 'Rua do Pasto', 'Leites', 932345678, 'Particular'),
+(456789617, 'Rua da Casa do Povo', 'Casa do Povo Figueiro', 212345678, 'Restaurante'),
+(267890123, 'Rua das Travessias', 'Sr Morreira', 925345678, 'Particular'),
+(678903234, 'Rua dos Limites', 'Terra e Mar', 912345678, 'Restaurante'),
+(789012145, 'Rua da Alegria', 'Três Jorges', 912345478, 'Restaurante'),
+(890121456, 'Rua da França', 'França c3', 912343456, 'Particular'),
+(903234567, 'Rua do Juventude', 'Magalhães', 912344378, 'Particular'),
+(123453789, 'Rua da Firmeza', 'Restaurante Firmino', 211534708, 'Restaurante'),
+(235567890, 'Rua da Beleza ', 'Ribeiro Paredes', 912445678, 'Particular'),
+(345678501, 'Rua do Penhasco', 'Silva', 913445678, 'Particular'),
+(456789477, 'Rua da Familia', 'Dino Filho', 912337678, 'Particular'),
+(567820123, 'Rua da Vizinhança', 'Ferreira Lousada', 921234567, 'Particular'),
+(678901424, 'Rua do Estranho', 'Jorge Irivo', 933455666, 'Particular'), 
+(456729677, 'Rua do Muro', 'Ribeiro Paredes', 932335678, 'Particular'),
+(678907234, 'Rua do Companhia', 'Paulo Vizinho', 932677900, 'Particular'),
+(789062345, 'Rua do Milho', 'Emídio', 922445678, 'Particular'),
+(890153456, 'Rua do Espanto', 'Domingos Barbeiro', 933512639, 'Particular'),
+(901234564, 'Rua do Monte', 'Domingos Barreiros', 937619745, 'Particular'),
+(123466789, 'Rua das Motas', 'Flávio Guimarães', 923648098, 'Particular'),
+(234546890, 'Rua do Carpinteiro', 'Fernando Carpinteiro', 921679376, 'Particular'),
+(345678904, 'Rua do Meio', 'Café Sampaio', 912345678, 'Restaurante'),
+(456789977, 'Rua da Herdade', 'Taberna dos Herdeiros', 936851879, 'Restaurante'),
+(678904234, 'Rua de Cima', 'Angélico Dino', 912645678, 'Particular');
 
 INSERT INTO QB.fornecedor (NIF, morada, nome, telemovel) VALUES
-(987654321, 'Avenida dos Vinhos, 321', 'Vinhos e Derivados SA', 961234567),
-(256986703, 'Rua das Rolhas, N12', 'Rolhas', 932560433);
+(987654322, 'Avenida dos Vinhos, 321', 'Rolhas1', 961234567),
+(256986503, 'Rua das Rolhas, N12', 'Rolhas2', 932560433),
+(712983756, 'Rua da Cortiça', 'Rolhas3', 961234567),
+(837249200, 'Rua da República', 'Rolhas4', 961234567);
 
 
 INSERT INTO QB.encomenda (NIF_cliente, fatura, valor, notas, data, numero) VALUES
-(123456789, 1, 1200.50, 'Urgent delivery', '2024-05-01', 10001),
-(987654321, 0, 200, NULL, '2024-03-18', 10002);
+(123456789, 1, 250.50, 'Primeira encomenda', '2024-05-01', 1),
+(987654321, 0, 150.75, 'Encomenda sem fatura', '2024-05-02', 2),
+(256986703, 1, 300.00, 'Cliente frequente', '2024-05-03', 3),
+(234567890, 1, 120.99, 'Nova encomenda', '2024-05-04', 4),
+(345678901, 0, 175.50, 'Promoção especial', '2024-05-05', 5),
+(456789677, 1, 210.00, 'Encomenda grande', '2024-05-06', 6),
+(567890123, 0, 50.25, 'Pequena encomenda', '2024-05-07', 7),
+(678901234, 1, 400.75, 'Encomenda VIP', '2024-05-08', 8),
+(789012345, 1, 225.00, 'Cliente antigo', '2024-05-09', 9),
+(890123456, 0, 130.45, 'Encomenda rápida', '2024-05-10', 10),
+(901234567, 1, 300.50, 'Encomenda de grande volume', '2024-05-11', 11),
+(234567880, 0, 85.75, 'Encomenda para evento', '2024-05-12', 12),
+(345672901, 1, 500.00, 'Encomenda mensal', '2024-05-13', 13),
+(456789657, 0, 120.00, 'Encomenda pequena', '2024-05-14', 14),
+(567890133, 1, 250.25, 'Encomenda urgente', '2024-05-15', 15),
+(678901434, 0, 275.75, 'Encomenda especial', '2024-05-16', 16),
+(789012343, 1, 150.00, 'Encomenda de rotina', '2024-05-17', 17),
+(890122456, 0, 95.45, 'Encomenda de teste', '2024-05-18', 18),
+(901235567, 1, 350.75, 'Encomenda grande', '2024-05-19', 19),
+(123457788, 0, 220.99, 'Encomenda de promoção', '2024-05-20', 20);
 
-
-INSERT INTO QB.stock (id_tipoVinho, id, peso_liquido, peso_bruto, preco) VALUES
-(101, 3001, 750, 800, 25.50),
-(102, 3002, 750, 800, 7.30);
+INSERT INTO QB.stock (id_tipoVinho, id, quantidade, peso_liquido, peso_bruto, preco) VALUES
+(101, 1001, 100, 700, 800, 25.50),
+(102, 1002, 200, 750, 800, 7.30),
+(103, 1003, 150, 680, 750, 10.00),
+(104, 1004, 120, 600, 700, 12.50),
+(105, 1005, 180, 800, 850, 20.00);
 
 INSERT INTO QB.item (quantidadeItems, id_stock, numero_encomenda) VALUES
-(10, 3001, 10001),
-(15, 3002, 10002);
+(10, 1001, 1),
+(15, 1002, 2),
+(20, 1003, 3),
+(25, 1004, 4),
+(30, 1005, 5);
 
 INSERT INTO QB.garrafao (id_stock, dataEng) VALUES
-(3001, '2021-12-10'),
-(3002, '2023-5-12');
+(1001, '2021-12-10'),
+(1002, '2023-05-12'),
+(1003, '2022-03-15'),
+(1004, '2023-07-20'),
+(1005, '2024-01-10');
 
 INSERT INTO QB.garrafa (id_tipoVinho, id_stock, dataEng) VALUES
-(101, 3001, '2021-12-10');
+(101, 1001, '2020-12-29'),
+(102, 1002, '2022-01-21'),
+(103, 1003, '2022-02-02'),
+(104, 1004, '2022-02-10'),
+(105, 1005, '2022-03-12');
+
 
 INSERT INTO QB.componente (id, quantidade) VALUES
-(4001, 100);
+(1001, 100),
+(1002, 200),
+(1003, 300),
+(1004, 150),
+(1005, 250);
 
 INSERT INTO QB.rotulo (id_componente, NIF_cliente, notacao_tipoVinho) VALUES
-(4001, 123456789, 'Red1');
-
-INSERT INTO QB.rolha (id_componente, id_tipoRolha) VALUES
-(4001, 5001);
+(1001, 123456789, 'Grande Escolha'),
+(1002, 987654321, 'Vinho Verde Rosado'),
+(1003, 256986703, 'Vinho Frisante Branco'),
+(1004, 234567890, 'Frisante Rosé'),
+(1005, 345678901, 'Vinho Branco Tradicional');
 
 INSERT INTO QB.tipoRolha (id, material, formato) VALUES
-(5001, 'Cork', 'Standard');
+(5001, 'Cork', 'Standard'),
+(5002, 'Synthetic', 'Long'),
+(5003, 'Cork', 'Short'),
+(5004, 'Synthetic', 'Standard'),
+(5005, 'Cork', 'Long');
+
+INSERT INTO QB.rolha (id_componente, id_tipoRolha) VALUES
+(1001, 5001),
+(1002, 5002),
+(1003, 5003),
+(1004, 5004),
+(1005, 5005);
 
 INSERT INTO QB.tipoRolha_fornecedor (id_tipoRolha, NIF, data, quantidade) VALUES
-(5001, 987654321, '2024-04-01', 2000);
+(5001, 987654322, '2024-04-01', 2000),
+(5002, 256986503, '2024-04-02', 1500),
+(5003, 712983756, '2024-04-03', 1000),
+(5004, 837249200, '2024-04-04', 1800),
+(5005, 987654322, '2024-04-05', 2200);
 
 INSERT INTO QB.selo (id_componente, ano, categoria) VALUES
-(4001, 2024, 'DOC');
+(1001, 2024, 'DOC'),
+(1002, 2023, 'IGP'),
+(1003, 2022, 'DOC'),
+(1004, 2021, 'IGP'),
+(1005, 2020, 'DOC');
 
 INSERT INTO QB.certificados (id_componente, ano, associacao, titulo) VALUES
-(4001, 2024, 'Wine Association', 'Quality Verified');
+(1001, 2024, 'Wine Association', 'Quality Verified'),
+(1002, 2023, 'Wine Association', 'Premium Quality'),
+(1003, 2022, 'Wine Guild', 'Excellence Award'),
+(1004, 2021, 'Vine Society', 'Top Choice'),
+(1005, 2020, 'Winemakers Guild', 'Best Value');
 
 INSERT INTO QB.caixa (numGarrafas, id_tipoVinho_garrafa, id_stock, dataEng, id_stock_garrafa) VALUES
-('6 bottles', 101, 3001, '2021-12-10', 3001);
-
+('6 bottles', 101, 1001, '2021-12-10', 1001),
+('12 bottles', 102, 1002, '2023-05-12', 3002),
+('6 bottles', 103, 1003, '2022-03-15', 4003),
+('12 bottles', 104, 1004, '2023-07-20', 5004),
+('6 bottles', 105, 1005, '2024-01-10', 6005);
