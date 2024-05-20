@@ -34,9 +34,24 @@
     background-color: #fde68a; /* bg-yellow-200 */
 }
 
-.status-button.espumante {
-    color: #d97706; /* text-orange-600 */
-    background-color: #fbd38d; /* bg-orange-200 */
+.status-button.frisante {
+    color: #6d502f; /* text-orange-600 */
+    background-color: #a3836e8c; /* bg-orange-200 */
+}
+
+.status-button.qb {
+    color: #16a34a;
+    background-color: #bbf7d0;
+}
+
+.status-button.carica {
+    color: #7b21a2; /* text-purple-600 */
+    background-color: #d4adf7; /* bg-purple-200 */
+}
+
+.status-button.cortiça {
+    color: #b86507; /* text-yellow-600 */
+    background-color: #fde68a; /* bg-yellow-200 */
 }
 
 /* Botões de ação */
