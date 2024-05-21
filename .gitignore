@@ -19,4 +19,4 @@ tailwind.config.js
 .DS_Store
 
 #veenv
-/veenv
+/venv
