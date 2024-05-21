@@ -9,7 +9,8 @@ Faz isto para ver algo mesmo giro:
 ```bash
 git clone https://github.com/henriqueft04/QuintaBarreirosBD
 python -m venv venv
-venv/Scripts/activate
+windows -> venv/Scripts/activate
+linux/Mac -> venv/bin/activate
 pip install -r backend/requirements.txt
 python backend/app.py
 ```

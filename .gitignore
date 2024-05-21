@@ -17,3 +17,6 @@ tailwind.config.js
 
 #macOs
 .DS_Store
+
+#veenv
+/veenv
