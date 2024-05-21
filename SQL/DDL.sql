@@ -69,6 +69,7 @@ GO
 
 CREATE TABLE [QB].[encomenda] (
   [NIF_cliente] int,
+  [estadoPagamento] bit,
   [fatura] bit,
   [valor] decimal,
   [notas] varchar(255),
