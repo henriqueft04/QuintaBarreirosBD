@@ -19,7 +19,7 @@
     background-color: #bbf7d0; /* bg-green-200 */
 }
 
-.status-button.individual {
+.status-button.particular {
     color: #1959e4; /* text-blue-600 */
     background-color: #93c5fd; /* bg-blue-200 */
 }
@@ -29,7 +29,7 @@
     background-color: #d4adf7; /* bg-purple-200 */
 }
 
-.status-button.revendedor {
+.status-button.distribuidor {
     color: #b86507; /* text-yellow-600 */
     background-color: #fde68a; /* bg-yellow-200 */
 }
