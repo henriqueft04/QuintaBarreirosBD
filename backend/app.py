@@ -19,7 +19,6 @@ def clientes():
     cursor.execute(query)
     clientes = cursor.fetchall()
     db.close()
-
     return render_template('clientes.html', clientes=clientes)
 
 @app.route('/fornecedores')
@@ -44,7 +43,16 @@ def stock():
 
 @app.route('/cubas')
 def cubas():
-    return render_template('cubas.html')
+    query = """
+        SELECT * FROM QB.cuba
+    """
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute(query)
+    cubas = cursor.fetchall()
+    db.close()
+
+    return render_template('cubas.html', cubas=cubas)
 
 if __name__ == "__main__":
     app.run(debug=True)
