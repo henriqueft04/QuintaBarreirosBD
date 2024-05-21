@@ -1,14 +1,26 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request,jsonify
+from database.connection import get_db_connection 
 
 app = Flask(__name__)
 
 @app.route('/')
 def index():
+
     return render_template('index.html')
 
 @app.route('/clientes')
 def clientes():
-    return render_template('clientes.html')
+
+    query=""" 
+        SELECT * FROM QB.cliente
+    """
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute(query)
+    clientes = cursor.fetchall()
+    db.close()
+
+    return render_template('clientes.html', clientes=clientes)
 
 @app.route('/fornecedores')
 def fornecedores():
