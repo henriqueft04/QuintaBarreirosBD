@@ -21,3 +21,13 @@ document.addEventListener('DOMContentLoaded', (event) => {
         modal.classList.add('hidden');
     });
 });
+
+function closeModal() {
+    document.getElementById('modal_enc').classList.add('hidden');
+}
+
+document.addEventListener('htmx:afterSwap', (event) => {
+    if (event.detail.target.id === 'modal-content') {
+        document.getElementById('modal_emc').classList.remove('hidden');
+    }
+});

@@ -64,14 +64,14 @@
                 <input type="text" placeholder="Search" class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-80 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-green-400 dark:focus:border-green-300 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40">
             </div>
             <div class="relative flex items-center gap-x-3">
-                <button class="action-button green">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                <button class="action-button green" hx-get="/novaForm" hx-target="#modal_forms" hx-trigger="click">
+                    <svg  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <span>Adicionar Encomenda</span>
                 </button>
                 <button class="action-button green">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <svg  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <span>Adicionar Cliente</span>
@@ -215,6 +215,15 @@
                                 <h2 class="text-xl mb-4">Detalhes da Encomenda</h2>
                                 <p>Aqui vão os detalhes da encomenda...</p>
                                 <button id="closeModal" class="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">Fechar</button>
+                            </div>
+                        </div>
+                        <!-- Forms modal -->
+                        <div id="modal_enc" class="fixed z-10 inset-0 overflow-y-auto hidden">
+                            <div class="flex items-center justify-center min-h-screen px-4">
+                                <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-3xl">
+                                    <div id="modal_forms"></div>
+                                    <button onclick="closeModal()" class="mt-4 px-4 py-2 status-button por-pagar">Fechar</button>
+                                </div>
                             </div>
                         </div>
                     </div>
