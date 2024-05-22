@@ -70,6 +70,6 @@
     <div class="mt-6">
         <button type="button" id="add-item" class="mt-4 px-4 py-2 status-button restaurante ">Adicionar Item</button>
         <button type="button" id="remove-item" class="mt-4 px-4 py-2 status-button por-pagar ">Remover Item</button>
-        <button type="submit" class="px-4 py-2 status-button qb">Salvar Encomenda</button>
+        <button type="submit" hx-post="/rotaParaSalvar" hx-target="#resultado" hx-swap="outerHTML" class="px-4 py-2 status-button qb">Salvar Encomenda</button>
     </div>
 </form>
