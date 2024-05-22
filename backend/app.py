@@ -31,7 +31,17 @@ def nova_encomenda():
 
 @app.route('/encomendas')
 def encomendas():
-    return render_template('encomendas.html')
+
+    query=""" 
+        SELECT * FROM QB.encomenda
+    """
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute(query)
+    encomendas = cursor.fetchall()
+    db.close()
+
+    return render_template('encomendas.html', encomendas=encomendas)
 
 @app.route('/engarrafamentos')
 def engarrafamentos():
