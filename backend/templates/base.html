@@ -19,6 +19,70 @@
     </nav>
     <div class="container mx-auto flex items-center mt-8">
         {% block content %}{% endblock %}
+
+        <div id="orderModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+            <div class="bg-white rounded-lg p-8">
+                <h2 class="text-xl mb-4">Detalhes da Encomenda</h2>
+                <p>Aqui vão os detalhes da encomenda...</p>
+                <button id="closeModal" class="close-modal mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">Fechar</button>
+            </div>
+        </div>
+        <div id="newOrderModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+            <div class="bg-white rounded-lg p-8">
+                <h2 class="text-xl mb-4">Novo Pedido</h2>
+                <p>Novos detalhes da encomenda serão exibidos aqui.</p>
+                <button id="closeNewOrderModal" class="close-modal mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">Fechar</button>
+            </div>
+        </div>
+        <div id="newClientModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+            <div class="bg-white rounded-lg p-8">
+                <h2 class="text-xl mb-4">Novo Cliente</h2>
+                <p>Novos detalhes da encomenda serão exibidos aqui.</p>
+                <button id="closeNewOrderModal" class="close-modal mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">Fechar</button>
+            </div>
+        </div>
+        <div id="newFornecimentoModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+            <div class="bg-white rounded-lg p-8">
+                <h2 class="text-xl mb-4">Novo Fornecimento</h2>
+                <p>Novos detalhes da encomenda serão exibidos aqui.</p>
+                <button id="closeNewOrderModal" class="close-modal mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">Fechar</button>
+            </div>
+        </div>
+        <div id="newRolhaModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+            <div class="bg-white rounded-lg p-8">
+                <h2 class="text-xl mb-4">Nova Rolha</h2>
+                <p>Novos detalhes da encomenda serão exibidos aqui.</p>
+                <button id="closeNewOrderModal" class="close-modal mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">Fechar</button>
+            </div>
+        </div>
+        <div id="newFornecedorModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+            <div class="bg-white rounded-lg p-8">
+                <h2 class="text-xl mb-4">Novo Fornecedor</h2>
+                <p>Novos detalhes da encomenda serão exibidos aqui.</p>
+                <button id="closeNewOrderModal" class="close-modal mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">Fechar</button>
+            </div>
+        </div>
+        <div id="newEngarrafamentoModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+            <div class="bg-white rounded-lg p-8">
+                <h2 class="text-xl mb-4">Novo Engarrafamento</h2>
+                <p>Novos detalhes da encomenda serão exibidos aqui.</p>
+                <button id="closeNewOrderModal" class="close-modal mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">Fechar</button>
+            </div>
+        </div>
+        <div id="newVinhoModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+            <div class="bg-white rounded-lg p-8">
+                <h2 class="text-xl mb-4">Novo Vinho</h2>
+                <p>Novos detalhes da encomenda serão exibidos aqui.</p>
+                <button id="closeNewOrderModal" class="close-modal mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">Fechar</button>
+            </div>
+        </div>
+        <div id="newCubaModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+            <div class="bg-white rounded-lg p-8">
+                <h2 class="text-xl mb-4">Nova Cuba</h2>
+                <p>Novos detalhes da encomenda serão exibidos aqui.</p>
+                <button id="closeNewOrderModal" class="close-modal mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">Fechar</button>
+            </div>
+        </div>
     </div>
 
     <script src="https://unpkg.com/htmx.org"></script>

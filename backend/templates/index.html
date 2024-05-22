@@ -70,7 +70,7 @@
                     </svg>
                     <span>Adicionar Encomenda</span>
                 </button>
-                <button class="action-button green">
+                <button class="action-button green open-modal" data-modal-target="newClientModal">
                     <svg  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -210,20 +210,6 @@
                             </tbody>
                         </table>
                         <!-- Modal -->  
-                        <div id="orderModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
-                            <div class="bg-white rounded-lg p-8">
-                                <h2 class="text-xl mb-4">Detalhes da Encomenda</h2>
-                                <p>Aqui vão os detalhes da encomenda...</p>
-                                <button id="closeModal" class="close-modal mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">Fechar</button>
-                            </div>
-                        </div>
-                        <div id="newOrderModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
-                            <div class="bg-white rounded-lg p-8">
-                                <h2 class="text-xl mb-4">Novo Pedido</h2>
-                                <p>Novos detalhes da encomenda serão exibidos aqui.</p>
-                                <button id="closeNewOrderModal" class="close-modal mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">Fechar</button>
-                            </div>
-                        </div>
                     </div>
                 </div>
             </div>
