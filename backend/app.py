@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request,jsonify
 from database.connection import get_db_connection 
+from app.models import *
 
 app = Flask(__name__)
 
@@ -10,67 +11,16 @@ def index():
 
 @app.route('/clientes')
 def clientes():
-
-    search_param = request.args.get('nome', '')
-
-    print(f"Recebendo parâmetro de busca: {search_param}")  # Debug
-
-
-    query = "SELECT * FROM QB.cliente"
-    params = []
-
-    if search_param:
-        if search_param.isdigit():
-            query += " WHERE QB.cliente.telemovel LIKE '%" + search_param + "%'"
-            params.append('%' + search_param + '%')
-        else:
-            query += " WHERE QB.cliente.nome LIKE '%" + search_param + "%'"
-            params.append('%' + search_param + '%')
-
-
+    clientes = Search_Clients("")
     
-    print(f"Query SQL: {query}")  # Debug
-    print(f"Parâmetros: {params}")  # Debug
-
-
-    db = get_db_connection()
-    cursor = db.cursor()
-    cursor.execute(query)
-    clientes = cursor.fetchall()
-    db.close()
-
-
-    print(f"Clientes encontrados: {clientes}")  # Debug
-
     return render_template('clientes.html', clientes=clientes)
 
-@app.route('/search', methods=['GET'])
-def search_cliente():
-    nome = request.args.get('nome', '')
-    telemovel = request.args.get('telemovel', '')
+@app.route('/searchClientes')
+def searchClientes():
+    search_param = request.args.get('nome', 'telemovel')
+    clientes = Search_Clients(search_param)
+    return render_template('tabelaClientes.html', clientes=clientes)
 
-    query = "SELECT * FROM Cliente WHERE nome LIKE ? OR telemovel LIKE ?"
-    params = ['%' + nome + '%', '%' + telemovel + '%']
-
-    cursor = get_db_connection().cursor()
-    cursor.execute(query, params)
-    result = cursor.fetchall()
-    cursor.close()
-
-    clientes = []
-    for row in result:
-        cliente = {
-            'id': row.id,
-            'nome': row.nome,
-            'telemovel': row.telemovel,
-            'nif': row.nif,
-            'morada': row.morada,
-            'total': row.total,
-            'tipo': row.tipo
-        }
-        clientes.append(cliente)
-
-    return jsonify(clientes)
 
 @app.route('/fornecedores')
 def fornecedores():
