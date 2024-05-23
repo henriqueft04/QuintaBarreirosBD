@@ -139,5 +139,17 @@ def novaCuba():
 def novoVinho():
     return render_template('novoVinho.html')
 
+@app.route('/novaRolha')
+def novaRolha():
+    return render_template('novaRolha.html')
+
+@app.route('/novoFornecedor')
+def novoFornecedor():
+    return render_template('novoFornecedor.html')
+
+@app.route('/encomendaDetalhes')
+def encomendasDetalhes():
+    return render_template('encomendaDetalhes.html')
+
 if __name__ == "__main__":
     app.run(debug=True)

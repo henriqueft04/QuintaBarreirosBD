@@ -131,18 +131,25 @@
                             </thead>
                             <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                 {% for encomenda in encomendas %}
-                                {% if encomenda.estadoPagamento == 1 %}
                                 <tr>
                                     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                         <div class="flex flex-col justify-between">
                                             <h2 class="font-medium text-gray-800 dark:text-white ">{{encomenda.NIF_cliente}}</h2>
                                         </div>
                                     </td>
+                                    {% if encomenda.estadoPagamento == 1 %}
                                     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                         <button class="status-button pago">
                                             Pago
                                         </button>
                                     </td>
+                                    {% else %}
+                                    <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                                        <button class="status-button por-pagar">
+                                            Por Pagar
+                                        </button>
+                                    </td>
+                                    {% endif %}
                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
                                         <div>
                                             <p class="text-gray-700 dark:text-gray-200">{{encomenda.notas}}</h4>
@@ -170,9 +177,9 @@
                                         </div>
                                     </td>
                                     
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <button data-order-id="11" class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100 open-modal">
-                                            <a class="space-x-1">10</a>
+                                    <td class="px-4 py-4 text-sm whitespace-nowrap" >
+                                        <button data-order-id={{encomenda.numero}} data-modal-target="detalhesDiv" hx-get="encomendaDetalhes" class="px-1 open-modal py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100 open-modal" hx-target="#modal-detalhesEnc">
+                                            <a class="space-x-1">1000</a>
                                             <i class="fas fas fa-expand-alt text-gray-600"></i>
                                         </button>
                                     </td>
@@ -182,73 +189,12 @@
                                         </button>
                                     </td>
                                 </tr>
-                                {% endif %}
-                                {% if encomenda.estadoPagamento == 0 %}
-                                <tr>
-                                    <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                        <div class="flex flex-col justify-between">
-                                            <h2 class="font-medium text-gray-800 dark:text-white ">{{encomenda.NIF_cliente}}</h2>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                        <button class="status-button por-pagar">
-                                            Por Pagar
-                                        </button>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div>
-                                            <p class="text-gray-700 dark:text-gray-200">{{encomenda.notas}}</h4>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>{{encomenda.valor}}</h1>
-                                            <span class="text-sm font-normal text-gray-500 dark:text-gray-400">€</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>{{encomenda.data}}</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>{{encomenda.numero}}</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>{{encomenda.fatura}}</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <button data-order-id="10" class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100 open-modal">
-                                            <a class="space-x-1">10</a>
-                                            <i class="fas fas fa-expand-alt text-gray-600"></i>
-                                        </button>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <button class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
-                                            <i class="fas fas fa-pencil-alt text-black"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                {% endif %}
-
+ 
                                 {% endfor %}                                
                                 
                                 
                             </tbody>
                         </table>
-                        <!-- Modal -->  
-                        <div id="orderModal" class="hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
-                            <div class="bg-white rounded-lg p-8">
-                                <h2 class="text-xl mb-4">Detalhes da Encomenda</h2>
-                                <p>Aqui vão os detalhes da encomenda...</p>
-                                <button id="closeModal" class="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">Fechar</button>
-                            </div>
-                        </div> 
-                        
                     </div>
                 </div>
             </div>
@@ -273,7 +219,28 @@
                 </a>
             </div>
         </div>
+        
+        <div id="detalhesDiv" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+            <div class="bg-white rounded-lg p-8">
+                <div id="modal-detalhesEnc"></div>
+                <button id="closeNewOrderModal" class="close-modal mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">Fechar</button>
+            </div>
+        </div>
     </section>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Função para abrir o modal
+        document.querySelectorAll('.open-modal').forEach(button => {
+            button.addEventListener('click', function() {
+                var orderId = this.getAttribute('data-order-id');
+                console.log("Order ID: " + orderId); // Exibe o ID da encomenda no console
+            });
+        });
+
+    });
+</script>
+
 <!-- Conteúdo específico para Encomendas -->
 {% endblock %}

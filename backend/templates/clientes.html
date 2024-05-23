@@ -134,107 +134,31 @@
                             </thead>
                             <tbody id="client-table" class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
                                 {% for cliente in clientes %}
-                                {% if cliente.tipo == "Particular" %}
                                 <tr>
                                     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                         <div class="flex flex-col justify-between">
                                             <h2 class="font-medium text-gray-800 dark:text-white">{{ cliente.nome }}</h2>
                                         </div>
                                     </td>
+                                    {% if cliente.tipo == "Particular" %}
                                     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                         <button class="status-button particular">
                                             Particular
                                         </button>
                                     </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div>
-                                            <h1>{{ cliente.telemovel }}</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>{{ cliente.NIF }}</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>{{ cliente.morada }}</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>na</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <button class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
-                                            <i class="fas fa-pencil-alt text-black"></i>
-                                        </button>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap flex justify-center mt-2">
-                                        <button class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
-                                            <i class="fas fa-expand-alt text-black"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                {% endif %}
-
-                                {% if cliente.tipo == "Restaurante" %}
-                                <tr>
-                                    <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                        <div class="flex flex-col justify-between">
-                                            <h2 class="font-medium text-gray-800 dark:text-white">{{ cliente.nome }}</h2>
-                                        </div>
-                                    </td>
+                                    {% elif cliente.tipo == "Restaurante" %}
                                     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                         <button class="status-button restaurante">
                                             Restaurante
                                         </button>
                                     </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div>
-                                            <h1>{{ cliente.telemovel }}</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>{{ cliente.NIF }}</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>{{ cliente.morada }}</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>na</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <button class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
-                                            <i class="fas fa-pencil-alt text-black"></i>
-                                        </button>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap flex justify-center mt-2">
-                                        <button class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
-                                            <i class="fas fa-expand-alt text-black"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                {% endif %}
-                                {% if cliente.tipo == "Distribuidor" %}
-                                <tr>
-                                    <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                        <div class="flex flex-col justify-between">
-                                            <h2 class="font-medium text-gray-800 dark:text-white">{{ cliente.nome }}</h2>
-                                        </div>
-                                    </td>
+                                    {% elif cliente.tipo == "Distribuidor" %}
                                     <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                                         <button class="status-button distribuidor">
                                             Distribuidor
                                         </button>
                                     </td>
+                                    {% endif %}
                                     <td class="px-4 py-4 text-sm whitespace-nowrap">
                                         <div>
                                             <h1>{{ cliente.telemovel }}</h1>
@@ -266,7 +190,7 @@
                                         </button>
                                     </td>
                                 </tr>
-                                {% endif %}
+
                                 {% endfor %}
                             </tbody>
                         </table>
