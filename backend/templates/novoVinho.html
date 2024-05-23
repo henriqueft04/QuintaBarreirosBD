@@ -1,0 +1,57 @@
+
+{% block content %}
+<form id="new-vinho-form" class="bg-white p-6 rounded-lg shadow-lg">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div >
+            <label for="id_cuba" class="block text-sm font-medium text-gray-700">ID</label>
+            <input type="number" id="id_cuba" name="id_cuba" class="mt-1 border border-gray-200 p-2 rounded-lg  h-8 block w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+        </div>
+        <div>
+            <label for="volume" class="block text-sm font-medium text-gray-700">Volume L</label>
+            <input type="number" id="volume" name="volume" class="mt-1 border border-gray-200 p-2 rounded-lg  h-8 block w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+        </div>
+        <div>
+            <label for="ocupada" class="block text-sm font-medium text-gray-700">Ocupação L</label>
+            <input type="number" id="ocupada" name="ocupada" class="mt-1 border border-gray-200 p-2 rounded-lg  h-8 block w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+        </div>
+        <div>
+            <label for="tipoVinho" class="block text-sm font-medium text-gray-700">Tipo de Vinho</label>
+            <select id="tipoVinho" name="tipoVinho" class="mt-1 border border-gray-200 rounded-lg p-1 h-8 block  w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                <option value=tipo1>
+                    Tipo1
+                </option>
+            </select>
+        </div>
+        <div >
+            <label for="data" class="block text-sm font-medium text-gray-700">Data Armazenamento</label>
+            <input type="date" id="data" name="data" class="mt-1 border border-gray-200 p-2 rounded-lg  h-8 block w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+        </div>
+        <div>
+            <label for="refrigerada" class="block text-sm font-medium text-gray-700">Refrigerada</label>
+            <select id="refrigerada" name="refrigerada"  class="mt-1 border border-gray-200 p-1 rounded-lg  h-8 block w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                <option value="Não">Não</option>
+                <option value="Sim">Sim</option>
+            </select>
+        </div>
+        <div>
+            <label for="termica" class="block text-sm font-medium text-gray-700">Térmica</label>
+            <select id="termica" name="refrigerada"  class="mt-1 border border-gray-200 p-1 rounded-lg  h-8 block w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                <option value="Não">Não</option>
+                <option value="Sim">Sim</option>
+            </select>
+        </div>
+        <div></div>
+        <div class="w-full col-span-2 row-span-6 mb-4">
+            <label for="notas" class="block text-sm font-medium text-gray-700">Notas</label>
+            <textarea id="notas" name="notas" class="mt-1 block w-full h-full rounded-md border border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"></textarea>
+        </div>
+    </div>
+
+    <div class="mt-6 flex flex-col gap-y-4">
+        <button type="reset" id="add-item" class="mt-4 px-4 py-2 status-button por-pagar ">Recomeçar</button>
+        <button type="submit" hx-post="/rotaParaSalvar" hx-target="#resultado" hx-swap="outerHTML" class="px-4 py-2 status-button qb close-modal">Salvar</button>
+    </div>
+</form>
+
+
+{% endblock %}

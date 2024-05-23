@@ -1,22 +1,25 @@
-
 {% block content %}
 <form id="new-fornecimento-form" class="bg-white p-6 rounded-lg shadow-lg">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div >
-            <label for="data" class="block text-sm font-medium text-gray-700">Data</label>
+            <label for="data" class="block text-sm font-medium text-gray-700">Nome Fornecedor</label>
             <input type="date" id="data" name="data" class="mt-1 border border-gray-200 p-2 rounded-lg  h-8 block w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
         </div>
         <div>
-            <label for="litragem" class="block text-sm font-medium text-gray-700">Litragem</label>
-            <input type="number" id="litragem" name="litragem" class="mt-1 border border-gray-200 p-2 rounded-lg  h-8 block w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+            <label for="litragem" class="block text-sm font-medium text-gray-700">Tipo Rolha</label>
+            <select id="tipo" name="tipo" class="mt-1 border border-gray-200 rounded-lg p-1 h-8 block  w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                <option value=tipo>
+                    Tipo1
+                </option>
+            </select>
         </div>
         <div>
-            <label for="quantidade" class="block text-sm font-medium text-gray-700">Quantidade Garrafas</label>
+            <label for="quantidade" class="block text-sm font-medium text-gray-700">Quantidade Rolhas</label>
             <input type="number" id="quantidade" name="quantidade" class="mt-1 border border-gray-200 p-2 rounded-lg  h-8 block w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
         </div>
-        <div>
-            <label for="cubas" class="block text-sm font-medium text-gray-700">Código Cubas</label>
-            <input type="text" id="cubas" name="cubas" class="mt-1 border border-gray-200 p-2 rounded-lg  h-8 block w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+        <div >
+            <label for="data" class="block text-sm font-medium text-gray-700">Data</label>
+            <input type="date" id="data" name="data" class="mt-1 border border-gray-200 p-2 rounded-lg  h-8 block w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
         </div>
     </div>
 
