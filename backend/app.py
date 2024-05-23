@@ -119,5 +119,17 @@ def cubas():
 def novaForm():
     return render_template('novaForm.html')
 
+@app.route('/clienteForm')
+def clientesForm():
+    return render_template('clienteForm.html')
+
+@app.route('/novoFornecimento')
+def novoFornecimento():
+    return render_template('novoFornecimento.html')
+
+@app.route('/novoEngarrafamento')
+def novoEngarrafamento():
+    return render_template('novoEngarrafamento.html')
+
 if __name__ == "__main__":
     app.run(debug=True)

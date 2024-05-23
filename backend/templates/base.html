@@ -29,22 +29,25 @@
         </div>
         <div id="newOrderModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
             <div class="bg-white rounded-lg p-8">
-                <h2 class="text-xl mb-4">Novo Pedido</h2>
-                <p>Novos detalhes da encomenda serão exibidos aqui.</p>
-                <button id="closeNewOrderModal" class="close-modal mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">Fechar</button>
+                <div id="modal-encomenda">
+                    <!-- content-->
+                </div>
+                <button id="closeModal" class="close-modal mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">Fechar</button>
             </div>
         </div>
         <div id="newClientModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
             <div class="bg-white rounded-lg p-8">
-                <h2 class="text-xl mb-4">Novo Cliente</h2>
-                <p>Novos detalhes da encomenda serão exibidos aqui.</p>
+                <div id="modal-cliente">
+
+                </div>
                 <button id="closeNewOrderModal" class="close-modal mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">Fechar</button>
             </div>
         </div>
         <div id="newFornecimentoModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
             <div class="bg-white rounded-lg p-8">
-                <h2 class="text-xl mb-4">Novo Fornecimento</h2>
-                <p>Novos detalhes da encomenda serão exibidos aqui.</p>
+                <div id="modal-fornecimento">
+
+                </div>
                 <button id="closeNewOrderModal" class="close-modal mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">Fechar</button>
             </div>
         </div>
@@ -64,8 +67,9 @@
         </div>
         <div id="newEngarrafamentoModal" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
             <div class="bg-white rounded-lg p-8">
-                <h2 class="text-xl mb-4">Novo Engarrafamento</h2>
-                <p>Novos detalhes da encomenda serão exibidos aqui.</p>
+                <div id="modal-engarrafamento">
+
+                </div>
                 <button id="closeNewOrderModal" class="close-modal mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">Fechar</button>
             </div>
         </div>
@@ -90,7 +94,6 @@
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="{{ url_for('static', filename='js/index.js') }}"></script>
     <script src="{{ url_for('static', filename='js/encomendas.js') }}"></script>
-    <script src="{{ url_for('static', filename='js/nova-encomenda.js') }}"></script>
     <script src="https://kit.fontawesome.com/b32138acf9.js" crossorigin="anonymous"></script>
 </body>
 </html>

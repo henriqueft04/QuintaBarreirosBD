@@ -49,3 +49,4 @@ document.getElementById('new-order-form').addEventListener('submit', (event) => 
     const formData = new FormData(event.target);
     // Process the form data as needed (e.g., send to server or update the table)
 });
+
