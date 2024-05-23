@@ -68,5 +68,9 @@ def cubas():
 def novaForm():
     return render_template('novaForm.html')
 
+@app.route('/clienteForm')
+def clientesForm():
+    return render_template('clienteForm.html')
+
 if __name__ == "__main__":
     app.run(debug=True)

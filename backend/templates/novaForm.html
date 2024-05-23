@@ -1,4 +1,4 @@
-
+{% block content %}
 <form id="new-order-form" class="bg-white p-6 rounded-lg shadow-lg">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div >
@@ -73,3 +73,7 @@
         <button type="submit" hx-post="/rotaParaSalvar" hx-target="#resultado" hx-swap="outerHTML" class="px-4 py-2 status-button qb">Salvar Encomenda</button>
     </div>
 </form>
+
+
+<script src="{{ url_for('static', filename='js/novaForm.js') }}"></script>
+{% endblock %}
