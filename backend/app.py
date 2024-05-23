@@ -81,5 +81,13 @@ def novoFornecimento():
 def novoEngarrafamento():
     return render_template('novoEngarrafamento.html')
 
+@app.route('/novaCuba')
+def novaCuba():
+    return render_template('novaCuba.html')
+
+@app.route('/novoVinho')
+def novoVinho():
+    return render_template('novoVinho.html')
+
 if __name__ == "__main__":
     app.run(debug=True)
