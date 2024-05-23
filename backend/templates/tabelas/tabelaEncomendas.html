@@ -1,0 +1,88 @@
+{% block content %}
+<table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+    <thead class="bg-gray-50 dark:bg-gray-800">
+        <tr>
+            <th scope="col" class="table-header">
+                <span class="table-header mr-2" style="padding: 0;">Cliente</span>
+                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+            </th>
+            <th scope="col" class="table-header">
+                Estado
+            </th>
+            <th scope="col" class="table-header">
+                Notas
+            </th>
+            <th scope="col" class="table-header">Valor</th>
+            <th scope="col" class="table-header">Data</th>
+            <th scope="col" class="table-header">Número</th>
+            <th scope="col" class="table-header">Faturada</th>
+            <th scope="col" class="table-header">Total</th>
+            <th scope="col" class="table-header">Editar</th>
+        </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+        {% for encomenda in encomendas %}
+        <tr>
+            <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                <div class="flex flex-col justify-between">
+                    <h2 class="font-medium text-gray-800 dark:text-white ">{{encomenda.NIF_cliente}}</h2>
+                </div>
+            </td>
+            {% if encomenda.estadoPagamento == 1 %}
+            <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                <button class="status-button pago">
+                    Pago
+                </button>
+            </td>
+            {% else %}
+            <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                <button class="status-button por-pagar">
+                    Por Pagar
+                </button>
+            </td>
+            {% endif %}
+            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                <div>
+                    <p class="text-gray-700 dark:text-gray-200">{{encomenda.notas}}</h4>
+                </div>
+            </td>
+            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                <div class="flex items-center">
+                    <h1>{{encomenda.valor}}</h1>
+                    <span class="text-sm font-normal text-gray-500 dark:text-gray-400">€</span>
+                </div>
+            </td>
+            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                <div class="flex items-center">
+                    <h1>{{encomenda.data}}</h1>
+                </div>
+            </td>
+            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                <div class="flex items-center">
+                    <h1>{{encomenda.numero}}</h1>
+                </div>
+            </td>
+            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                <div class="flex items-center">
+                    <h1>{{encomenda.fatura}}</h1>
+                </div>
+            </td>
+            
+            <td class="px-4 py-4 text-sm whitespace-nowrap" >
+                <button data-order-id={{encomenda.numero}} data-modal-target="detalhesDiv" hx-get="encomendaDetalhes" class="px-1 open-modal py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100 open-modal" hx-target="#modal-detalhesEnc">
+                    <a class="space-x-1">1000</a>
+                    <i class="fas fas fa-expand-alt text-gray-600"></i>
+                </button>
+            </td>
+            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                <button class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
+                    <i class="fas fas fa-pencil-alt text-black"></i>
+                </button>
+            </td>
+        </tr>
+
+        {% endfor %}                                
+        
+    </tbody>
+</table>
+{% endblock %}
