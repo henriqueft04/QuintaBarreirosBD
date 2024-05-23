@@ -1,0 +1,30 @@
+
+
+{% block content %}
+<form id="new-fornecedor-form" class="bg-white p-6 rounded-lg shadow-lg">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div >
+            <label for="nomeFornecedor" class="block text-sm font-medium text-gray-700">Nome</label>
+            <input type="nome" id="nomeFornecedor" name="nomeFornecedor" class="mt-1 border border-gray-200 p-2 rounded-lg  h-8 block w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+        </div>
+        <div>
+            <label for="telemovelForn" class="block text-sm font-medium text-gray-700">Telemovel</label>
+            <input type="text" id="telemovelForn" name="telemovelForn" class="mt-1 border border-gray-200 p-2 rounded-lg  h-8 block w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+        </div>
+        <div>
+            <label for="NIF_forn" class="block text-sm font-medium text-gray-700">NIF</label>
+            <input type="number" id="NIF_forn" name="NIF_forn" class="mt-1 border border-gray-200 p-2 rounded-lg  h-8 block w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+        </div>
+        <div>
+            <label for="morada_forn" class="block text-sm font-medium text-gray-700">Morada</label>
+            <input type="text" id="morada_forn" name="morada_forn" class="mt-1 border border-gray-200 p-2 rounded-lg  h-8 block w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+        </div>
+    </div>
+
+    <div class="mt-6 flex flex-col gap-y-4">
+        <button type="reset" id="add-item" class="mt-4 px-4 py-2 status-button por-pagar ">Recomeçar</button>
+        <button type="submit" hx-post="/rotaParaSalvar" hx-target="#resultado" hx-swap="outerHTML" class="px-4 py-2 status-button qb close-modal">Salvar</button>
+    </div>
+</form>
+
+{% endblock %}
