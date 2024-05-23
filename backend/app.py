@@ -12,14 +12,17 @@ def index():
 @app.route('/clientes')
 def clientes():
     clientes = Search_Clients("")
-    
-    return render_template('clientes.html', clientes=clientes)
+    total_clients = Get_Num_Clients()
+    #print(total_clients)
+    return render_template('clientes.html', clientes=clientes, total_clients=total_clients)
 
 @app.route('/searchClientes')
 def searchClientes():
     search_param = request.args.get('nome', 'telemovel')
     clientes = Search_Clients(search_param)
     return render_template('tabelaClientes.html', clientes=clientes)
+
+
 
 
 @app.route('/fornecedores')

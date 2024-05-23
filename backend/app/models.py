@@ -23,10 +23,24 @@ def Search_Clients(search_param):
     cursor = db.cursor()
     cursor.execute(query, params)
     clientes = cursor.fetchall()
-    db.close()
 
-    print(f"Clientes encontrados: {clientes}")  # Debug
+
+    #print(f"Clientes encontrados: {clientes}")  # Debug
 
     return clientes
+
+def Get_Num_Clients():
+    query = "{CALL QB.p_getNumberOfClients}"
+
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute(query)
+    num_clients = cursor.fetchone()
+    num_clients = num_clients[0]
+    db.close()
+
+    print(f"Número de clientes: {num_clients}")  # Debug
+
+    return num_clients
 
 
