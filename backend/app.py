@@ -104,5 +104,9 @@ def novoFornecedor():
 def encomendasDetalhes():
     return render_template('tabelas/encomendaDetalhes.html')
 
+@app.route('/tabelaEncomendas')
+def tabelaEncomendas():
+    return render_template('tabelas/tabelaEncomendas.html')
+
 if __name__ == "__main__":
     app.run(debug=True)
