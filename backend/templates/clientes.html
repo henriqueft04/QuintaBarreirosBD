@@ -63,9 +63,9 @@
                             <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
                         </svg>
                     </span>
-                    <input type="text" name="nome" id="search" hx-include="[name='nome']"     hx-get="/clientes"
+                    <input type="text" name="nome" id="search" hx-include="[name='nome']"     hx-get="/searchClientes"
                     hx-trigger="keyup delay:500ms changed"
-                    hx-target="#client-table" placeholder="Search" class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-64 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-green-400 dark:focus:border-green-300 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40">
+                    hx-target="#tabela-clientes" placeholder="Search" class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-64 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-green-400 dark:focus:border-green-300 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40">
                 </div>
                 <div class="relative inline-block text-left" x-data="{ open: false }">
                     <button @click="open = !open" class="rounded-lg bg-white border border-gray-200 text-gray-700 py-1.5 px-4 inline-flex justify-between items-center dark:bg-[#20293A] dark:border-slate-700 dark:text-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-200">
@@ -119,81 +119,9 @@
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                     <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                            <thead class="bg-gray-50 dark:bg-gray-800">
-                                <tr>
-                                    <th scope="col" class="table-header">Nome</th>
-                                    <th scope="col" class="table-header">Tipo</th>
-                                    <th scope="col" class="table-header">Telemóvel</th>
-                                    <th scope="col" class="table-header">NIF</th>
-                                    <th scope="col" class="table-header">Morada</th>
-                                    <th scope="col" class="table-header">Total <i class="fas fas fa-wine-bottle ml-1 mt-1"></i></th>
-                                    <th scope="col" class="table-header">Editar</th>
-                                    <th scope="col" class="table-header">Encomendas</th>
-                                </tr>
-                            </thead>
-                            <tbody id="client-table" class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                {% for cliente in clientes %}
-                                <tr>
-                                    <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                        <div class="flex flex-col justify-between">
-                                            <h2 class="font-medium text-gray-800 dark:text-white">{{ cliente.nome }}</h2>
-                                        </div>
-                                    </td>
-                                    {% if cliente.tipo == "Particular" %}
-                                    <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                        <button class="status-button particular">
-                                            Particular
-                                        </button>
-                                    </td>
-                                    {% elif cliente.tipo == "Restaurante" %}
-                                    <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                        <button class="status-button restaurante">
-                                            Restaurante
-                                        </button>
-                                    </td>
-                                    {% elif cliente.tipo == "Distribuidor" %}
-                                    <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                        <button class="status-button distribuidor">
-                                            Distribuidor
-                                        </button>
-                                    </td>
-                                    {% endif %}
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div>
-                                            <h1>{{ cliente.telemovel }}</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>{{ cliente.NIF }}</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>{{ cliente.morada }}</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>na</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <button class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
-                                            <i class="fas fa-pencil-alt text-black"></i>
-                                        </button>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap flex justify-center mt-2">
-                                        <button class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
-                                            <i class="fas fa-expand-alt text-black"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-
-                                {% endfor %}
-                            </tbody>
-                        </table>
+                        <div id="tabela-clientes" >
+                            {% include "tabelaClientes.html" %}
+                        </div>
                     </div>
                 </div>
             </div>
