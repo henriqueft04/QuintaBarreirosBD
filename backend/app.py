@@ -20,7 +20,7 @@ def clientes():
 def searchClientes():
     search_param = request.args.get('nome', 'telemovel')
     clientes = Search_Clients(search_param)
-    return render_template('tabelaClientes.html', clientes=clientes)
+    return render_template('tabelas/tabelaClientes.html', clientes=clientes)
 
 @app.route('/clientesForm', methods=['GET', 'POST'])
 def clientesForm():
@@ -41,17 +41,17 @@ def clientesForm():
                 print(f"Cliente inserido com sucesso: {nif}, {morada}, {nome}, {telemovel}, {tipo}")
 
                 clientes = Search_Clients("")
-                print("AAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+
                 
             except Exception as e:
                 # Log do erro
                 print("ola sou eu o erro")
                 print(f"Erro ao inserir cliente: {e}")
-                return render_template('clienteForm.html', error=str(e))
+                return render_template('forms/clienteForm.html', error=str(e))
             
-            return render_template('tabelaClientes.html', clientes=clientes)
+            return render_template('tabelas/tabelaClientes.html', clientes=clientes)
         else:
-            return render_template('clienteForm.html')
+            return render_template('forms/clienteForm.html')
 
 
 @app.route('/fornecedores')
