@@ -27,7 +27,8 @@ def searchClientes():
 
 @app.route('/fornecedores')
 def fornecedores():
-    return render_template('fornecedores.html')
+    fornecimentos = get_fornecimentos()
+    return render_template('fornecedores.html', fornecimentos=fornecimentos)
 
 @app.route('/nova-encomenda')
 def nova_encomenda():
@@ -107,6 +108,10 @@ def encomendasDetalhes():
 @app.route('/tabelaEncomendas')
 def tabelaEncomendas():
     return render_template('tabelas/tabelaEncomendas.html')
+
+@app.route('/tabelaFornecimentos')
+def tabelaFornecimentos():
+    return render_template('tabelas/tabelaFornecimentos.html')
 
 @app.route('/vinhoDetalhes')
 def tabelaTipoVinho():

@@ -43,4 +43,12 @@ def Get_Num_Clients():
 
     return num_clients
 
+def get_fornecimentos():
+    query = "{CALL QB.fornecimentos}"
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute(query)
+    fornecimentos = cursor.fetchall()
+    db.close()
 
+    return fornecimentos
