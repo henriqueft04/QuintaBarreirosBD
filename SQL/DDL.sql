@@ -51,16 +51,16 @@ CREATE TABLE [QB].[engarrafamento] (
 GO
 
 CREATE TABLE [QB].[cliente] (
-  [NIF] int PRIMARY KEY,
+  [NIF] varchar(20) PRIMARY KEY,
   [morada] varchar(255),
   [nome] varchar(255),
-  [telemovel] int,
+  [telemovel] varchar(20),
   [tipo] varchar(255),
 )
 GO
 
 CREATE TABLE [QB].[fornecedor] (
-  [NIF] int PRIMARY KEY,
+  [NIF] varchar(20) PRIMARY KEY,
   [morada] varchar(255),
   [nome] varchar(255),
   [telemovel] int,
@@ -68,7 +68,7 @@ CREATE TABLE [QB].[fornecedor] (
 GO
 
 CREATE TABLE [QB].[encomenda] (
-  [NIF_cliente] int,
+  [NIF_cliente] varchar(20),
   [estadoPagamento] bit,
   [fatura] bit,
   [valor] decimal,
@@ -116,7 +116,7 @@ GO
 
 CREATE TABLE [QB].[rotulo] (
   [id_componente] int PRIMARY KEY,
-  [NIF_cliente] int,
+  [NIF_cliente] varchar(20),
   [notacao_tipoVinho] nvarchar(255)
 )
 GO
@@ -136,7 +136,7 @@ GO
 
 CREATE TABLE [QB].[tipoRolha_fornecedor] (
   [id_tipoRolha] int,
-  [NIF] int,
+  [NIF] varchar(20),
   [data] date,
   [quantidade] int,
   PRIMARY KEY ([id_tipoRolha], [NIF])

@@ -1,6 +1,6 @@
-
+{% extends "base.html" %}
 {% block content %}
-<form id="new-cliente-form" class="bg-white p-6 rounded-lg shadow-lg">
+<form d="new-cliente-form" class="bg-white p-6 rounded-lg shadow-lg" method="POST" hx-post="{{ url_for('clientesForm') }}" hx-on="htmx:afterRequest: closeModal()">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div >
             <label for="nome" class="block text-sm font-medium text-gray-700">Nome Cliente</label>
@@ -23,7 +23,7 @@
         <div>
         <div>
             <label for="telemovel" class="block text-sm font-medium text-gray-700">Telemóvel</label>
-            <input type="tel" id="telemovel" name="telemovel" class="mt-1 border border-gray-200 p-2 rounded-lg  h-8 block w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+            <input type="number" id="telemovel" name="telemovel" class="mt-1 border border-gray-200 p-2 rounded-lg  h-8 block w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
         </div>
         <div>
             <label for="nif" class="block text-sm font-medium text-gray-700">NIF</label>
@@ -37,9 +37,9 @@
 
     <div class="mt-6 flex flex-col gap-y-4">
         <button type="reset" id="add-item" class="mt-4 px-4 py-2 status-button por-pagar ">Recomeçar</button>
-        <button type="submit" hx-post="/rotaParaSalvar" hx-target="#resultado" hx-swap="outerHTML" class="px-4 py-2 status-button qb close-modal">Salvar</button>
+        <button type="submit" class="px-4 py-2 status-button qb close-modal hx-post="/clientes" hx-target="#tabela-clientes" hx-swap="outerHTML">Salvar</button>
     </div>
 </form>
-
+<!-- hx-post="/rotaParaSalvar" hx-target="#resultado" hx-swap="outerHTML" -->
 
 {% endblock %}

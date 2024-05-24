@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request,jsonify
+from flask import Flask, request, redirect, url_for, render_template
 from database.connection import get_db_connection 
 from app.models import *
 
@@ -22,7 +22,36 @@ def searchClientes():
     clientes = Search_Clients(search_param)
     return render_template('tabelaClientes.html', clientes=clientes)
 
+@app.route('/clientesForm', methods=['GET', 'POST'])
+def clientesForm():
+        if request.method == 'POST':
+            try:
+                nif = request.form['nif']
+                nif = int(nif)
+                morada = request.form['morada']
+                nome = request.form['nome']
+                telemovel = request.form['telemovel']
+                telemovel = int(telemovel)
+                tipo = request.form['tipo']
 
+                print(f"Recebido: NIF={nif}, Morada={morada}, Nome={nome}, Telemovel={telemovel}, Tipo={tipo}")
+
+                Insert_Cliente(nif, morada, nome, telemovel, tipo)
+
+                print(f"Cliente inserido com sucesso: {nif}, {morada}, {nome}, {telemovel}, {tipo}")
+
+                clientes = Search_Clients("")
+                print("AAAAAAAAAAAAAAAAAAAAAAAAAAAA")
+                
+            except Exception as e:
+                # Log do erro
+                print("ola sou eu o erro")
+                print(f"Erro ao inserir cliente: {e}")
+                return render_template('clienteForm.html', error=str(e))
+            
+            return render_template('tabelaClientes.html', clientes=clientes)
+        else:
+            return render_template('clienteForm.html')
 
 
 @app.route('/fornecedores')
@@ -71,10 +100,6 @@ def cubas():
 @app.route('/novaForm')
 def novaForm():
     return render_template('novaForm.html')
-
-@app.route('/clienteForm')
-def clientesForm():
-    return render_template('clienteForm.html')
 
 @app.route('/novoFornecimento')
 def novoFornecimento():

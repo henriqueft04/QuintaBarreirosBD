@@ -37,10 +37,22 @@ def Get_Num_Clients():
     cursor.execute(query)
     num_clients = cursor.fetchone()
     num_clients = num_clients[0]
-    db.close()
+
 
     print(f"Número de clientes: {num_clients}")  # Debug
 
     return num_clients
+
+def Insert_Cliente(nif, morada, nome, telemovel, tipo):
+    db = get_db_connection()
+    cursor = db.cursor()
+
+    query = "{CALL QB.p_AdicionarCliente(?, ?, ?, ?, ?)}"
+
+    cursor.execute(query, (nif, morada, nome, telemovel, tipo))
+    db.commit()
+    cursor.close()
+
+
 
 
