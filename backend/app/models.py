@@ -53,7 +53,19 @@ def Insert_Cliente(nif, morada, nome, telemovel, tipo):
     db.commit()
     cursor.close()
 
+def Get_Num_Garrafas_Cliente():
+    query = "{CALL QB.p_NumberOfBottlesPerClient}"
 
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute(query)
+    results = cursor.fetchall()
+
+    num_garrafas = {row[0]: row[2] for row in results}
+
+    #print(f"Número de garrafas por cliente: {num_garrafas}")  # Debug
+
+    return num_garrafas
 
 def get_fornecimentos():
     query = "{CALL QB.fornecimentos}"

@@ -13,8 +13,10 @@ def index():
 def clientes():
     clientes = Search_Clients("")
     total_clients = Get_Num_Clients()
+    total_garrafas_cliente = Get_Num_Garrafas_Cliente()
     #print(total_clients)
-    return render_template('clientes.html', clientes=clientes, total_clients=total_clients)
+    print(total_garrafas_cliente)
+    return render_template('clientes.html', clientes=clientes, total_clients=total_clients, total_garrafas_cliente=total_garrafas_cliente)
 
 @app.route('/searchClientes')
 def searchClientes():
