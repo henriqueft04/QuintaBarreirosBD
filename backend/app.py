@@ -56,7 +56,8 @@ def clientesForm():
 
 @app.route('/fornecedores')
 def fornecedores():
-    return render_template('fornecedores.html')
+    fornecimentos, total_fornecedores, tipos_rolhas = get_fornecimentos()
+    return render_template('fornecedores.html', fornecimentos=fornecimentos, total_fornecedores=total_fornecedores, tipos_rolhas=tipos_rolhas)
 
 @app.route('/nova-encomenda')
 def nova_encomenda():
@@ -78,7 +79,8 @@ def encomendas():
 
 @app.route('/engarrafamentos')
 def engarrafamentos():
-    return render_template('engarrafamentos.html')
+    engarrafamentos, total_engarrafamentos = get_engarrafamentos()
+    return render_template('engarrafamentos.html', engarrafamentos=engarrafamentos, total_engarrafamentos=total_engarrafamentos)
 
 @app.route('/stock')
 def stock():
@@ -99,35 +101,51 @@ def cubas():
 
 @app.route('/novaForm')
 def novaForm():
-    return render_template('novaForm.html')
+    return render_template('forms/novaForm.html')
 
 @app.route('/novoFornecimento')
 def novoFornecimento():
-    return render_template('novoFornecimento.html')
+    return render_template('forms/novoFornecimento.html')
 
 @app.route('/novoEngarrafamento')
 def novoEngarrafamento():
-    return render_template('novoEngarrafamento.html')
+    return render_template('forms/novoEngarrafamento.html')
 
 @app.route('/novaCuba')
 def novaCuba():
-    return render_template('novaCuba.html')
+    return render_template('forms/novaCuba.html')
 
 @app.route('/novoVinho')
 def novoVinho():
-    return render_template('novoVinho.html')
+    return render_template('forms/novoVinho.html')
 
 @app.route('/novaRolha')
 def novaRolha():
-    return render_template('novaRolha.html')
+    return render_template('forms/novaRolha.html')
 
 @app.route('/novoFornecedor')
 def novoFornecedor():
-    return render_template('novoFornecedor.html')
+    return render_template('forms/novoFornecedor.html')
 
 @app.route('/encomendaDetalhes')
 def encomendasDetalhes():
-    return render_template('encomendaDetalhes.html')
+    return render_template('tabelas/encomendaDetalhes.html')
+
+@app.route('/tabelaEncomendas')
+def tabelaEncomendas():
+    return render_template('tabelas/tabelaEncomendas.html')
+
+@app.route('/tabelaFornecimentos')
+def tabelaFornecimentos():
+    return render_template('tabelas/tabelaFornecimentos.html')
+
+@app.route('/vinhoDetalhes')
+def tabelaTipoVinho():
+    return render_template('tabelas/vinhoDetalhes.html')
+
+@app.route('/tabelaEngarramentos')
+def tabelaEngarrafamentos():
+    return render_template('tabelas/tabelaEngarrafamentos.html')
 
 if __name__ == "__main__":
     app.run(debug=True)

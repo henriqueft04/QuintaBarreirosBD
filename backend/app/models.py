@@ -55,4 +55,31 @@ def Insert_Cliente(nif, morada, nome, telemovel, tipo):
 
 
 
+def get_fornecimentos():
+    query = "{CALL QB.fornecimentos}"
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute(query)
+    fornecimentos = cursor.fetchall()
+    cursor.nextset()
+    total_fornecedores = cursor.fetchone()[0]
+    cursor.nextset()
+    tipos_rolhas = cursor.fetchall()
 
+    cursor.close()
+    db.close()
+
+    return fornecimentos, total_fornecedores, tipos_rolhas
+
+def get_engarrafamentos():
+    query = "{CALL QB.engarrafamentos}"
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute(query)
+    engarrafamentos = cursor.fetchall()
+    cursor.nextset()
+    total_engarrafamentos = cursor.fetchone()[0]
+    cursor.close()
+    db.close()
+
+    return engarrafamentos, total_engarrafamentos

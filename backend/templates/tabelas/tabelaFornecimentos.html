@@ -1,0 +1,63 @@
+
+<table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+    <thead class="bg-gray-50 dark:bg-gray-800">
+        <tr>
+            <th scope="col" class="table-header">Fornecedor</th>
+            <th scope="col" class="table-header">Tipo de Rolha</th>
+            <th scope="col" class="table-header">Fornecimentos</th>
+            <th scope="col" class="table-header">Telemóvel</th>
+            <th scope="col" class="table-header">NIF</th>
+            <th scope="col" class="table-header">Morada</th>
+            <th scope="col" class="table-header">Total Tipo de Rolha</th>
+            <th scope="col" class="table-header">Editar</th>
+        </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+        {% for fornecimento in fornecimentos %}
+        <tr>
+            <td class="px-4 py-4 text-sm  whitespace-nowrap">
+                <div class="flex flex-col justify-between">
+                    <h2 class="font-medium text-gray-800 dark:text-white ">{{ fornecimento.nome }}</h2>
+                </div>
+            </td>
+            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                <div>
+                    <h1>{{ fornecimento.material }}</h1>
+                    <h1> {{ fornecimento.formato }}</h1>
+                </div>
+            </td>
+            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                <div>
+                    <h1>{{ fornecimento.quantidade }}</h1>
+                </div>
+            </td>
+            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                <div>
+                    <h1>{{ fornecimento.telemovel }}</h1>
+                </div>
+            </td>
+            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                <div class="flex items-center">
+                    <h1>{{ fornecimento.NIF }}</h1>
+                </div>
+            </td>
+            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                <div class="flex items-center">
+                    <h1>{{ fornecimento.morada }}</h1>
+                </div>
+            </td>
+            <td class="px-4 py-4 text-sm whitespace-nowrap flex justify-center mt-2">
+                <div class="flex items-center">
+                    <h1>{{ fornecimento.quantidadeTotal }}</h1>
+                </div>
+            </td>
+            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                <button class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
+                    <i class="fas fas fa-pencil-alt text-black"></i>
+                </button>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </tbody>
+</table>
