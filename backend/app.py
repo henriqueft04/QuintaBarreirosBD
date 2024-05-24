@@ -22,13 +22,10 @@ def searchClientes():
     clientes = Search_Clients(search_param)
     return render_template('tabelas/tabelaClientes.html', clientes=clientes)
 
-
-
-
 @app.route('/fornecedores')
 def fornecedores():
-    fornecimentos = get_fornecimentos()
-    return render_template('fornecedores.html', fornecimentos=fornecimentos)
+    fornecimentos, total_fornecedores, tipos_rolhas = get_fornecimentos()
+    return render_template('fornecedores.html', fornecimentos=fornecimentos, total_fornecedores=total_fornecedores, tipos_rolhas=tipos_rolhas)
 
 @app.route('/nova-encomenda')
 def nova_encomenda():
@@ -50,7 +47,8 @@ def encomendas():
 
 @app.route('/engarrafamentos')
 def engarrafamentos():
-    return render_template('engarrafamentos.html')
+    engarrafamentos, total_engarrafamentos = get_engarrafamentos()
+    return render_template('engarrafamentos.html', engarrafamentos=engarrafamentos, total_engarrafamentos=total_engarrafamentos)
 
 @app.route('/stock')
 def stock():
@@ -116,6 +114,10 @@ def tabelaFornecimentos():
 @app.route('/vinhoDetalhes')
 def tabelaTipoVinho():
     return render_template('tabelas/vinhoDetalhes.html')
+
+@app.route('/tabelaEngarramentos')
+def tabelaEngarrafamentos():
+    return render_template('tabelas/tabelaEngarrafamentos.html')
 
 if __name__ == "__main__":
     app.run(debug=True)
