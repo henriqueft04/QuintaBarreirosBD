@@ -1,0 +1,72 @@
+
+{% block content %}
+<h1 class="text-2xl font-bold mb-2">Detalhes da Encomenda</h1>
+<!-- Fazer table com cada item da encomenda -->
+<table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+    <thead class="bg-gray-50 dark:bg-gray-800">
+        <tr>
+            <th scope="col" class="table-header">
+                <span class="table-header mr-2" style="padding: 0;">Notação</span>
+            </th>
+            <th scope="col" class="table-header">
+                Denominação
+            </th>
+            <th scope="col" class="table-header">
+                ID
+            </th>
+            <th scope="col" class="table-header">
+                Acidez
+            </th>
+            <th scope="col" class="table-header">
+                Ano da Colheita
+            </th>
+            <th scope="col" class="table-header">
+                Teor Alcoólico
+            </th>
+            <th scope="col" class="table-header">
+                Sub-Região
+            </th>
+        </tr>
+    </thead>
+    <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
+        <tr>
+            <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                <div class="flex flex-col justify-between">
+                    <h2 class="font-medium text-gray-800 dark:text-white "></h2>
+                </div>
+            </td>
+            <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                <button class="status-button pago">
+                    
+                </button>
+            </td>
+            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                <div class="flex items-center">
+                    <h1></h1>
+                </div>
+            </td>
+            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                <div class="flex items-center">
+                    <h1></h1>
+                    <span class="text-sm font-normal text-gray-500 dark:text-gray-400">%</span>
+                </div>
+            </td>
+            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                <div class="flex items-center">
+                    <h1></h1>
+                </div>
+            </td>
+            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                <div class="flex items-center">
+                    <h1></h1>
+                </div>
+            </td>
+            <td class="px-4 py-4 text-sm whitespace-nowrap">
+                <div class="flex items-center">
+                    <h1></h1>
+                </div>
+            </td>
+        </tr>
+    </tbody>
+</table>
+{% endblock %}

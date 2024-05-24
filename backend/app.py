@@ -108,5 +108,9 @@ def encomendasDetalhes():
 def tabelaEncomendas():
     return render_template('tabelas/tabelaEncomendas.html')
 
+@app.route('/vinhoDetalhes')
+def tabelaTipoVinho():
+    return render_template('tabelas/vinhoDetalhes.html')
+
 if __name__ == "__main__":
     app.run(debug=True)
