@@ -25,10 +25,21 @@ def Search_Clients(search_param):
     cursor.execute(query, params)
     clientes = cursor.fetchall()
 
+    clientes_dict = []
+    for row in clientes:
+        cliente_dict = {
+            'NIF': row[0], 
+            'morada': row[1], 
+            'nome': row[2],
+            'telemovel': row[3],
+            'tipo': row[4]
 
-    #print(f"Clientes encontrados: {clientes}")  # Debug
+        }
+        clientes_dict.append(cliente_dict)
 
-    return clientes
+    
+
+    return clientes_dict
 
 def Get_Num_Clients():
     query = "{CALL QB.p_getNumberOfClients}"
@@ -62,7 +73,8 @@ def Get_Num_Garrafas_Cliente():
     cursor.execute(query)
     results = cursor.fetchall()
 
-    num_garrafas = {row[0]: row[2] for row in results}
+    # Acessar elementos pelo índice
+    num_garrafas = {row[0]: row[2] for row in results}  # Usando ClienteNIF (índice 0) como chave e TotalGarrafas (índice 2) como valor
 
     print(f"Número de garrafas por cliente: {num_garrafas}")  # Debug
 

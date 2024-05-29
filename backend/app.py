@@ -11,20 +11,35 @@ def index():
 
 @app.route('/clientes')
 def clientes():
-    clientes = Search_Clients("")
+    search_param = request.args.get('search_param', '')
+    
+    if search_param:
+        clientes = Search_Clients(search_param)
+    else:
+        clientes = Search_Clients("")
+
     total_clients = Get_Num_Clients()
-    total_garrafas_cliente = Get_Num_Garrafas_Cliente()
-    #print(total_clients)
-    print(total_garrafas_cliente)
-    return render_template('clientes.html', clientes=clientes, total_clients=total_clients, total_garrafas_cliente=total_garrafas_cliente)
+    num_garrafas_cliente = Get_Num_Garrafas_Cliente()
 
-@app.route('/searchClientes')
+    # Adicionar o número de garrafas aos dados dos clientes usando o NIF
+    for cliente in clientes:
+        cliente_nif = cliente['NIF']  # Supondo que a chave primária do cliente seja 'NIF'
+        cliente['num_garrafas'] = num_garrafas_cliente.get(cliente_nif, 0)
+
+    return render_template('clientes.html', clientes=clientes, total_clients=total_clients, total_garrafas_cliente=num_garrafas_cliente)
+
+
+@app.route('/searchClientes', methods=['GET'])
 def searchClientes():
-    search_param = request.args.get('nome', 'telemovel')
-
+    search_param = request.args.get('nome', '')
     clientes = Search_Clients(search_param)
-    return render_template('tabelas/tabelaClientes.html', clientes=clientes)
+    num_garrafas_cliente = Get_Num_Garrafas_Cliente()
 
+    for cliente in clientes:
+        cliente_nif = cliente['NIF']  
+        cliente['num_garrafas'] = num_garrafas_cliente.get(cliente_nif, 0)
+
+    return render_template('tabelas/tabelaClientes.html', clientes=clientes)
 
 @app.route('/clientesForm', methods=['GET', 'POST'])
 def clientesForm():
