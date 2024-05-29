@@ -21,8 +21,10 @@ def clientes():
 @app.route('/searchClientes')
 def searchClientes():
     search_param = request.args.get('nome', 'telemovel')
+
     clientes = Search_Clients(search_param)
     return render_template('tabelas/tabelaClientes.html', clientes=clientes)
+
 
 @app.route('/clientesForm', methods=['GET', 'POST'])
 def clientesForm():

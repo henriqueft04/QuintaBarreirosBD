@@ -18,6 +18,7 @@ def Search_Clients(search_param):
 
     print(f"Recebendo parâmetro de busca: {search_param}")  # Debug
     print(f"Query SQL: {query}")  # Debug
+    print(f"Parâmetros: {params}")  # Debug
     
     db = get_db_connection()
     cursor = db.cursor()
@@ -63,7 +64,7 @@ def Get_Num_Garrafas_Cliente():
 
     num_garrafas = {row[0]: row[2] for row in results}
 
-    #print(f"Número de garrafas por cliente: {num_garrafas}")  # Debug
+    print(f"Número de garrafas por cliente: {num_garrafas}")  # Debug
 
     return num_garrafas
 

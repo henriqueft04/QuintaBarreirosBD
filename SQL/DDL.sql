@@ -1,5 +1,4 @@
-CREATE SCHEMA [QB]
-GO
+
 
 CREATE TABLE [QB].[casta] (
   [nome] varchar(255),
@@ -96,6 +95,7 @@ CREATE TABLE [QB].[item] (
 GO
 
 CREATE TABLE [QB].[garrafao] (
+  [id_tipoVinho] int,
   [id_stock] int PRIMARY KEY,
   [dataEng] date
 )
@@ -115,15 +115,17 @@ CREATE TABLE [QB].[componente] (
 GO
 
 CREATE TABLE [QB].[rotulo] (
-  [id_componente] int PRIMARY KEY,
+  [id_componente] int ,
   [NIF_cliente] varchar(20),
-  [notacao_tipoVinho] nvarchar(255)
+  [notacao_tipoVinho] nvarchar(255),
+  PRIMARY KEY ([id_componente], [NIF_cliente])
 )
 GO
 
 CREATE TABLE [QB].[rolha] (
-  [id_componente] int PRIMARY KEY,
-  [id_tipoRolha] int
+  [id_componente] int,
+  [id_tipoRolha] int,
+  PRIMARY KEY ([id_componente], [id_tipoRolha])
 )
 GO
 
@@ -144,17 +146,19 @@ CREATE TABLE [QB].[tipoRolha_fornecedor] (
 GO
 
 CREATE TABLE [QB].[selo] (
-  [id_componente] int PRIMARY KEY,
+  [id_componente] int,
   [ano] int,
-  [categoria] varchar(255)
+  [categoria] varchar(255),
+  PRIMARY KEY ([id_componente], [ano], [categoria])
 )
 GO
 
 CREATE TABLE [QB].[certificados] (
-  [id_componente] int PRIMARY KEY,
+  [id_componente] int,
   [ano] int,
   [associacao] varchar(255),
   [titulo] varchar(255)
+  PRIMARY KEY ([id_componente], [ano], [associacao], [titulo])
 )
 GO
 
@@ -200,10 +204,13 @@ GO
 ALTER TABLE [QB].[garrafao] ADD FOREIGN KEY ([id_stock]) REFERENCES [QB].[stock] ([id])
 GO
 
+ALTER TABLE [QB].[garrafao] ADD FOREIGN KEY ([id_tipoVinho]) REFERENCES [QB].[tipoVinho] ([id])
+GO
+
 ALTER TABLE [QB].[garrafa] ADD FOREIGN KEY ([id_stock]) REFERENCES [QB].[stock] ([id])
 GO
 
-ALTER TABLE [QB].[componente] ADD FOREIGN KEY ([id]) REFERENCES [QB].[garrafa] ([id_stock])
+ALTER TABLE [QB].[garrafa] ADD FOREIGN KEY ([id_tipoVinho]) REFERENCES [QB].[tipoVinho] ([id])
 GO
 
 ALTER TABLE [QB].[rotulo] ADD FOREIGN KEY ([id_componente]) REFERENCES [QB].[componente] ([id])
