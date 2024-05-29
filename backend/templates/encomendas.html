@@ -36,14 +36,11 @@
     <span>Cubas</span>
 </a>
 {% endblock %}
-
 {% block content %}
-
 <div class="container border border-l rounded-xl p-12 pt-8">
     <h1 class="text-3xl font-bold mb-5">
         Encomendas
     </h1>
-    
 
     <section class="container px-4 mx-auto">
         <div class="sm:flex sm:items-center sm:justify-between">
@@ -57,9 +54,6 @@
         </div>
 
         <div class="mt-6 md:flex md:items-center md:justify-between">
-            
-            
-               
             <div class="relative flex items-center gap-x-3">
                 <div class="relative flex items-center mt-4 md:mt-0">
                     <span class="absolute">
@@ -88,15 +82,15 @@
                 </div>
             </div>
 
-            <div class="relative flex items-center gap-x-3"> 
-                <button class="action-button green open-modal"  data-modal-target="newOrderModal" hx-get="novaForm" hx-target="#modal-encomenda">
+            <div class="relative flex items-center gap-x-3">
+                <button class="action-button green open-modal" data-modal-target="newOrderModal" hx-get="novaForm" hx-target="#modal-encomenda">
                     <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <span>Adicionar Encomenda</span>
                 </button>
                 <button class="action-button green open-modal" data-modal-target="newClientModal" hx-get="clienteForm" hx-target="#modal-cliente">
-                    <svg  fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                    <svg fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <span>Adicionar Cliente</span>
@@ -114,18 +108,18 @@
             </div>
         </div>
 
-        <div class="mt-6 sm:flex sm:items-center sm:justify-between ">
+        <div class="mt-6 sm:flex sm:items-center sm:justify-between">
             <div class="text-sm text-gray-500 dark:text-gray-400">
-                Page <span class="font-medium text-gray-700 dark:text-gray-100">1 of 10</span> 
+                Página <span class="font-medium text-gray-700 dark:text-gray-100">{{ page }}</span> de <span class="font-medium text-gray-700 dark:text-gray-100">{{ total_pages }}</span>
             </div>
             <div class="flex items-center mt-4 gap-x-4 sm:mt-0">
-                <a href="#" class="nav-button flex flex-row space-x-1">
+                <a href="{{ url_for('encomendas', page=page-1 if page > 1 else 1, per_page=per_page) }}" class="nav-button flex flex-row space-x-1" {% if page <= 1 %}style="pointer-events: none; opacity: 0.5;"{% endif %}>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100 mt-1">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75L3 12m0 0l3.75-3.75M3 12h18" />
                     </svg>
                     <span>Previous</span>
                 </a>
-                <a href="#" class="nav-button flex flex-row space-x-1">
+                <a href="{{ url_for('encomendas', page=page+1, per_page=per_page) }}" class="nav-button flex flex-row space-x-1" {% if page >= total_pages %}style="pointer-events: none; opacity: 0.5;"{% endif %}>
                     <span>Next</span>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5 rtl:-scale-x-100 mt-1">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
@@ -155,6 +149,4 @@
 
     });
 </script>
-
-<!-- Conteúdo específico para Encomendas -->
 {% endblock %}

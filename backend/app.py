@@ -69,17 +69,30 @@ def nova_encomenda():
 
 @app.route('/encomendas')
 def encomendas():
-
-    query=""" 
-        SELECT * FROM QB.encomenda
-    """
+    # Obter a página atual e o número de registros por página da query string
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 10, type=int)
+    
     db = get_db_connection()
     cursor = db.cursor()
-    cursor.execute(query)
+
+    # Calcular o total de registros
+    total_query = "SELECT COUNT(*) FROM QB.encomenda"
+    cursor.execute(total_query)
+    total_records = cursor.fetchone()[0]
+
+    # Calcular o número total de páginas
+    total_pages = (total_records + per_page - 1) // per_page
+
+    # Chamar a stored procedure
+    query = """EXEC GetEncomendasPaginadas @PageNumber=?, @RowsPerPage=?"""
+    cursor.execute(query, (page, per_page))
     encomendas = cursor.fetchall()
     db.close()
 
-    return render_template('encomendas.html', encomendas=encomendas)
+    return render_template('encomendas.html', encomendas=encomendas, page=page, per_page=per_page, total_pages=total_pages)
+
+
 
 @app.route('/engarrafamentos')
 def engarrafamentos():
