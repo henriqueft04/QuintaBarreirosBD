@@ -45,3 +45,22 @@ BEGIN
 
 	
 END;
+
+GO
+
+DROP PROCEDURE IF EXISTS QB.GetEncomendasPaginadas;
+GO
+
+CREATE PROCEDURE GetEncomendasPaginadas
+    @PageNumber INT,
+    @RowsPerPage INT
+	AS
+	BEGIN
+		SET NOCOUNT ON;
+		SELECT * FROM QB.encomenda
+		ORDER BY QB.encomenda.data DESC
+		OFFSET (@PageNumber - 1) * @RowsPerPage ROWS
+		FETCH NEXT @RowsPerPage ROWS ONLY;
+END;
+
+GO
