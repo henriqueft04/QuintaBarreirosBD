@@ -88,7 +88,7 @@ def encomendas():
     encomendas = cursor.fetchall()
     db.close()
 
-    return render_template('encomendas.html', encomendas=encomendas, page=page, per_page=per_page, total_pages=total_pages)
+    return render_template('encomendas.html', encomendas=encomendas, page=page, per_page=per_page, total_pages=total_pages, total_records=total_records)
 
 
 
