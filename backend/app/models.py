@@ -95,3 +95,5 @@ def get_engarrafamentos():
     db.close()
 
     return engarrafamentos, total_engarrafamentos
+
+

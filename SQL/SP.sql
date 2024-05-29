@@ -57,7 +57,9 @@ CREATE PROCEDURE GetEncomendasPaginadas
 	AS
 	BEGIN
 		SET NOCOUNT ON;
-		SELECT * FROM QB.encomenda
+		SELECT * 
+		FROM QB.encomenda 
+			JOIN QB.cliente on Qb.cliente.NIF = QB.encomenda.NIF_cliente 
 		ORDER BY QB.encomenda.data DESC
 		OFFSET (@PageNumber - 1) * @RowsPerPage ROWS
 		FETCH NEXT @RowsPerPage ROWS ONLY;
