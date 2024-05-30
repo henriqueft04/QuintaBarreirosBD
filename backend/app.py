@@ -104,7 +104,10 @@ def searchFornecedores():
 
 @app.route('/nova-encomenda')
 def nova_encomenda():
-    return render_template('nova-encomenda.html')
+
+    tipos_vinho = get_TipoVinho()
+
+    return render_template('nova-encomenda.html', tipos_vinho=tipos_vinho)
 
 @app.route('/encomendas')
 def encomendas():
@@ -146,6 +149,8 @@ def encomendas():
         print(encomendas)
         table_html = render_template('tabelas/tabelaEncomendas.html', encomendas=encomendas)
         return table_html
+    
+    
 
     return render_template('encomendas.html', encomendas=encomendas, page=page, per_page=per_page, total_pages=total_pages, total_records=total_records)
 
@@ -209,8 +214,6 @@ def encomendas_total():
     return str(total_records)
 
 
-
-
 @app.route('/engarrafamentos')
 def engarrafamentos():
     engarrafamentos, total_engarrafamentos = get_engarrafamentos()
@@ -235,7 +238,10 @@ def cubas():
 
 @app.route('/novaForm')
 def novaForm():
-    return render_template('forms/novaForm.html')
+
+    tipos_vinho = get_TipoVinho()
+
+    return render_template('forms/novaForm.html', tipos_vinho=tipos_vinho)
 
 @app.route('/novoFornecimento')
 def novoFornecimento():

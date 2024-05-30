@@ -159,3 +159,14 @@ def Search_Fornecedor(search_param):
         fornecimentos_dict.append(fornecimento_dict)
 
     return fornecimentos_dict
+
+def get_TipoVinho():
+    
+    query = """SELECT denominacao FROM QB.tipoVinho"""
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute(query)
+    tipos_vinho = cursor.fetchall()
+    db.close()
+
+    return tipos_vinho
