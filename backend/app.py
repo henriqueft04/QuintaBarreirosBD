@@ -82,8 +82,24 @@ def encomendaDetalhes():
 
 @app.route('/fornecedores')
 def fornecedores():
-    fornecimentos, total_fornecedores, tipos_rolhas = get_fornecimentos()
-    return render_template('fornecedores.html', fornecimentos=fornecimentos, total_fornecedores=total_fornecedores, tipos_rolhas=tipos_rolhas)
+    search_param = request.args.get('search_param', None)
+    if search_param:
+        fornecimentos = Search_Fornecedor(search_param)
+        print(f"Data for search_param {search_param}: {fornecimentos}")  # Adicione esta linha
+        return render_template('fornecedores.html', fornecimentos=fornecimentos)
+    else:
+        fornecimentos, total_fornecedores, tipos_rolhas = get_fornecimentos()
+        print(f"Data without search_param: {fornecimentos}, {total_fornecedores}, {tipos_rolhas}")  # Adicione esta linha
+        return render_template('fornecedores.html', fornecimentos=fornecimentos, total_fornecedores=total_fornecedores, tipos_rolhas=tipos_rolhas)
+
+@app.route('/searchFornecedores', methods=['GET'])
+def searchFornecedores():
+    search_param = request.args.get('nome', '')
+    print(f"Search param: {search_param}")
+    fornecimentos = Search_Fornecedor(search_param)
+
+    print(f"Fornecedores: {fornecimentos}")
+    return render_template('tabelas/tabelaFornecimentos.html', fornecimentos=fornecimentos)
 
 @app.route('/nova-encomenda')
 def nova_encomenda():
