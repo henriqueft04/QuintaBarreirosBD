@@ -42,54 +42,54 @@
         attachModalListeners();
 
 
-       
-       function setClientFilter(type, value) {
-        let filters = new URLSearchParams(window.location.search);
-        filters.set(type.toLowerCase(), value);
+        function setClientFilter(type, value) {
+            let filters = new URLSearchParams(window.location.search);
+            filters.set(type.toLowerCase(), value);
 
-        let url = '/clientes?' + filters.toString();
-        let paginationUrl = '/clientes/paginacao?' + filters.toString();
-        let totalUrl = '/clientes/total?' + filters.toString();
-        
-        fetch(url, {
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById('tabela-clientes').innerHTML = html;
-            attachModalListeners();
-        })
-        .catch(error => console.error('Error:', error));
+            let url = '/clientes?' + filters.toString();
+            let paginationUrl = '/clientes/paginacao?' + filters.toString();
+            console.log(url);
+            console.log(paginationUrl);
 
-        fetch(paginationUrl, {
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById('pagination-container').innerHTML = html;
-            attachPaginationListeners();
-        })
-        .catch(error => console.error('Error:', error));
+            fetch(url, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('tabela-clientes-container').innerHTML = html;
+                attachModalListeners();
+            })
+            .catch(error => console.error('Error:', error));
 
-        fetch(totalUrl, {
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-        .then(response => response.text())
-        .then(text => {
-            document.getElementById('total-clientes').innerText = text + ' clientes';
-        })
-        .catch(error => console.error('Error:', error));
-    }
+            fetch(paginationUrl, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('pagination-container').innerHTML = html;
+            })
+            .catch(error => console.error('Error:', error));
 
-    window.setClientFilter = setClientFilter;
-       
-       
+            let urltotal = '/clientes/total?' + filters.toString();
+            fetch(urltotal, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.text())
+            .then(text => {
+                document.getElementById('total-clientes').innerText = text + ' Clientes';
+            })
+            .catch(error => console.error('Error:', error));
+            
+        }
+
+        window.setClientFilter = setClientFilter;
+
         // Adicionar listeners ao input de busca
         document.getElementById('search').addEventListener('keyup', function(event) {
             let searchParam = event.target.value;
