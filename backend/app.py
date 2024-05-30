@@ -72,12 +72,18 @@ def encomendas():
     # Obter a página atual e o número de registros por página da query string
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
+    ano = request.args.get('ano', type=int)
+    mes = request.args.get('mes', type=int)
+    semana = request.args.get('semana', type=int)
+    dia = request.args.get('dia', type=int)
+
+    print(ano)
     
     db = get_db_connection()
     cursor = db.cursor()
 
     # Calcular o total de registros
-    total_query = "SELECT COUNT(*) FROM QB.encomenda"
+    total_query = "SELECT QB.fn_AtualizaContagemEncomendas()"
     cursor.execute(total_query)
     total_records = cursor.fetchone()[0]
 
@@ -85,13 +91,28 @@ def encomendas():
     total_pages = (total_records + per_page - 1) // per_page
 
     # Chamar a stored procedure
-    query = """EXEC GetEncomendasPaginadas @PageNumber=?, @RowsPerPage=?"""
-    cursor.execute(query, (page, per_page))
+    query = """EXEC GetEncomendasPaginadas @PageNumber=?, @RowsPerPage=?, @ano=?, @mes=?, @semana=?, @dia=?"""
+    cursor.execute(query, (page, per_page, ano, mes, semana, dia))
     encomendas = cursor.fetchall()
     db.close()
 
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return render_template('tabelas/tabelaEncomendas.html', encomendas=encomendas)
+
     return render_template('encomendas.html', encomendas=encomendas, page=page, per_page=per_page, total_pages=total_pages, total_records=total_records)
 
+
+@app.route('/encomendas/total')
+def encomendas_total():
+    db = get_db_connection()
+    cursor = db.cursor()
+
+    total_query = "SELECT QB.fn_AtualizaContagemEncomendas()"
+    cursor.execute(total_query)
+    total_records = cursor.fetchone()[0]
+    db.close()
+
+    return f'<span id="total-encomendas" class="px-3 py-1 text-xs text-green-600 bg-green-100 rounded-full dark:bg-gray-800 dark:text-green-400">{total_records} Encomendas</span>'
 
 
 @app.route('/engarrafamentos')
