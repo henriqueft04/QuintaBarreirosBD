@@ -278,9 +278,9 @@ INSERT INTO QB.certificados (id_componente, ano, associacao, titulo) VALUES
 (4, 2021, 'Vine Society', 'Top Choice'),
 (4, 2020, 'Winemakers Guild', 'Best Value');
 
-INSERT INTO QB.caixa (numGarrafas, id_tipoVinho_garrafa, id_stock, dataEng, id_stock_garrafa) VALUES
-('6 bottles', 101, 1003, '2021-12-10', 1001),
-('12 bottles', 102, 1003, '2023-05-12', 1002),
-('6 bottles', 103, 1003, '2022-03-15', 1002),
-('12 bottles', 104, 1003, '2023-07-20', 1001),
-('6 bottles', 105, 1003, '2024-01-10', 1002);
+INSERT INTO QB.caixa (numGarrafas, id_stock, dataEng, id_stock_garrafa) VALUES
+(6, 1003, '2021-12-10', 1002),
+(12, 1003, '2023-05-12', 1002),
+(6, 1003, '2022-03-15', 1002),
+(12, 1003, '2023-07-20', 1002),
+(6, 1003, '2024-01-10', 1002);

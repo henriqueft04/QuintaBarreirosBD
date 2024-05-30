@@ -163,8 +163,7 @@ CREATE TABLE [QB].[certificados] (
 GO
 
 CREATE TABLE [QB].[caixa] (
-  [numGarrafas] varchar(255),
-  [id_tipoVinho_garrafa] int,
+  [numGarrafas] int,
   [id_stock] int,
   [dataEng] date,
   [id_stock_garrafa] int
