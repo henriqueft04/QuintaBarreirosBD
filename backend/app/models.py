@@ -25,10 +25,21 @@ def Search_Clients(search_param):
     cursor.execute(query, params)
     clientes = cursor.fetchall()
 
+    clientes_dict = []
+    for row in clientes:
+        cliente_dict = {
+            'NIF': row[0], 
+            'morada': row[1], 
+            'nome': row[2],
+            'telemovel': row[3],
+            'tipo': row[4]
 
-    #print(f"Clientes encontrados: {clientes}")  # Debug
+        }
+        clientes_dict.append(cliente_dict)
 
-    return clientes
+    
+
+    return clientes_dict
 
 def Get_Num_Clients():
     query = "{CALL QB.p_getNumberOfClients}"
@@ -62,11 +73,42 @@ def Get_Num_Garrafas_Cliente():
     cursor.execute(query)
     results = cursor.fetchall()
 
-    num_garrafas = {row[0]: row[2] for row in results}
+    # Acessar elementos pelo índice
+    num_garrafas = {row[0]: row[2] for row in results}  # Usando ClienteNIF (índice 0) como chave e TotalGarrafas (índice 2) como valor
 
     print(f"Número de garrafas por cliente: {num_garrafas}")  # Debug
 
     return num_garrafas
+
+def Get_Encomendas_Cliente(nif_cliente):
+    query = "{CALL QB.p_DetalhesEcomendasPorCliente(?)}"
+    
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute(query, nif_cliente)
+    results = cursor.fetchall()
+
+    encomendas = []
+    for row in results:
+        encomenda = {
+            'nome': row[0],
+            'numero': row[1],
+            'data': row[2],
+            'estadoPagamento': row[3],
+            'fatura': row[4],
+            'valor': row[5],
+            'notas': row[6],
+            'Denominacao': row[7],
+            'QuantidadeItems': row[8]
+        }
+        print(f"Encomenda: {encomenda}")  # Log para depuração
+
+        encomendas.append(encomenda)
+    
+    return encomendas
+
+
+
 
 def get_fornecimentos():
     query = "{CALL QB.fornecimentos}"
