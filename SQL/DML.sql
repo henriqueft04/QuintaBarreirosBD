@@ -185,33 +185,43 @@ INSERT INTO QB.encomenda (NIF_cliente, estadoPagamento, fatura, valor, notas, da
 (901235567, 1, 1, 350.75, 'Encomenda grande', '2024-05-19', 19),
 (123457788, 0, 0, 220.99, 'Encomenda de promoção', '2024-05-20', 20);
 
-INSERT INTO QB.stock (id_tipoVinho, id, quantidade, peso_liquido, peso_bruto, preco) VALUES
-(101, 1001, 100, 700, 800, 25.50),
-(102, 1002, 200, 750, 800, 7.30),
-(103, 1003, 150, 680, 750, 10.00),
-(104, 1004, 120, 600, 700, 12.50),
-(105, 1005, 180, 800, 850, 20.00);
+INSERT INTO QB.stock (id_tipoVinho, id, quantidade, peso_liquido, peso_bruto, preco, dataEng) VALUES
+(101, 1001, 100, 700, 800, 25.50, '2021-12-10'),
+(102, 2002, 200, 750, 800, 7.30, '2023-05-12'),
+(103, 3003, 150, 680, 750, 10.00, '2022-03-15'),
+(104, 4001, 120, 600, 700, 12.50, '2023-07-20'),
+(105, 5002, 180, 800, 850, 20.00, '2024-01-10'),
+(101, 1002, 100, 200, 250, 30, '2020-12-29'),
+(102, 2002, 100, 300, 250, 30, '2022-01-21'),
+(103, 3003, 100, 300, 250, 30, '2022-02-02'),
+(104, 4002, 100, 300, 250, 40, '2022-02-10'),
+(105, 5002, 100, 150, 200, 50, '2022-03-12'),
+(101, 1003, 100, 200, 250, 50, '2021-12-10'),
+(101, 1003, 100, 200, 250, 40, '2023-05-12'),
+(101, 1003, 100, 200, 250, 50, '2022-03-15'),
+(101, 1003, 100, 200, 250, 50, '2023-07-20'),
+(101, 1003, 100, 200, 250, 50, '2024-01-10');
 
-INSERT INTO QB.item (quantidadeItems, id_stock, numero_encomenda) VALUES
-(10, 1001, 1),
-(15, 1002, 2),
-(20, 1003, 3),
-(25, 1004, 4),
-(30, 1005, 5);
+INSERT INTO QB.item (quantidadeItems, id_stock, dataEng, numero_encomenda) VALUES
+(10, 1001,'2021-12-10', 1),
+(15, 2002, '2023-05-12', 2),
+(20, 3003, '2022-03-15', 3),
+(25, 4001, '2023-07-20', 4),
+(30, 5002, '2024-01-10', 5);
 
 INSERT INTO QB.garrafao (id_stock, dataEng) VALUES
 (1001, '2021-12-10'),
-(1002, '2023-05-12'),
-(1003, '2022-03-15'),
-(1004, '2023-07-20'),
-(1005, '2024-01-10');
+(2002, '2023-05-12'),
+(3003, '2022-03-15'),
+(4001, '2023-07-20'),
+(5002, '2024-01-10');
 
 INSERT INTO QB.garrafa (id_tipoVinho, id_stock, dataEng) VALUES
-(101, 1001, '2020-12-29'),
-(102, 1002, '2022-01-21'),
-(103, 1003, '2022-02-02'),
-(104, 1004, '2022-02-10'),
-(105, 1005, '2022-03-12');
+(101, 1002, '2020-12-29'),
+(102, 2002, '2022-01-21'),
+(103, 3003, '2022-02-02'),
+(104, 4002, '2022-02-10'),
+(105, 5002, '2022-03-12');
 
 INSERT INTO QB.componente (id, quantidade) VALUES
 (1001, 100),
@@ -222,10 +232,10 @@ INSERT INTO QB.componente (id, quantidade) VALUES
 
 INSERT INTO QB.rotulo (id_componente, NIF_cliente, notacao_tipoVinho) VALUES
 (1001, 123456789, 'Grande Escolha'),
-(1002, 987654321, 'Vinho Verde Rosado'),
-(1003, 256986703, 'Vinho Frisante Branco'),
-(1004, 234567890, 'Frisante Rosé'),
-(1005, 345678901, 'Vinho Branco Tradicional');
+(1001, 987654321, 'Vinho Verde Rosado'),
+(1001, 256986703, 'Vinho Frisante Branco'),
+(1001, 234567890, 'Frisante Rosé'),
+(1001, 345678901, 'Vinho Branco Tradicional');
 
 INSERT INTO QB.tipoRolha (id, material, formato) VALUES
 (21, 'Cortiça', 'Simples'),
@@ -234,10 +244,10 @@ INSERT INTO QB.tipoRolha (id, material, formato) VALUES
 (24, 'Cortiça', 'Frizante');
 
 INSERT INTO QB.rolha (id_componente, id_tipoRolha) VALUES
-(2, 21),
-(2, 22),
-(2, 23),
-(2, 24);
+(1002, 21),
+(1002, 22),
+(1002, 23),
+(1002, 24);
 
 INSERT INTO QB.tipoRolha_fornecedor (id_tipoRolha, NIF, data, quantidade) VALUES
 (21, 987654322, '2024-04-01', 2000),
@@ -247,18 +257,18 @@ INSERT INTO QB.tipoRolha_fornecedor (id_tipoRolha, NIF, data, quantidade) VALUES
 
 
 INSERT INTO QB.selo (id_componente, ano, categoria) VALUES
-(1001, 2024, 'DOC'),
-(1002, 2023, 'IGP'),
+(1003, 2024, 'DOC'),
+(1003, 2023, 'IGP'),
 (1003, 2022, 'DOC'),
-(1004, 2021, 'IGP'),
-(1005, 2020, 'DOC');
+(1003, 2021, 'IGP'),
+(1003, 2020, 'DOC');
 
 INSERT INTO QB.certificados (id_componente, ano, associacao, titulo) VALUES
-(1001, 2024, 'Wine Association', 'Quality Verified'),
-(1002, 2023, 'Wine Association', 'Premium Quality'),
-(1003, 2022, 'Wine Guild', 'Excellence Award'),
+(1004, 2024, 'Wine Association', 'Quality Verified'),
+(1004, 2023, 'Wine Association', 'Premium Quality'),
+(1004, 2022, 'Wine Guild', 'Excellence Award'),
 (1004, 2021, 'Vine Society', 'Top Choice'),
-(1005, 2020, 'Winemakers Guild', 'Best Value');
+(1004, 2020, 'Winemakers Guild', 'Best Value');
 
 INSERT INTO QB.caixa (numGarrafas, id_stock, dataEng, id_stock_garrafa) VALUES
 (6, 1003, '2021-12-10', 1002),

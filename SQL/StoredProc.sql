@@ -100,7 +100,7 @@ AS
                     JOIN QB.componente AS c ON c.id = rolha.id_componente';
 
 		IF @nomeFornecedor IS NOT NULL
-        SET @query = @query + ' WHERE f.nome LIKE ''%' + @nomeFornecedor + '%''';
+    SET @query = @query + ' WHERE f.nome LIKE ''%' + @nomeFornecedor + '%''';
 
     EXEC sp_executesql @query;
 
