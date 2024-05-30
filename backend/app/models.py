@@ -170,3 +170,21 @@ def get_TipoVinho():
     db.close()
 
     return tipos_vinho
+
+
+def get_paginacao_clientes(search_param):
+    page = request.args.get('page', 1, type=int)
+    search_param = request.args.get('search_param', '', type=str)
+    per_page = request.args.get('per_page', 10, type=int)
+    total_clients = Get_Num_Clients()
+    total_pages = (total_clients + per_page - 1) // per_page
+
+    db = get_db_connection()
+    cursor = db.cursor()
+
+    query = """EXEC QB.GetClientesPaginadas @PageNumber = ?, @RowsPerPage = ?, @SearchParam = ?"""
+    cursor.execute(query, (page, per_page, search_param))
+    clients = cursor.fetchall()
+
+    return clients, per_page, page, total_pages
+

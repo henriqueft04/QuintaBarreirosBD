@@ -57,7 +57,7 @@ CREATE PROCEDURE GetEncomendasPaginadas
 	@Ano INT = NULL,
     @Mes INT = NULL,
     @Semana INT = NULL,
-    @Dia INT = NULL
+    @Dia DATE = NULL
 	AS
 	BEGIN
 		SET NOCOUNT ON;
@@ -68,7 +68,7 @@ CREATE PROCEDURE GetEncomendasPaginadas
 			(@Ano IS NULL OR YEAR(QB.encomenda.data) = @Ano) AND
 			(@Mes IS NULL OR MONTH(QB.encomenda.data) = @Mes) AND
 			(@Semana IS NULL OR DATEPART(WEEK, QB.encomenda.data) = @Semana) AND
-			(@Dia IS NULL OR DAY(QB.encomenda.data) = @Dia)
+			(@Dia IS NULL OR CAST(QB.encomenda.data AS DATE) = @Dia)
 		ORDER BY QB.encomenda.data DESC
 		OFFSET (@PageNumber - 1) * @RowsPerPage ROWS
 		FETCH NEXT @RowsPerPage ROWS ONLY;
@@ -76,4 +76,17 @@ END;
 
 GO 
 
+DROP PROCEDURE IF EXISTS QB.GetClientesPaginadas;
 GO
+
+CREATE PROCEDURE GetClientesPaginadas
+    @PageNumber INT,
+    @RowsPerPage INT
+	AS
+	BEGIN
+		SET NOCOUNT ON;
+		SELECT * FROM QB.cliente
+		ORDER BY QB.cliente.nome DESC
+		OFFSET (@PageNumber - 1) * @RowsPerPage ROWS
+		FETCH NEXT @RowsPerPage ROWS ONLY;
+END;
