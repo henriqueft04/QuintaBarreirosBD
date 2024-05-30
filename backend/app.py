@@ -96,8 +96,7 @@ def encomendas():
     semana = request.args.get('semana', type=int)
     dia = request.args.get('dia', type=int)
 
-    print(ano)
-    
+     
     db = get_db_connection()
     cursor = db.cursor()
 
@@ -129,13 +128,14 @@ def encomendas_total():
 
     db = get_db_connection()
     cursor = db.cursor()
-
+    print(ano)
     total_query = "SELECT QB.fn_AtualizaContagemEncomendas(?,?,?,?)"
     cursor.execute(total_query, (ano, mes, semana, dia))
     total_records = cursor.fetchone()[0]
+    print("total", total_records)
     db.close()
 
-    return f'<span id="total-encomendas" class="px-3 py-1 text-xs text-green-600 bg-green-100 rounded-full dark:bg-gray-800 dark:text-green-400">{total_records} Encomendas</span>'
+    return str(total_records)
 
 
 

@@ -46,8 +46,8 @@
         <div class="sm:flex sm:items-center sm:justify-between">
             <div>
                 <div class="flex items-center gap-x-3">
-                    <h2 class="text-lg font-medium text-gray-800 dark:text-white">Encomendas Totais</h2>
-                    <span hx-get="/encomendas/total" hx-trigger="every 5s" class="px-3 py-1 text-xs text-green-600 bg-green-100 rounded-full dark:bg-gray-800 dark:text-green-400">{{total_records}} Encomendas</span>
+                    <h2 class="text-lg font-medium text-gray-800 dark:text-white">Total</h2>
+                    <span  id="total-encomendas" hx-trigger="enter" class="px-3 py-1 text-xs text-green-600 bg-green-100 rounded-full dark:bg-gray-800 dark:text-green-400">{{total_records}} Encomendas</span>
                 </div>
             </div>
         </div>
@@ -150,24 +150,36 @@
         });
 
     });
-
     function setFilter(type, value) {
-    let filters = new URLSearchParams(window.location.search);
-    filters.set(type.toLowerCase(), value);
+            let filters = new URLSearchParams(window.location.search);
+            filters.set(type.toLowerCase(), value);
 
-    let url = '/encomendas?' + filters.toString();
-    console.log(url);
+            let url = '/encomendas?' + filters.toString();
+            let urltotal = '/encomendas/total?' + filters.toString();
+            console.log(url);
+            console.log(urltotal);
 
-    fetch(url, {
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest'
+            fetch(url, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.text())
+            .then(html => {
+                document.getElementById('tabela-encomendas-container').innerHTML = html;
+            })
+            .catch(error => console.error('Error:', error));
+
+            fetch(urltotal, {
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => response.text())
+            .then(text => {
+                document.getElementById('total-encomendas').innerText = text + ' Encomendas';
+            })
+            .catch(error => console.error('Error:', error));
         }
-    })
-    .then(response => response.text())
-    .then(html => {
-        document.getElementById('tabela-encomendas-container').innerHTML = html;
-    })
-    .catch(error => console.error('Error:', error));
-}
 </script>
 {% endblock %}
