@@ -17,11 +17,12 @@ def clientes():
     search_param = request.args.get('search_param', '')
 
     clientes, per_page, page, total_pages = get_paginacao_clientes(search_param, page, per_page)
-    num_garrafas_cliente = Get_Num_Garrafas_Cliente()
 
     for cliente in clientes:
         cliente_nif = cliente['NIF']
-        cliente['num_garrafas'] = num_garrafas_cliente.get(cliente_nif, 0)
+        cliente['num_garrafas'] = Get_Num_Garrafas_Cliente(cliente_nif)
+    
+    num_garrafas_cliente = Get_Num_Garrafas_Cliente(search_param)
 
     total_clients = Get_Num_Clients(search_param)
 
@@ -53,11 +54,10 @@ def searchClientes():
     per_page = request.args.get('per_page', 10, type=int)
     
     clientes, per_page, page, total_pages = get_paginacao_clientes(search_param, page, per_page)
-    num_garrafas_cliente = Get_Num_Garrafas_Cliente()
 
     for cliente in clientes:
         cliente_nif = cliente['NIF']
-        cliente['num_garrafas'] = num_garrafas_cliente.get(cliente_nif, 0)
+        cliente['num_garrafas'] = Get_Num_Garrafas_Cliente(cliente_nif)
 
     print(f"Clientes: {clientes}")
     print(page, per_page, total_pages)

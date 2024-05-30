@@ -99,6 +99,7 @@ INSERT INTO QB.engarrafamento (dataEng, litragemEng, quantidade) VALUES ('2022-0
 INSERT INTO QB.engarrafamento (dataEng, litragemEng, quantidade) VALUES ('2022-03-12', 2500, 3333);
 INSERT INTO QB.engarrafamento (dataEng, litragemEng, quantidade) VALUES ('2022-04-20', 500, 666);
 INSERT INTO QB.engarrafamento (dataEng, litragemEng, quantidade) VALUES ('2022-05-21', 250, 333);
+INSERT INTO QB.engarrafamento (dataEng, litragemEng, quantidade) VALUES ('2024-01-10', 500, 666);
 
 
 INSERT INTO QB.cuba_engarrafamento (codigo_Cuba, dataEngarrafamento) VALUES
@@ -109,7 +110,9 @@ INSERT INTO QB.cuba_engarrafamento (codigo_Cuba, dataEngarrafamento) VALUES
 (12, '2022-02-28'),
 (8, '2022-03-12'),
 (25, '2022-04-20'),
-(45, '2022-05-21');
+(45, '2022-05-21'),
+(1, '2024-01-10');
+
 
 INSERT INTO QB.cliente (NIF, morada, nome, telemovel, tipo) VALUES
 (123456789, 'Rua da Tasca', 'Tasca do Bôzo', 961234567, 'Restaurante'),
@@ -200,14 +203,16 @@ INSERT INTO QB.stock (id_tipoVinho, id, quantidade, peso_liquido, peso_bruto, pr
 (101, 1003, 100, 200, 250, 40, '2023-05-12'),
 (101, 1003, 100, 200, 250, 50, '2022-03-15'),
 (101, 1003, 100, 200, 250, 50, '2023-07-20'),
-(101, 1003, 100, 200, 250, 50, '2024-01-10');
+(101, 1003, 100, 200, 250, 50, '2024-01-10'),
+(105, 5003, 100, 150, 200, 50, '2024-01-10');
 
 INSERT INTO QB.item (quantidadeItems, id_stock, dataEng, numero_encomenda) VALUES
 (10, 1001,'2021-12-10', 1),
 (15, 2002, '2023-05-12', 2),
 (20, 3003, '2022-03-15', 3),
 (25, 4001, '2023-07-20', 4),
-(30, 5002, '2024-01-10', 5);
+(30, 5002, '2024-01-10', 5),
+(14, 5003, '2024-01-10', 6);
 
 INSERT INTO QB.garrafao (id_stock, dataEng) VALUES
 (1001, '2021-12-10'),
@@ -221,7 +226,8 @@ INSERT INTO QB.garrafa (id_tipoVinho, id_stock, dataEng) VALUES
 (102, 2002, '2022-01-21'),
 (103, 3003, '2022-02-02'),
 (104, 4002, '2022-02-10'),
-(105, 5002, '2022-03-12');
+(105, 5002, '2022-03-12'),
+(105, 5002, '2024-01-10');
 
 INSERT INTO QB.componente (id, quantidade) VALUES
 (1001, 100),
@@ -272,7 +278,8 @@ INSERT INTO QB.certificados (id_componente, ano, associacao, titulo) VALUES
 
 INSERT INTO QB.caixa (numGarrafas, id_stock, dataEng, id_stock_garrafa) VALUES
 (6, 1003, '2021-12-10', 1002),
-(12, 1003, '2023-05-12', 1002),
+(6, 1003, '2023-05-12', 1002),
 (6, 1003, '2022-03-15', 1002),
-(12, 1003, '2023-07-20', 1002),
-(6, 1003, '2024-01-10', 1002);
+(6, 1003, '2023-07-20', 1002),
+(6, 1003, '2024-01-10', 1002),
+(12, 5003, '2024-01-10', 5002);

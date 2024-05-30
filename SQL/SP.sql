@@ -48,31 +48,56 @@ END;
 
 GO
 
-DROP PROCEDURE IF EXISTS QB.GetEncomendasPaginadas;
-GO
-
-CREATE PROCEDURE GetEncomendasPaginadas
+ALTER PROCEDURE GetEncomendasPaginadas
     @PageNumber INT,
     @RowsPerPage INT,
-	@Ano INT = NULL,
+    @Ano INT = NULL,
     @Mes INT = NULL,
     @Semana INT = NULL,
     @Dia DATE = NULL
-	AS
-	BEGIN
-		SET NOCOUNT ON;
-		SELECT * 
-		FROM QB.encomenda 
-			JOIN QB.cliente on Qb.cliente.NIF = QB.encomenda.NIF_cliente
-		WHERE
-			(@Ano IS NULL OR YEAR(QB.encomenda.data) = @Ano) AND
-			(@Mes IS NULL OR MONTH(QB.encomenda.data) = @Mes) AND
-			(@Semana IS NULL OR DATEPART(WEEK, QB.encomenda.data) = @Semana) AND
-			(@Dia IS NULL OR CAST(QB.encomenda.data AS DATE) = @Dia)
-		ORDER BY QB.encomenda.data DESC
-		OFFSET (@PageNumber - 1) * @RowsPerPage ROWS
-		FETCH NEXT @RowsPerPage ROWS ONLY;
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    WITH Encomendas AS (
+        SELECT 
+            NIF_cliente, 
+            estadoPagamento, 
+            fatura, 
+            valor, 
+            notas, 
+            QB.encomenda.data, 
+            numero, 
+            NIF, 
+            morada, 
+            nome, 
+            tipo,
+            (SELECT SUM(CASE 
+                        WHEN RIGHT(QB.stock.id, 1) = '1' THEN stock.quantidade
+                        WHEN RIGHT(QB.stock.id, 1) = '2' THEN stock.quantidade
+                        WHEN RIGHT(QB.stock.id, 1) = '3' THEN numGarrafas * stock.quantidade
+                        ELSE 0 
+                    END)
+             FROM QB.item 
+             JOIN QB.stock ON QB.stock.id = QB.item.id_stock 
+             LEFT JOIN QB.caixa ON QB.caixa.id_stock = QB.stock.id
+             WHERE QB.item.numero_encomenda = QB.encomenda.numero) AS TotalGarrafas
+        FROM QB.encomenda 
+        JOIN QB.cliente ON QB.cliente.NIF = QB.encomenda.NIF_cliente
+        WHERE
+            (@Ano IS NULL OR YEAR(QB.encomenda.data) = @Ano) AND
+            (@Mes IS NULL OR MONTH(QB.encomenda.data) = @Mes) AND
+            (@Semana IS NULL OR DATEPART(WEEK, QB.encomenda.data) = @Semana) AND
+            (@Dia IS NULL OR CAST(QB.encomenda.data AS DATE) = @Dia)
+    )
+    SELECT *
+    FROM Encomendas
+    ORDER BY data DESC
+    OFFSET (@PageNumber - 1) * @RowsPerPage ROWS
+    FETCH NEXT @RowsPerPage ROWS ONLY;
 END;
+
+
 
 GO 
 
@@ -89,4 +114,26 @@ CREATE PROCEDURE GetClientesPaginadas
 		ORDER BY QB.cliente.nome DESC
 		OFFSET (@PageNumber - 1) * @RowsPerPage ROWS
 		FETCH NEXT @RowsPerPage ROWS ONLY;
+END;
+
+GO
+
+CREATE PROCEDURE QB.GetTotalGarrafasCliente
+    @NIF_cliente NVARCHAR(50)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    SELECT 
+        SUM(CASE 
+                WHEN RIGHT(QB.stock.id, 1) = '1' THEN quantidadeItems 
+                WHEN RIGHT(QB.stock.id, 1) = '2' THEN quantidadeItems 
+                WHEN RIGHT(QB.stock.id, 1) = '3' THEN quantidadeItems * numGarrafas 
+                ELSE 0 
+            END) AS TotalGarrafas
+    FROM QB.encomenda 
+    JOIN QB.item ON QB.item.numero_encomenda = QB.encomenda.numero
+    JOIN QB.stock ON QB.stock.id = QB.item.id_stock 
+    LEFT JOIN QB.caixa ON QB.caixa.id_stock = QB.stock.id
+    WHERE QB.encomenda.NIF_cliente = @NIF_cliente;
 END;

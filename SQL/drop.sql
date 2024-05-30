@@ -22,5 +22,5 @@ DROP TABLE IF EXISTS QB.casta_tipoVinho;
 DROP TABLE IF EXISTS QB.casta;
 
 -- Dropping the schema
-DROP SCHEMA IF EXISTS QB;
-GO
+--DROP SCHEMA IF EXISTS QB;
+--GO
