@@ -187,6 +187,17 @@
     }
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var modals = document.querySelectorAll('.open-modal');
+        modals.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var modal = document.querySelector(button.getAttribute('hx-target'));
+                modal.classList.remove('hidden');
+            });
+        });
+</script>
+
 <!-- Conteúdo específico para Clientes -->
 {% endblock %}
 

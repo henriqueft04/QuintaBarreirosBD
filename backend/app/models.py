@@ -80,6 +80,36 @@ def Get_Num_Garrafas_Cliente():
 
     return num_garrafas
 
+def Get_Encomendas_Cliente(nif_cliente):
+    query = "{CALL QB.p_DetalhesEcomendasPorCliente(?)}"
+    
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute(query, nif_cliente)
+    results = cursor.fetchall()
+
+    encomendas = []
+    for row in results:
+        encomenda = {
+            'nome': row[0],
+            'numero': row[1],
+            'data': row[2],
+            'estadoPagamento': row[3],
+            'fatura': row[4],
+            'valor': row[5],
+            'notas': row[6],
+            'Denominacao': row[7],
+            'QuantidadeItems': row[8]
+        }
+        print(f"Encomenda: {encomenda}")  # Log para depuração
+
+        encomendas.append(encomenda)
+    
+    return encomendas
+
+
+
+
 def get_fornecimentos():
     query = "{CALL QB.fornecimentos}"
     db = get_db_connection()

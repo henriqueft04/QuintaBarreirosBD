@@ -63,14 +63,18 @@ def clientesForm():
 
                 
             except Exception as e:
-                # Log do erro
-                print("ola sou eu o erro")
                 print(f"Erro ao inserir cliente: {e}")
                 return render_template('forms/clienteForm.html', error=str(e))
             
             return render_template('tabelas/tabelaClientes.html', clientes=clientes)
         else:
             return render_template('forms/clienteForm.html')
+
+@app.route('/encomendaDetalhes', methods=['GET'])
+def encomendaDetalhes():
+    nif_cliente = request.args.get('nif')
+    encomendas = Get_Encomendas_Cliente(nif_cliente)
+    return render_template('tabelas/tabelaEncomendas.html', encomendas=encomendas)
 
 
 @app.route('/fornecedores')
