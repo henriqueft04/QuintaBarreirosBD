@@ -181,9 +181,7 @@ def novoFornecimento():
         print(f"ERRO: {e}")
         return render_template('forms/novoFornecimento.html', error=str(e))
         
-        
-    fornecimentos, total_fornecedores, tipos_rolhas = get_fornecimentos()
-    return render_template('forms/novoFornecimento.html', tipos_rolhas=tipos_rolhas, fornecimentos=fornecimentos, total_fornecedores=total_fornecedores)
+
 
 
 @app.route('/nova-encomenda')
