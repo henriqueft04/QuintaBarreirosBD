@@ -56,20 +56,20 @@ def Insert_Cliente(nif, morada, nome, telemovel, tipo):
     db.commit()
     cursor.close()
 
-def Get_Num_Garrafas_Cliente():
-    query = "{CALL QB.p_NumberOfBottlesPerClient}"
+def Get_Num_Garrafas_Cliente(NIF_cliente):
+    query = "EXEC QB.GetTotalGarrafasCliente ?"
 
     db = get_db_connection()
     cursor = db.cursor()
-    cursor.execute(query)
-    results = cursor.fetchall()
+    cursor.execute(query, (NIF_cliente,))
+    result = cursor.fetchone()
 
-    # Acessar elementos pelo índice
-    num_garrafas = {row[0]: row[2] for row in results}  # Usando ClienteNIF (índice 0) como chave e TotalGarrafas (índice 2) como valor
+    total_garrafas = result[0] if result else 0
 
-    print(f"Número de garrafas por cliente: {num_garrafas}")  # Debug
+    print(f"Número de garrafas por cliente: {total_garrafas}")  # Debug
 
-    return num_garrafas
+
+    return total_garrafas
 
 def Get_Encomendas_Cliente(nif_cliente):
     query = "{CALL QB.p_DetalhesEcomendasPorCliente(?)}"
