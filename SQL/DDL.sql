@@ -79,17 +79,20 @@ GO
 
 CREATE TABLE [QB].[stock] (
   [id_tipoVinho] int,
-  [id] int PRIMARY KEY,
+  [id] int,
   [quantidade] int,
   [peso_liquido] decimal,
   [peso_bruto] decimal,
-  [preco] decimal
+  [preco] decimal,
+  [dataEng] DATE
+  PRIMARY KEY ([id], [dataEng])
 )
 GO
 
 CREATE TABLE [QB].[item] (
   [quantidadeItems] int,
-  [id_stock] int ,
+  [id_stock] int,
+  [dataEng] DATE,
   [numero_encomenda] int
 )
 GO
@@ -103,8 +106,9 @@ GO
 
 CREATE TABLE [QB].[garrafa] (
   [id_tipoVinho] int,
-  [id_stock] int UNIQUE,
+  [id_stock] int,
   [dataEng] date
+  PRIMARY KEY ([id_stock], [dataEng])
 )
 GO
 
@@ -194,19 +198,20 @@ GO
 ALTER TABLE [QB].[item] ADD FOREIGN KEY ([numero_encomenda]) REFERENCES [QB].[encomenda] ([numero])
 GO
 
-ALTER TABLE [QB].[item] ADD FOREIGN KEY ([id_stock]) REFERENCES [QB].[stock] ([id])
+
+ALTER TABLE [QB].[item] ADD FOREIGN KEY ([id_stock], [dataEng]) REFERENCES [QB].[stock] ([id], [dataEng])
 GO
 
-ALTER TABLE [QB].[caixa] ADD FOREIGN KEY ([id_stock]) REFERENCES [QB].[stock] ([id])
+ALTER TABLE [QB].[caixa] ADD FOREIGN KEY ([id_stock], [dataEng]) REFERENCES [QB].[stock] ([id], [dataEng])
 GO
 
-ALTER TABLE [QB].[garrafao] ADD FOREIGN KEY ([id_stock]) REFERENCES [QB].[stock] ([id])
+ALTER TABLE [QB].[garrafao] ADD FOREIGN KEY ([id_stock], [dataEng]) REFERENCES [QB].[stock] ([id], [dataEng])
 GO
 
 ALTER TABLE [QB].[garrafao] ADD FOREIGN KEY ([id_tipoVinho]) REFERENCES [QB].[tipoVinho] ([id])
 GO
 
-ALTER TABLE [QB].[garrafa] ADD FOREIGN KEY ([id_stock]) REFERENCES [QB].[stock] ([id])
+ALTER TABLE [QB].[garrafa] ADD FOREIGN KEY ([id_stock], [dataEng]) REFERENCES [QB].[stock] ([id], [dataEng])
 GO
 
 ALTER TABLE [QB].[garrafa] ADD FOREIGN KEY ([id_tipoVinho]) REFERENCES [QB].[tipoVinho] ([id])
