@@ -138,4 +138,3 @@ def get_engarrafamentos():
 
     return engarrafamentos, total_engarrafamentos
 
-

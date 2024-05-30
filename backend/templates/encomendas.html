@@ -129,6 +129,16 @@ document.addEventListener('DOMContentLoaded', function() {
             button.addEventListener('click', function() {
                 var orderId = this.getAttribute('data-order-id');
                 console.log("Order ID: " + orderId); // Exibe o ID da encomenda no console
+                
+                // Obter o modal
+                var modalId = this.getAttribute('data-modal-target');
+                var modal = document.getElementById(modalId);
+                
+                if (modal) {
+                    modal.classList.remove('hidden');
+                } else {
+                    console.error('Modal not found: ' + modalId);
+                }
             });
         });
     }
