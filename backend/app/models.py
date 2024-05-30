@@ -158,6 +158,17 @@ def Search_Fornecedor(search_param):
 
     return fornecimentos_dict
 
+def Insert_Fornecimento(nome, tipo, quantidade, data):
+    db = get_db_connection()
+    cursor = db.cursor()
+
+    query = "{CALL QB.insert_fornecimento(?, ?, ?, ?)}"
+    print(f"QUERY: {query}")
+
+    cursor.execute(query, (nome, tipo, quantidade, data))
+    db.commit()
+    cursor.close()
+
 def get_TipoVinho():
     
     query = """SELECT denominacao FROM QB.tipoVinho"""

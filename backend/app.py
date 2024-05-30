@@ -142,6 +142,48 @@ def searchFornecedores():
     print(f"Fornecedores: {fornecimentos}")
     return render_template('tabelas/tabelaFornecimentos.html', fornecimentos=fornecimentos)
 
+@app.route('/novoFornecimento', methods=['GET', 'POST'])
+def novoFornecimento():
+    print("Entrou no novo fornecimento")
+    print(request.method)
+    try:
+        if request.method == 'POST':
+            fornecimentos, total_fornecedores, tipos_rolhas = get_fornecimentos()
+            print("Recebendo dados do formulário...")
+            nome = request.form['nome']
+            print(nome)
+            tipo = request.form['tipo']
+            print(tipo)
+            quantidade = request.form['quantidade']
+            quantidade = int(quantidade)
+            print(quantidade)
+            data = request.form['data']
+            data = datetime.strptime(data, '%Y-%m-%d').date()
+
+            print(f"Recebido: Nome={nome}, TipoRolha={tipo}, Quantidade={quantidade}, Data={data}")
+            if not tipo:
+                raise ValueError("Tipo de rolha não foi selecionado.")
+
+
+            Insert_Fornecimento(nome, tipo, quantidade, data)
+
+            print(f"Fornecimento inserido com sucesso: {nome}, {tipo}, {quantidade}, {data}")
+
+            return redirect(url_for('fornecedores'))
+        
+        fornecimentos, total_fornecedores, tipos_rolhas = get_fornecimentos()
+
+        print(f"Tipos de rolhas: {tipos_rolhas}")
+        return render_template('forms/novoFornecimento.html', tipos_rolhas=tipos_rolhas, fornecimentos=fornecimentos, total_fornecedores=total_fornecedores)
+        
+        
+    except Exception as e:
+        print(f"ERRO: {e}")
+        return render_template('forms/novoFornecimento.html', error=str(e))
+        
+        
+    fornecimentos, total_fornecedores, tipos_rolhas = get_fornecimentos()
+    return render_template('forms/novoFornecimento.html', tipos_rolhas=tipos_rolhas, fornecimentos=fornecimentos, total_fornecedores=total_fornecedores)
 
 
 @app.route('/nova-encomenda')
@@ -284,11 +326,6 @@ def novaForm():
     tipos_vinho = get_TipoVinho()
 
     return render_template('forms/novaForm.html', tipos_vinho=tipos_vinho)
-
-@app.route('/novoFornecimento')
-def novoFornecimento():
-    fornecimentos, total_fornecedores, tipos_rolhas = get_fornecimentos()
-    return render_template('forms/novoFornecimento.html', tipos_rolhas=tipos_rolhas, fornecimentos=fornecimentos, total_fornecedores=total_fornecedores)
 
 @app.route('/novoEngarrafamento')
 def novoEngarrafamento():
