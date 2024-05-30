@@ -31,19 +31,20 @@ def Search_Clients(search_param, page, per_page):
     
     return clientes_dict
 
-def Get_Num_Clients():
-    query = "SELECT COUNT(*) AS TotalClientes FROM QB.cliente"
+def Get_Num_Clients(search_param):
+    query = "SELECT COUNT(*) FROM QB.cliente WHERE (? IS NULL OR nome LIKE ? OR telemovel LIKE ?)"
+    search_param = f"%{search_param}%"
+    params = (search_param, search_param, search_param)
 
     db = get_db_connection()
     cursor = db.cursor()
-    cursor.execute(query)
-    num_clients = cursor.fetchone()
-    num_clients = num_clients[0]
-
+    cursor.execute(query, params)
+    num_clients = cursor.fetchone()[0]
 
     print(f"Número de clientes: {num_clients}")  # Debug
 
     return num_clients
+
 
 def Insert_Cliente(nif, morada, nome, telemovel, tipo):
     db = get_db_connection()

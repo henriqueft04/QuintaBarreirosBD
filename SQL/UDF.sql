@@ -17,3 +17,18 @@ BEGIN
     RETURN @TotalEncomendas;
 END;
 GO
+
+
+ALTER FUNCTION QB.fn_AtualizaContagemClientes(@SearchParam varchar(2048))
+RETURNS INT
+AS
+BEGIN
+    DECLARE @TotalClientes INT;
+    
+    SELECT @TotalClientes = COUNT(*)
+    FROM QB.cliente
+    WHERE QB.cliente.nome LIKE '%' + @SearchParam + '%'
+    
+    RETURN @TotalClientes;
+END;
+GO

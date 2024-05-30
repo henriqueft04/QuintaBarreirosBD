@@ -23,7 +23,7 @@ def clientes():
         cliente_nif = cliente['NIF']
         cliente['num_garrafas'] = num_garrafas_cliente.get(cliente_nif, 0)
 
-    total_clients = Get_Num_Clients()
+    total_clients = Get_Num_Clients(search_param)
 
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         return render_template('tabelas/tabelaClientes.html', clientes=clientes)
@@ -37,6 +37,13 @@ def clientes():
                            search_param=search_param,
                            total_pages=total_pages, 
                            endpoint='clientes')
+
+@app.route('/clientes/total')
+def clientes_total():
+    search_param = request.args.get('search_param', '')
+    total_clients = Get_Num_Clients(search_param)
+    print("clientes agora ", total_clients)
+    return str(total_clients)
 
 
 @app.route('/searchClientes', methods=['GET'])
@@ -54,7 +61,7 @@ def searchClientes():
 
     print(f"Clientes: {clientes}")
     print(page, per_page, total_pages)
-    return render_template('tabelas/tabelaClientes.html', clientes=clientes, page=page, per_page=per_page, total_pages=total_pages)
+    return render_template('tabelas/tabelaClientes.html', clientes=clientes)
 
 
 

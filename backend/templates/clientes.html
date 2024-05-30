@@ -50,7 +50,7 @@
             <div>
                 <div class="flex items-center gap-x-3">
                     <h2 class="text-lg font-medium text-gray-800 dark:text-white">Total</h2>
-                    <span class="px-3 py-1 text-xs text-green-600 bg-green-100 rounded-full dark:bg-gray-800 dark:text-green-400">{{ total_clients }} clientes</span>
+                    <span id="total-clientes" class="px-3 py-1 text-xs text-green-600 bg-green-100 rounded-full dark:bg-gray-800 dark:text-green-400">{{ total_clients }} clientes</span>
                 </div>
             </div>
         </div>
@@ -135,72 +135,5 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
-    function openModal() {
-        document.getElementById("form-modal").classList.remove("hidden");
-    }
-    
-    function closeModal() {
-        document.getElementById("form-modal").classList.add("hidden");
-    }
-    
-    function resetForm() {
-        document.querySelector("#form-modal form").reset();
-    }
-</script>
-
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        var modals = document.querySelectorAll('.open-modal');
-        modals.forEach(function(button) {
-            button.addEventListener('htmx:afterSwap', function() {
-                var modal = document.querySelector(button.getAttribute('hx-target'));
-                modal.classList.remove('hidden');
-            });
-        });
-    });
-    document.addEventListener('DOMContentLoaded', function() {
-    function setClientFilter(type, value) {
-        let filters = new URLSearchParams(window.location.search);
-        filters.set(type.toLowerCase(), value);
-
-        let url = '/clientes?' + filters.toString();
-        let paginationUrl = '/clientes/paginacao?' + filters.toString();
-        console.log(url);
-        console.log(paginationUrl);
-
-        fetch(url, {
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById('tabela-clientes-container').innerHTML = html;
-        })
-        .catch(error => console.error('Error:', error));
-
-        fetch(paginationUrl, {
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-        .then(response => response.text())
-        .then(html => {
-            document.getElementById('pagination-container').innerHTML = html;
-        })
-        .catch(error => console.error('Error:', error));
-    }
-
-    window.setClientFilter = setClientFilter;
-
-    // Adicionar listeners ao input de busca
-    document.getElementById('search').addEventListener('keyup', function(event) {
-        let searchParam = event.target.value;
-        setClientFilter('search_param', searchParam);
-    });
-});
-
-
-</script>
+<script src="{{ url_for('static', filename='js/clientes.js') }}"></script>
 {% endblock %}
