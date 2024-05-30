@@ -151,29 +151,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-    function performSearch() {
-        const query = document.getElementById('search').value;
-        console.log(`Searching for: ${query}`);  // Debug
-
-        // Make an AJAX request to fetch updated content
-        $.ajax({
-            url: `/clientes?nome=${query}`,  // Assuming this is the correct endpoint
-            method: "GET",
-            success: function(response) {
-                console.log("Received HTML:", response);  // Debug
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(response, 'text/html');
-                const newTbody = doc.querySelector('tbody'); 
-                $('.container > div:last-child > div:last-child > div:last-child > tbody').html(newTbody.innerHTML); // Update tbody content
-            },
-            error: function(xhr, status, error) {
-                console.error('Error during search:', error);  // Debug
-            }
-        });
-    }
-</script>
-
-<script>
     function openModal() {
         document.getElementById("form-modal").classList.remove("hidden");
     }

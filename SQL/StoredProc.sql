@@ -87,23 +87,28 @@ END
 go
 
 CREATE PROCEDURE QB.fornecimentos
+    (@nomeFornecedor VARCHAR(255) = NULL)
 AS
 	BEGIN
-		SELECT f.nome, f.morada, f.telemovel, tr.material, tr.formato, r.quantidade, f.NIF, c.quantidade AS quantidadeTotal
-		FROM QB.fornecedor AS f
-		JOIN QB.tipoRolha_Fornecedor AS r
-			ON f.NIF = r.NIF
-		JOIN QB.tipoRolha AS tr
-			ON tr.id = r.id_tipoRolha
-		JOIN QB.rolha
-			ON rolha.id_tipoRolha = tr.id
-		JOIN QB.componente AS c
-			ON c.id = rolha.id_componente;
 
-		SELECT COUNT(*) AS total_fornecedores
+        DECLARE @query NVARCHAR(MAX);
+        SET @query = 'SELECT f.nome, f.morada, f.telemovel, tr.material, tr.formato, r.quantidade, f.NIF, c.quantidade AS quantidadeTotal
+                    FROM QB.fornecedor AS f
+                    JOIN QB.tipoRolha_Fornecedor AS r ON f.NIF = r.NIF
+                    JOIN QB.tipoRolha AS tr ON tr.id = r.id_tipoRolha
+                    JOIN QB.rolha ON rolha.id_tipoRolha = tr.id
+                    JOIN QB.componente AS c ON c.id = rolha.id_componente';
+
+		IF @nomeFornecedor IS NOT NULL
+        SET @query = @query + ' WHERE f.nome LIKE ''%' + @nomeFornecedor + '%''';
+
+    EXEC sp_executesql @query;
+
+
+	SELECT COUNT(*) AS total_fornecedores
 		FROM QB.fornecedor;
 
-		SELECT tr.material, tr.formato, tr.id
+	SELECT tr.material, tr.formato, tr.id
 		FROM QB.tipoRolha AS tr;
 
 	END;

@@ -15,10 +15,6 @@ def Search_Clients(search_param):
         else:
             query += " WHERE QB.cliente.nome LIKE ?"
             params.append('%' + search_param + '%')
-
-    print(f"Recebendo parâmetro de busca: {search_param}")  # Debug
-    print(f"Query SQL: {query}")  # Debug
-    print(f"Parâmetros: {params}")  # Debug
     
     db = get_db_connection()
     cursor = db.cursor()
@@ -36,9 +32,6 @@ def Search_Clients(search_param):
 
         }
         clientes_dict.append(cliente_dict)
-
-    
-
     return clientes_dict
 
 def Get_Num_Clients():
@@ -111,30 +104,58 @@ def Get_Encomendas_Cliente(nif_cliente):
 
 def get_fornecimentos():
     query = "{CALL QB.fornecimentos}"
+
     db = get_db_connection()
     cursor = db.cursor()
     cursor.execute(query)
     fornecimentos = cursor.fetchall()
+
     cursor.nextset()
     total_fornecedores = cursor.fetchone()[0]
+
     cursor.nextset()
     tipos_rolhas = cursor.fetchall()
-
-    cursor.close()
-    db.close()
 
     return fornecimentos, total_fornecedores, tipos_rolhas
 
 def get_engarrafamentos():
     query = "{CALL QB.engarrafamentos}"
+
     db = get_db_connection()
     cursor = db.cursor()
     cursor.execute(query)
     engarrafamentos = cursor.fetchall()
-    cursor.nextset()
+
+
     total_engarrafamentos = cursor.fetchone()[0]
-    cursor.close()
-    db.close()
+
 
     return engarrafamentos, total_engarrafamentos
 
+
+def Search_Fornecedor(search_param):
+    query = "{CALL QB.fornecimentos(?)}"
+    params = (search_param,)
+
+    print(f"QUERY: {query}")
+
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute(query, params)
+    fornecimentos = cursor.fetchall()
+
+    fornecimentos_dict = []
+    for row in fornecimentos:
+        fornecimento_dict = {
+            'nome': row[0],
+            'morada': row[1],
+            'telemovel': row[2],
+            'material': row[3],
+            'formato': row[4],
+            'quantidade': row[5],
+            'NIF': row[6],
+            'quantidadeTotal': row[7],
+        }
+        fornecimentos_dict.append(fornecimento_dict)
+
+    return fornecimentos_dict
