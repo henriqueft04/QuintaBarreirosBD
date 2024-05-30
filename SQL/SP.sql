@@ -53,16 +53,27 @@ GO
 
 CREATE PROCEDURE GetEncomendasPaginadas
     @PageNumber INT,
-    @RowsPerPage INT
+    @RowsPerPage INT,
+	@Ano INT = NULL,
+    @Mes INT = NULL,
+    @Semana INT = NULL,
+    @Dia INT = NULL
 	AS
 	BEGIN
 		SET NOCOUNT ON;
 		SELECT * 
 		FROM QB.encomenda 
-			JOIN QB.cliente on Qb.cliente.NIF = QB.encomenda.NIF_cliente 
+			JOIN QB.cliente on Qb.cliente.NIF = QB.encomenda.NIF_cliente
+		WHERE
+			(@Ano IS NULL OR YEAR(QB.encomenda.data) = @Ano) AND
+			(@Mes IS NULL OR MONTH(QB.encomenda.data) = @Mes) AND
+			(@Semana IS NULL OR DATEPART(WEEK, QB.encomenda.data) = @Semana) AND
+			(@Dia IS NULL OR DAY(QB.encomenda.data) = @Dia)
 		ORDER BY QB.encomenda.data DESC
 		OFFSET (@PageNumber - 1) * @RowsPerPage ROWS
 		FETCH NEXT @RowsPerPage ROWS ONLY;
 END;
+
+GO 
 
 GO
