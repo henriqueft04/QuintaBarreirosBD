@@ -187,63 +187,45 @@ INSERT INTO QB.encomenda (NIF_cliente, estadoPagamento, fatura, valor, notas, da
 
 INSERT INTO QB.stock (id_tipoVinho, id, quantidade, peso_liquido, peso_bruto, preco) VALUES
 (101, 1001, 100, 700, 800, 25.50),
-(101, 1002, 200, 700, 800, 25.50),
-(101, 1003, 300, 700, 800, 25.50),
-(102, 2001, 150, 700, 800, 25.50),
-(102, 2002, 250, 700, 800, 25.50),
-(102, 2003, 350, 700, 800, 25.50),
-(103, 3001, 200, 700, 800, 25.50),
-(103, 3002, 300, 700, 800, 25.50),
-(103, 3003, 400, 700, 800, 25.50),
-(104, 4001, 250, 700, 800, 25.50),
-(104, 4002, 350, 700, 800, 25.50),
-(104, 4003, 450, 700, 800, 25.50),
-(105, 5001, 300, 700, 800, 25.50),
-(105, 5002, 400, 700, 800, 25.50),
-(105, 5003, 500, 700, 800, 25.50),
-(106, 6001, 350, 700, 800, 25.50),
-(106, 6002, 450, 700, 800, 25.50),
-(106, 6003, 550, 700, 800, 25.50),
-(107, 7001, 400, 700, 800, 25.50),
-(107, 7002, 500, 700, 800, 25.50),
-(107, 7003, 600, 700, 800, 25.50);
- -- estes valores estão todos errados
+(102, 1002, 200, 750, 800, 7.30),
+(103, 1003, 150, 680, 750, 10.00),
+(104, 1004, 120, 600, 700, 12.50),
+(105, 1005, 180, 800, 850, 20.00);
 
 INSERT INTO QB.item (quantidadeItems, id_stock, numero_encomenda) VALUES
 (10, 1001, 1),
 (15, 1002, 2),
-(20, 1002, 3),
-(25, 1001, 4),
-(30, 1002, 5);
+(20, 1003, 3),
+(25, 1004, 4),
+(30, 1005, 5);
 
-
-INSERT INTO QB.garrafao (id_tipoVinho, id_stock, dataEng) VALUES
-(101, 1001, '2021-12-10'),
-(102, 2001, '2023-05-12'),
-(103, 3001, '2022-03-15'),
-(104, 4001, '2023-07-20'),
-(105, 5001, '2024-01-10');
+INSERT INTO QB.garrafao (id_stock, dataEng) VALUES
+(1001, '2021-12-10'),
+(1002, '2023-05-12'),
+(1003, '2022-03-15'),
+(1004, '2023-07-20'),
+(1005, '2024-01-10');
 
 INSERT INTO QB.garrafa (id_tipoVinho, id_stock, dataEng) VALUES
-(101, 1002, '2020-12-29'),
-(102, 2002, '2022-01-21'),
-(103, 3002, '2022-02-02'),
-(104, 4002, '2022-02-10'),
-(105, 5002, '2022-03-12');
+(101, 1001, '2020-12-29'),
+(102, 1002, '2022-01-21'),
+(103, 1003, '2022-02-02'),
+(104, 1004, '2022-02-10'),
+(105, 1005, '2022-03-12');
 
 INSERT INTO QB.componente (id, quantidade) VALUES
-(1, 100),
-(2, 200),
-(3, 300),
-(4, 150),
-(5, 250);
+(1001, 100),
+(1002, 200),
+(1003, 300),
+(1004, 150),
+(1005, 250);
 
 INSERT INTO QB.rotulo (id_componente, NIF_cliente, notacao_tipoVinho) VALUES
-(1, 123456789, 'Grande Escolha'),
-(1, 987654321, 'Vinho Verde Rosado'),
-(1, 256986703, 'Vinho Frisante Branco'),
-(1, 234567890, 'Frisante Rosé'),
-(1, 345678901, 'Vinho Branco Tradicional');
+(1001, 123456789, 'Grande Escolha'),
+(1002, 987654321, 'Vinho Verde Rosado'),
+(1003, 256986703, 'Vinho Frisante Branco'),
+(1004, 234567890, 'Frisante Rosé'),
+(1005, 345678901, 'Vinho Branco Tradicional');
 
 INSERT INTO QB.tipoRolha (id, material, formato) VALUES
 (21, 'Cortiça', 'Simples'),
@@ -265,18 +247,18 @@ INSERT INTO QB.tipoRolha_fornecedor (id_tipoRolha, NIF, data, quantidade) VALUES
 
 
 INSERT INTO QB.selo (id_componente, ano, categoria) VALUES
-(3, 2024, 'DOC'),
-(3, 2023, 'IGP'),
-(3, 2022, 'DOC'),
-(3, 2021, 'IGP'),
-(3, 2020, 'DOC');
+(1001, 2024, 'DOC'),
+(1002, 2023, 'IGP'),
+(1003, 2022, 'DOC'),
+(1004, 2021, 'IGP'),
+(1005, 2020, 'DOC');
 
 INSERT INTO QB.certificados (id_componente, ano, associacao, titulo) VALUES
-(4, 2024, 'Wine Association', 'Quality Verified'),
-(4, 2023, 'Wine Association', 'Premium Quality'),
-(4, 2022, 'Wine Guild', 'Excellence Award'),
-(4, 2021, 'Vine Society', 'Top Choice'),
-(4, 2020, 'Winemakers Guild', 'Best Value');
+(1001, 2024, 'Wine Association', 'Quality Verified'),
+(1002, 2023, 'Wine Association', 'Premium Quality'),
+(1003, 2022, 'Wine Guild', 'Excellence Award'),
+(1004, 2021, 'Vine Society', 'Top Choice'),
+(1005, 2020, 'Winemakers Guild', 'Best Value');
 
 INSERT INTO QB.caixa (numGarrafas, id_stock, dataEng, id_stock_garrafa) VALUES
 (6, 1003, '2021-12-10', 1002),
