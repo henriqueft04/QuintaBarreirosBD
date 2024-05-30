@@ -99,7 +99,6 @@ def encomendas():
     semana = request.args.get('semana', type=int)
     dia = request.args.get('dia', type=int)
 
-     
     db = get_db_connection()
     cursor = db.cursor()
 
@@ -118,7 +117,10 @@ def encomendas():
     db.close()
 
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        return render_template('tabelas/tabelaEncomendas.html', encomendas=encomendas)
+        print(encomendas)
+        table_html = render_template('tabelas/tabelaEncomendas.html', encomendas=encomendas)
+        pagination_html = render_template('pagination.html', page=page, per_page=per_page, total_pages=total_pages)
+        return table_html + pagination_html
 
     return render_template('encomendas.html', encomendas=encomendas, page=page, per_page=per_page, total_pages=total_pages, total_records=total_records)
 
