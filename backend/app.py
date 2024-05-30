@@ -12,36 +12,76 @@ def index():
 
 @app.route('/clientes')
 def clientes():
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 10, type=int)
     search_param = request.args.get('search_param', '')
-    
-    if search_param:
-        clientes = Search_Clients(search_param)
-    else:
-        clientes = Search_Clients("")
 
-    total_clients = Get_Num_Clients()
+    clientes, per_page, page, total_pages = get_paginacao_clientes(search_param, page, per_page)
     num_garrafas_cliente = Get_Num_Garrafas_Cliente()
 
-    # Adicionar o número de garrafas aos dados dos clientes usando o NIF
     for cliente in clientes:
-        cliente_nif = cliente['NIF']  # Supondo que a chave primária do cliente seja 'NIF'
+        cliente_nif = cliente['NIF']
         cliente['num_garrafas'] = num_garrafas_cliente.get(cliente_nif, 0)
 
-    return render_template('clientes.html', clientes=clientes, total_clients=total_clients, total_garrafas_cliente=num_garrafas_cliente)
+    total_clients = Get_Num_Clients(search_param)
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return render_template('tabelas/tabelaClientes.html', clientes=clientes)
+
+    return render_template('clientes.html', 
+                           clientes=clientes, 
+                           total_clients=total_clients, 
+                           total_garrafas_cliente=num_garrafas_cliente, 
+                           page=page, 
+                           per_page=per_page, 
+                           search_param=search_param,
+                           total_pages=total_pages, 
+                           endpoint='clientes')
+
+@app.route('/clientes/total')
+def clientes_total():
+    search_param = request.args.get('search_param', '')
+    total_clients = Get_Num_Clients(search_param)
+    print("clientes agora ", total_clients)
+    return str(total_clients)
 
 
 @app.route('/searchClientes', methods=['GET'])
 def searchClientes():
     search_param = request.args.get('nome', '')
-    clientes = Search_Clients(search_param)
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 10, type=int)
+    
+    clientes, per_page, page, total_pages = get_paginacao_clientes(search_param, page, per_page)
     num_garrafas_cliente = Get_Num_Garrafas_Cliente()
 
-
     for cliente in clientes:
-        cliente_nif = cliente['NIF']  
+        cliente_nif = cliente['NIF']
         cliente['num_garrafas'] = num_garrafas_cliente.get(cliente_nif, 0)
 
+    print(f"Clientes: {clientes}")
+    print(page, per_page, total_pages)
     return render_template('tabelas/tabelaClientes.html', clientes=clientes)
+
+
+
+@app.route('/clientes/paginacao')
+def clientes_paginacao():
+    search_param = request.args.get('search_param', '')
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 10, type=int)
+
+    clients, per_page, page, total_pages = get_paginacao_clientes(search_param, page, per_page)
+
+    # Depuração para garantir que a paginação está funcionando corretamente
+    print(f"Clientes: {clients}")
+    print(f"Página atual: {page}")
+    print(f"Total de páginas: {total_pages}")
+    print(f"Parâmetro de busca: {search_param}")
+
+    return render_template('pagination.html', page=page, per_page=per_page, total_pages=total_pages, endpoint='clientes')
+
+
 
 @app.route('/clientesForm', methods=['GET', 'POST'])
 def clientesForm():
@@ -196,7 +236,7 @@ def encomendas():
     
     
 
-    return render_template('encomendas.html', encomendas=encomendas, page=page, per_page=per_page, total_pages=total_pages, total_records=total_records)
+    return render_template('encomendas.html', encomendas=encomendas, page=page, per_page=per_page, total_pages=total_pages, total_records=total_records, endpoint='encomendas')
 
 
 @app.route('/encomendas/paginacao')
@@ -228,7 +268,7 @@ def encomendas_paginacao():
     # Calcular o número total de páginas
     total_pages = (total_records + per_page - 1) // per_page
 
-    pagination_html = render_template('pagination.html', page=page, per_page=per_page, total_pages=total_pages)
+    pagination_html = render_template('pagination.html', page=page, per_page=per_page, total_pages=total_pages, endpoint='encomendas')
     return pagination_html
 
 @app.route('/encomendas/total')
