@@ -15,51 +15,66 @@ def clientes():
     page = request.args.get('page', 1, type=int)
     per_page = request.args.get('per_page', 10, type=int)
     search_param = request.args.get('search_param', '')
-    
-    if search_param:
-        clientes = Search_Clients(search_param)
-    else:
-        clientes = Search_Clients("")
 
-    total_clients = Get_Num_Clients()
+    clientes, per_page, page, total_pages = get_paginacao_clientes(search_param, page, per_page)
     num_garrafas_cliente = Get_Num_Garrafas_Cliente()
 
-    # Adicionar o número de garrafas aos dados dos clientes usando o NIF
     for cliente in clientes:
-        cliente_nif = cliente['NIF']  # Supondo que a chave primária do cliente seja 'NIF'
+        cliente_nif = cliente['NIF']
         cliente['num_garrafas'] = num_garrafas_cliente.get(cliente_nif, 0)
 
-    paginacao_results = get_paginacao_clientes(search_param)
-    clientes = paginacao_results[0]
-    print(f"Clientes yhaa: {clientes}")
-    total_pages = paginacao_results[3]
-    print(f"Total pages: {total_pages}")
-    print(f"page: {page}, per_page: {per_page}, search_param: {search_param}")
+    total_clients = Get_Num_Clients()
 
-    return render_template('clientes.html', clientes=clientes, total_clients=total_clients, total_garrafas_cliente=num_garrafas_cliente, page=page, per_page=per_page, search_param=search_param,total_pages=total_pages, endpoint='clientes')
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return render_template('tabelas/tabelaClientes.html', clientes=clientes)
+
+    return render_template('clientes.html', 
+                           clientes=clientes, 
+                           total_clients=total_clients, 
+                           total_garrafas_cliente=num_garrafas_cliente, 
+                           page=page, 
+                           per_page=per_page, 
+                           search_param=search_param,
+                           total_pages=total_pages, 
+                           endpoint='clientes')
 
 
 @app.route('/searchClientes', methods=['GET'])
 def searchClientes():
     search_param = request.args.get('nome', '')
-    clientes = Search_Clients(search_param)
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 10, type=int)
+    
+    clientes, per_page, page, total_pages = get_paginacao_clientes(search_param, page, per_page)
     num_garrafas_cliente = Get_Num_Garrafas_Cliente()
 
-
     for cliente in clientes:
-        cliente_nif = cliente['NIF']  
+        cliente_nif = cliente['NIF']
         cliente['num_garrafas'] = num_garrafas_cliente.get(cliente_nif, 0)
 
-    return render_template('tabelas/tabelaClientes.html', clientes=clientes)
+    print(f"Clientes: {clientes}")
+    print(page, per_page, total_pages)
+    return render_template('tabelas/tabelaClientes.html', clientes=clientes, page=page, per_page=per_page, total_pages=total_pages)
+
+
 
 @app.route('/clientes/paginacao')
 def clientes_paginacao():
-    
-    searchParams = request.args.get('search_param', '')
-    [clients, per_page, page, total_pages] = get_paginacao_clientes(searchParams)
-    pagination_html = render_template('pagination.html', page=page, per_page=per_page, total_pages=total_pages, endpoint='clientes')
+    search_param = request.args.get('search_param', '')
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 10, type=int)
 
-    return pagination_html
+    clients, per_page, page, total_pages = get_paginacao_clientes(search_param, page, per_page)
+
+    # Depuração para garantir que a paginação está funcionando corretamente
+    print(f"Clientes: {clients}")
+    print(f"Página atual: {page}")
+    print(f"Total de páginas: {total_pages}")
+    print(f"Parâmetro de busca: {search_param}")
+
+    return render_template('pagination.html', page=page, per_page=per_page, total_pages=total_pages, endpoint='clientes')
+
+
 
 @app.route('/clientesForm', methods=['GET', 'POST'])
 def clientesForm():

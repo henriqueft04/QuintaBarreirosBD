@@ -3,19 +3,16 @@ from flask import Flask, render_template, request,jsonify, Request, Response
 from database.connection import get_db_connection
 
 
+def Search_Clients(search_param, page, per_page):
+    query = """
+    SELECT * 
+    FROM QB.cliente
+    WHERE (? IS NULL OR QB.cliente.telemovel LIKE ? OR QB.cliente.nome LIKE ?)
+    ORDER BY nome
+    OFFSET ? ROWS FETCH NEXT ? ROWS ONLY
+    """
+    params = [search_param if search_param else None, '%' + search_param + '%', '%' + search_param + '%', (page-1) * per_page, per_page]
 
-def Search_Clients(search_param):
-    query = "SELECT * FROM QB.cliente"
-    params = []
-
-    if search_param:
-        if search_param.isdigit():
-            query += " WHERE QB.cliente.telemovel LIKE ?"
-            params.append('%' + search_param + '%')
-        else:
-            query += " WHERE QB.cliente.nome LIKE ?"
-            params.append('%' + search_param + '%')
-    
     db = get_db_connection()
     cursor = db.cursor()
     cursor.execute(query, params)
@@ -29,9 +26,9 @@ def Search_Clients(search_param):
             'nome': row[2],
             'telemovel': row[3],
             'tipo': row[4]
-
         }
         clientes_dict.append(cliente_dict)
+    
     return clientes_dict
 
 def Get_Num_Clients():
@@ -171,20 +168,26 @@ def get_TipoVinho():
 
     return tipos_vinho
 
-
-def get_paginacao_clientes(search_param):
-    page = request.args.get('page', 1, type=int)
-    search_param = request.args.get('search_param', '', type=str)
-    per_page = request.args.get('per_page', 10, type=int)
-    total_clients = Get_Num_Clients()
-    total_pages = (total_clients + per_page - 1) // per_page
-
+def get_paginacao_clientes(search_param, page, per_page):
     db = get_db_connection()
     cursor = db.cursor()
 
-    query = """EXEC QB.GetClientesPaginadas @PageNumber = ?, @RowsPerPage = ?, @SearchParam = ?"""
-    cursor.execute(query, (page, per_page, search_param))
-    clients = cursor.fetchall()
+    # Contar o número total de clientes que correspondem ao filtro
+    count_query = """
+    SELECT COUNT(*) 
+    FROM QB.cliente
+    WHERE (? IS NULL OR QB.cliente.telemovel LIKE ? OR QB.cliente.nome LIKE ?)
+    """
+    count_params = [search_param if search_param else None, '%' + search_param + '%', '%' + search_param + '%']
+    cursor.execute(count_query, count_params)
+    total_clients = cursor.fetchone()[0]
+
+    # Calcular o número total de páginas
+    total_pages = (total_clients + per_page - 1) // per_page
+
+    # Obter os clientes com paginação
+    clients = Search_Clients(search_param, page, per_page)
 
     return clients, per_page, page, total_pages
+
 

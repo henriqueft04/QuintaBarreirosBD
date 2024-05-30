@@ -65,8 +65,9 @@
                         </svg>
                     </span>
                     <input type="text" name="nome" id="search" hx-get="/searchClientes"
-                    hx-trigger="keyup delay:10ms changed"
-                    hx-target="#tabela-clientes" placeholder="Search" class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-64 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-green-400 dark:focus:border-green-300 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40">
+                        hx-trigger="keyup delay:10ms changed"
+                        hx-target="#tabela-clientes" placeholder="Search"
+                        class="block w-full py-1.5 pr-5 text-gray-700 bg-white border border-gray-200 rounded-lg md:w-64 placeholder-gray-400/70 pl-11 rtl:pr-11 rtl:pl-5 dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-green-400 dark:focus:border-green-300 focus:ring-green-300 focus:outline-none focus:ring focus:ring-opacity-40">
                 </div>
                 <div class="relative inline-block text-left" x-data="{ open: false }">
                     <button @click="open = !open" class="rounded-lg bg-white border border-gray-200 text-gray-700 py-1.5 px-4 inline-flex justify-between items-center dark:bg-[#20293A] dark:border-slate-700 dark:text-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-200">
@@ -119,7 +120,7 @@
                 <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
                     <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
                         <div id="tabela-clientes" >
-                            {% include 'tabelas/tabelaClientes.html' %}
+                            {% include 'tabelas/tabelaClientes.html' with context %}
                         </div>
                     </div>
                 </div>
@@ -158,5 +159,48 @@
             });
         });
     });
+    document.addEventListener('DOMContentLoaded', function() {
+    function setClientFilter(type, value) {
+        let filters = new URLSearchParams(window.location.search);
+        filters.set(type.toLowerCase(), value);
+
+        let url = '/clientes?' + filters.toString();
+        let paginationUrl = '/clientes/paginacao?' + filters.toString();
+        console.log(url);
+        console.log(paginationUrl);
+
+        fetch(url, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('tabela-clientes-container').innerHTML = html;
+        })
+        .catch(error => console.error('Error:', error));
+
+        fetch(paginationUrl, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('pagination-container').innerHTML = html;
+        })
+        .catch(error => console.error('Error:', error));
+    }
+
+    window.setClientFilter = setClientFilter;
+
+    // Adicionar listeners ao input de busca
+    document.getElementById('search').addEventListener('keyup', function(event) {
+        let searchParam = event.target.value;
+        setClientFilter('search_param', searchParam);
+    });
+});
+
+
 </script>
 {% endblock %}
