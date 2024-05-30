@@ -102,8 +102,8 @@ def encomendas():
     cursor = db.cursor()
 
     # Calcular o total de registros
-    total_query = "SELECT QB.fn_AtualizaContagemEncomendas()"
-    cursor.execute(total_query)
+    total_query = """SELECT QB.fn_AtualizaContagemEncomendas(?,?,?,?)"""
+    cursor.execute(total_query, (ano, mes, semana, dia))
     total_records = cursor.fetchone()[0]
 
     # Calcular o número total de páginas
@@ -120,18 +120,24 @@ def encomendas():
 
     return render_template('encomendas.html', encomendas=encomendas, page=page, per_page=per_page, total_pages=total_pages, total_records=total_records)
 
-
 @app.route('/encomendas/total')
 def encomendas_total():
+    ano = request.args.get('ano', type=int)
+    mes = request.args.get('mes', type=int)
+    semana = request.args.get('semana', type=int)
+    dia = request.args.get('dia', type=int)
+
     db = get_db_connection()
     cursor = db.cursor()
 
-    total_query = "SELECT QB.fn_AtualizaContagemEncomendas()"
-    cursor.execute(total_query)
+    total_query = "SELECT QB.fn_AtualizaContagemEncomendas(?,?,?,?)"
+    cursor.execute(total_query, (ano, mes, semana, dia))
     total_records = cursor.fetchone()[0]
     db.close()
 
     return f'<span id="total-encomendas" class="px-3 py-1 text-xs text-green-600 bg-green-100 rounded-full dark:bg-gray-800 dark:text-green-400">{total_records} Encomendas</span>'
+
+
 
 
 @app.route('/engarrafamentos')
