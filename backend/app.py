@@ -1,6 +1,7 @@
 from flask import Flask, request, redirect, url_for, render_template
 from database.connection import get_db_connection 
 from app.models import *
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -97,7 +98,15 @@ def encomendas():
     ano = request.args.get('ano', type=int)
     mes = request.args.get('mes', type=int)
     semana = request.args.get('semana', type=int)
-    dia = request.args.get('dia', type=int)
+    dia = request.args.get('dia', type=str)
+
+    if dia:
+        try:
+            dia = datetime.strptime(dia, '%Y-%m-%d').date()
+        except ValueError:
+            dia = None
+    else:
+        dia = None
 
     db = get_db_connection()
     cursor = db.cursor()
@@ -117,6 +126,7 @@ def encomendas():
     db.close()
 
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        print(ano , "\n" , mes , "\n" , semana , "\n" , dia)
         print(encomendas)
         table_html = render_template('tabelas/tabelaEncomendas.html', encomendas=encomendas)
         return table_html
@@ -132,7 +142,15 @@ def encomendas_paginacao():
     ano = request.args.get('ano', type=int)
     mes = request.args.get('mes', type=int)
     semana = request.args.get('semana', type=int)
-    dia = request.args.get('dia', type=int)
+    dia = request.args.get('dia', type=str)
+
+    if dia:
+        try:
+            dia = datetime.strptime(dia, '%Y-%m-%d').date()
+        except ValueError:
+            dia = None
+    else:
+        dia = None
 
     db = get_db_connection()
     cursor = db.cursor()
@@ -153,7 +171,15 @@ def encomendas_total():
     ano = request.args.get('ano', type=int)
     mes = request.args.get('mes', type=int)
     semana = request.args.get('semana', type=int)
-    dia = request.args.get('dia', type=int)
+    dia = request.args.get('dia', type=str)
+
+    if dia:
+        try:
+            dia = datetime.strptime(dia, '%Y-%m-%d').date()
+        except ValueError:
+            dia = None
+    else:
+        dia = None
 
     db = get_db_connection()
     cursor = db.cursor()
