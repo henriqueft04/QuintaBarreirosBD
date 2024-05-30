@@ -191,7 +191,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         var modals = document.querySelectorAll('.open-modal');
         modals.forEach(function(button) {
-            button.addEventListener('click', function() {
+            button.addEventListener('htmx:afterSwap', function() {
                 var modal = document.querySelector(button.getAttribute('hx-target'));
                 modal.classList.remove('hidden');
             });

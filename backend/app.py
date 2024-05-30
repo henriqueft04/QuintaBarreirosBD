@@ -35,6 +35,7 @@ def searchClientes():
     clientes = Search_Clients(search_param)
     num_garrafas_cliente = Get_Num_Garrafas_Cliente()
 
+
     for cliente in clientes:
         cliente_nif = cliente['NIF']  
         cliente['num_garrafas'] = num_garrafas_cliente.get(cliente_nif, 0)
@@ -74,7 +75,9 @@ def clientesForm():
 def encomendaDetalhes():
     nif_cliente = request.args.get('nif')
     encomendas = Get_Encomendas_Cliente(nif_cliente)
+    print(f"Encomendas do cliente {nif_cliente}: {encomendas}")
     return render_template('tabelas/tabelaEncomendas.html', encomendas=encomendas)
+
 
 
 @app.route('/fornecedores')
