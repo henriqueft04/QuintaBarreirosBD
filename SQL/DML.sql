@@ -228,25 +228,23 @@ INSERT INTO QB.rotulo (id_componente, NIF_cliente, notacao_tipoVinho) VALUES
 (1005, 345678901, 'Vinho Branco Tradicional');
 
 INSERT INTO QB.tipoRolha (id, material, formato) VALUES
-(5001, 'Cork', 'Standard'),
-(5002, 'Synthetic', 'Long'),
-(5003, 'Cork', 'Short'),
-(5004, 'Synthetic', 'Standard'),
-(5005, 'Cork', 'Long');
+(21, 'Cortiça', 'Simples'),
+(22, 'Cortiça', 'QB'),
+(23, 'Metal', 'Carica'),
+(24, 'Cortiça', 'Frizante');
 
 INSERT INTO QB.rolha (id_componente, id_tipoRolha) VALUES
-(1001, 5001),
-(1002, 5002),
-(1003, 5003),
-(1004, 5004),
-(1005, 5005);
+(2, 21),
+(2, 22),
+(2, 23),
+(2, 24);
 
 INSERT INTO QB.tipoRolha_fornecedor (id_tipoRolha, NIF, data, quantidade) VALUES
-(5001, 987654322, '2024-04-01', 2000),
-(5002, 256986503, '2024-04-02', 1500),
-(5003, 712983756, '2024-04-03', 1000),
-(5004, 837249200, '2024-04-04', 1800),
-(5005, 987654322, '2024-04-05', 2200);
+(21, 987654322, '2024-04-01', 2000),
+(22, 256986503, '2024-04-02', 1500),
+(23, 712983756, '2024-04-03', 1000),
+(24, 837249200, '2024-04-04', 1800);
+
 
 INSERT INTO QB.selo (id_componente, ano, categoria) VALUES
 (1001, 2024, 'DOC'),
