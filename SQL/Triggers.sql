@@ -1,11 +1,13 @@
-CREATE TRIGGER trg_UpdateTotalClientes
-ON QB.cliente
-AFTER INSERT
-AS
-    BEGIN
-        DECLARE @totalClientes INT;
+use p8g4
+GO
 
-        SELECT @totalClientes = COUNT(*) FROM QB.cliente;
-    end
+CREATE TRIGGER trg_AtualizarEncomendas
 
-SELECT COUNT(*) AS TotalClientes FROM QB.cliente;
+ON QB.encomenda
+AFTER INSERT, UPDATE, DELETE
+AS 
+	BEGIN
+		DECLARE @TotalEncomendas INT;
+		SET @TotalEncomendas = (SELECT QB.fn_AtualizaContagemEncomendas());
+	END;
+GO
