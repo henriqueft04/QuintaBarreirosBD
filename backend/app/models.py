@@ -42,7 +42,7 @@ def Search_Clients(search_param):
     return clientes_dict
 
 def Get_Num_Clients():
-    query = "{CALL QB.p_getNumberOfClients}"
+    query = "SELECT COUNT(*) AS TotalClientes FROM QB.cliente"
 
     db = get_db_connection()
     cursor = db.cursor()
@@ -101,7 +101,6 @@ def Get_Encomendas_Cliente(nif_cliente):
             'Denominacao': row[7],
             'QuantidadeItems': row[8]
         }
-        print(f"Encomenda: {encomenda}")  # Log para depuração
 
         encomendas.append(encomenda)
     
