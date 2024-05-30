@@ -1,6 +1,7 @@
 from flask import Flask, request, redirect, url_for, render_template
 from database.connection import get_db_connection 
 from app.models import *
+from datetime import datetime
 
 app = Flask(__name__)
 
@@ -71,8 +72,8 @@ def clientesForm():
         else:
             return render_template('forms/clienteForm.html')
 
-@app.route('/encomendaDetalhes', methods=['GET'])
-def encomendaDetalhes():
+@app.route('/encomendaMultiplas', methods=['GET'])
+def encomendaMultiplas():
     nif_cliente = request.args.get('nif')
     encomendas = Get_Encomendas_Cliente(nif_cliente)
     print(f"Encomendas do cliente {nif_cliente}: {encomendas}")
@@ -113,10 +114,16 @@ def encomendas():
     ano = request.args.get('ano', type=int)
     mes = request.args.get('mes', type=int)
     semana = request.args.get('semana', type=int)
-    dia = request.args.get('dia', type=int)
+    dia = request.args.get('dia', type=str)
 
-    print(ano)
-    
+    if dia:
+        try:
+            dia = datetime.strptime(dia, '%Y-%m-%d').date()
+        except ValueError:
+            dia = None
+    else:
+        dia = None
+
     db = get_db_connection()
     cursor = db.cursor()
 
@@ -135,26 +142,71 @@ def encomendas():
     db.close()
 
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        return render_template('tabelas/tabelaEncomendas.html', encomendas=encomendas)
+        print(ano , "\n" , mes , "\n" , semana , "\n" , dia)
+        print(encomendas)
+        table_html = render_template('tabelas/tabelaEncomendas.html', encomendas=encomendas)
+        return table_html
 
     return render_template('encomendas.html', encomendas=encomendas, page=page, per_page=per_page, total_pages=total_pages, total_records=total_records)
+
+
+@app.route('/encomendas/paginacao')
+def encomendas_paginacao():
+    # Obter a página atual e o número de registros por página da query string
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 10, type=int)
+    ano = request.args.get('ano', type=int)
+    mes = request.args.get('mes', type=int)
+    semana = request.args.get('semana', type=int)
+    dia = request.args.get('dia', type=str)
+
+    if dia:
+        try:
+            dia = datetime.strptime(dia, '%Y-%m-%d').date()
+        except ValueError:
+            dia = None
+    else:
+        dia = None
+
+    db = get_db_connection()
+    cursor = db.cursor()
+
+    # Calcular o total de registros
+    total_query = """SELECT QB.fn_AtualizaContagemEncomendas(?,?,?,?)"""
+    cursor.execute(total_query, (ano, mes, semana, dia))
+    total_records = cursor.fetchone()[0]
+
+    # Calcular o número total de páginas
+    total_pages = (total_records + per_page - 1) // per_page
+
+    pagination_html = render_template('pagination.html', page=page, per_page=per_page, total_pages=total_pages)
+    return pagination_html
 
 @app.route('/encomendas/total')
 def encomendas_total():
     ano = request.args.get('ano', type=int)
     mes = request.args.get('mes', type=int)
     semana = request.args.get('semana', type=int)
-    dia = request.args.get('dia', type=int)
+    dia = request.args.get('dia', type=str)
+
+    if dia:
+        try:
+            dia = datetime.strptime(dia, '%Y-%m-%d').date()
+        except ValueError:
+            dia = None
+    else:
+        dia = None
 
     db = get_db_connection()
     cursor = db.cursor()
-
+    print(ano)
     total_query = "SELECT QB.fn_AtualizaContagemEncomendas(?,?,?,?)"
     cursor.execute(total_query, (ano, mes, semana, dia))
     total_records = cursor.fetchone()[0]
+    print("total", total_records)
     db.close()
 
-    return f'<span id="total-encomendas" class="px-3 py-1 text-xs text-green-600 bg-green-100 rounded-full dark:bg-gray-800 dark:text-green-400">{total_records} Encomendas</span>'
+    return str(total_records)
 
 
 
