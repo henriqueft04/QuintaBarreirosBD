@@ -133,43 +133,55 @@
 
     });
     function setFilter(type, value) {
-            let filters = new URLSearchParams(window.location.search);
-            filters.set(type.toLowerCase(), value);
+    let filters = new URLSearchParams(window.location.search);
+    filters.set(type.toLowerCase(), value);
 
-            let url = '/encomendas?' + filters.toString();
-            let urltotal = '/encomendas/total?' + filters.toString();
-            console.log(url);
-            console.log(urltotal);
+    let url = '/encomendas?' + filters.toString();
+    let paginationUrl = '/encomendas/paginacao?' + filters.toString();
+    console.log(url);
+    console.log(paginationUrl);
 
-            fetch(url, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(response => response.text())
-            .then(html => {
-                document.getElementById('tabela-encomendas-container').innerHTML = html;
-                document.getElementById('pagination-container').innerHTML = html;
-                // reatach
-                document.querySelectorAll('.open-modal').forEach(button => {
-                    button.addEventListener('click', function() {
-                        var orderId = this.getAttribute('data-order-id');
-                        console.log("Order ID: " + orderId); // Exibe o ID da encomenda no console
-                    });
-                });
-            })
-            .catch(error => console.error('Error:', error));
-
-            fetch(urltotal, {
-                headers: {
-                    'X-Requested-With': 'XMLHttpRequest'
-                }
-            })
-            .then(response => response.text())
-            .then(text => {
-                document.getElementById('total-encomendas').innerText = text + ' Encomendas';
-            })
-            .catch(error => console.error('Error:', error));
+    fetch(url, {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
         }
+    })
+    .then(response => response.text())
+    .then(html => {
+        document.getElementById('tabela-encomendas-container').innerHTML = html;
+        // reatach
+        document.querySelectorAll('.open-modal').forEach(button => {
+            button.addEventListener('click', function() {
+                var orderId = this.getAttribute('data-order-id');
+                console.log("Order ID: " + orderId); // Exibe o ID da encomenda no console
+            });
+        });
+    })
+    .catch(error => console.error('Error:', error));
+
+    fetch(paginationUrl, {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.text())
+    .then(html => {
+        document.getElementById('pagination-container').innerHTML = html;
+    })
+    .catch(error => console.error('Error:', error));
+
+    let urltotal = '/encomendas/total?' + filters.toString();
+    fetch(urltotal, {
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest'
+        }
+    })
+    .then(response => response.text())
+    .then(text => {
+        document.getElementById('total-encomendas').innerText = text + ' Encomendas';
+    })
+    .catch(error => console.error('Error:', error));
+}
+
 </script>
 {% endblock %}

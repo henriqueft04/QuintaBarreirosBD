@@ -119,10 +119,34 @@ def encomendas():
     if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
         print(encomendas)
         table_html = render_template('tabelas/tabelaEncomendas.html', encomendas=encomendas)
-        pagination_html = render_template('pagination.html', page=page, per_page=per_page, total_pages=total_pages)
-        return table_html + pagination_html
+        return table_html
 
     return render_template('encomendas.html', encomendas=encomendas, page=page, per_page=per_page, total_pages=total_pages, total_records=total_records)
+
+
+@app.route('/encomendas/paginacao')
+def encomendas_paginacao():
+    # Obter a página atual e o número de registros por página da query string
+    page = request.args.get('page', 1, type=int)
+    per_page = request.args.get('per_page', 10, type=int)
+    ano = request.args.get('ano', type=int)
+    mes = request.args.get('mes', type=int)
+    semana = request.args.get('semana', type=int)
+    dia = request.args.get('dia', type=int)
+
+    db = get_db_connection()
+    cursor = db.cursor()
+
+    # Calcular o total de registros
+    total_query = """SELECT QB.fn_AtualizaContagemEncomendas(?,?,?,?)"""
+    cursor.execute(total_query, (ano, mes, semana, dia))
+    total_records = cursor.fetchone()[0]
+
+    # Calcular o número total de páginas
+    total_pages = (total_records + per_page - 1) // per_page
+
+    pagination_html = render_template('pagination.html', page=page, per_page=per_page, total_pages=total_pages)
+    return pagination_html
 
 @app.route('/encomendas/total')
 def encomendas_total():
