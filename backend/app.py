@@ -72,8 +72,8 @@ def clientesForm():
         else:
             return render_template('forms/clienteForm.html')
 
-@app.route('/encomendaDetalhes', methods=['GET'])
-def encomendaDetalhes():
+@app.route('/encomendaMultiplas', methods=['GET'])
+def encomendaMultiplas():
     nif_cliente = request.args.get('nif')
     encomendas = Get_Encomendas_Cliente(nif_cliente)
     print(f"Encomendas do cliente {nif_cliente}: {encomendas}")

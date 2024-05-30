@@ -88,7 +88,6 @@
         <div id= "encomendasCliente" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
             <div class="bg-white rounded-lg p-8">
                 <div id="modal-multiplasEnc">
-
                 </div>
                 <button id="closeNewOrderModal" class="close-modal mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">Fechar</button>
             </div>
@@ -101,12 +100,21 @@
                 <button id="closeNewOrderModal" class="close-modal mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">Fechar</button>
             </div>
         </div>
+        <div id="detalhesEncDiv" class="modal hidden fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center">
+            <div class="bg-white rounded-lg p-8">
+                <div id="modal-detalhesEnc">
+                    
+                </div>
+                <button id="closeNewOrderModal" class="close-modal mt-4 px-4 py-2 bg-red-500 text-white rounded-lg">Fechar</button>
+            </div>
+        </div>
     </div>
 
     <script src="https://unpkg.com/htmx.org"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/encomendas.js') }}"></script>
     <script src="https://kit.fontawesome.com/b32138acf9.js" crossorigin="anonymous"></script>
 
     
