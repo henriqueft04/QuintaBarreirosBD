@@ -112,6 +112,7 @@
 
     <script src="https://unpkg.com/htmx.org"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="{{ url_for('static', filename='js/nova-encomenda.js') }}"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="{{ url_for('static', filename='js/index.js') }}"></script>
     <script src="https://kit.fontawesome.com/b32138acf9.js" crossorigin="anonymous"></script>
@@ -133,6 +134,67 @@
             if (event.detail.target.id === 'tabela-clientes') {
                 closeModal();
             }
+        });
+    </script>
+    <script>
+
+        document.getElementById('add-item').addEventListener('click', () => {
+            const itemsContainer = document.getElementById('items-container');
+            const itemCount = itemsContainer.children.length + 1;
+            const newItem = document.createElement('div');
+            newItem.className = 'item grid grid-cols-4 space-x-4';
+
+            newItem.innerHTML = `
+                <div>
+                    <label for="item-${itemCount}" class="block text-sm font-medium text-gray-700">Item</label>
+                    <select id="item-${itemCount}" name="items[]" class="mt-1 border border-gray-200 p-1 rounded-lg block w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                        {% for vinho in tipos_vinho %}
+                        <option value="{{vinho.id}}">{{ vinho.denominacao }}-{{vinho.id}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label for="quantity-caixas-${itemCount}" class="block text-sm font-medium text-gray-700">Quantidade Caixas <i class="fas fas fa-box-open"></i></label>
+                    <input type="number" id="quantity-caixas-${itemCount}" name="quantities_caixas[]" class="mt-1 border border-gray-200 p-1 rounded-lg block w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                </div>
+                <div>
+                    <label for="quantity-garrafas-${itemCount}" class="block text-sm font-medium text-gray-700">Quantidade Garrafas <i class="fas fas fa-wine-bottle"></i></label>
+                    <input type="number" id="quantity-garrafas-${itemCount}" name="quantities_garrafas[]" class="mt-1 border border-gray-200 p-1 rounded-lg block w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                </div>
+                <div>
+                    <label for="quantity-garrafoes-${itemCount}" class="block text-sm font-medium text-gray-700">Quantidade Garrafões <i class="fa-solid fa-jug-detergent"></i></label>
+                    <input type="number" id="quantity-garrafoes-${itemCount}" name="quantities_garrafoes[]" class="mt-1 border border-gray-200 p-1 rounded-lg block w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                </div>
+            `;
+
+            itemsContainer.appendChild(newItem);
+        });
+
+        document.getElementById('remove-item').addEventListener('click', () => {
+            const itemsContainer = document.getElementById('items-container');
+            if (itemsContainer.children.length > 0) {
+                itemsContainer.removeChild(itemsContainer.lastChild);
+            }
+        });
+
+        document.getElementById('new-order-form').addEventListener('submit', (event) => {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+
+            fetch('/inserir_encomenda', {
+                method: 'POST',
+                body: formData
+            }).then(response => {
+                if (response.ok) {
+                    alert('Encomenda inserida com sucesso!');
+                    window.location.reload();
+                } else {
+                    alert('Erro ao inserir encomenda.');
+                }
+            }).catch(error => {
+                console.error('Erro:', error);
+                alert('Erro ao inserir encomenda.');
+            });
         });
     </script>
 </body>
