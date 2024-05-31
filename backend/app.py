@@ -180,9 +180,32 @@ def novoFornecimento():
     except Exception as e:
         print(f"ERRO: {e}")
         return render_template('forms/novoFornecimento.html', error=str(e))
+
+@app.route('/novoFornecedor', methods=['GET', 'POST'])
+def novoFornecedor():
+    if request.method == 'POST':
+        try:
+            nomeFornecedor = request.form['nomeFornecedor']
+            telemovelForn = request.form['telemovelForn']
+            telemovelForn = int(telemovelForn)
+            NIF_forn = request.form['NIF_forn']
+            NIF_forn = int(NIF_forn)
+            morada_forn = request.form['morada_forn']
+
+            print(f"Recebido: Nome={nomeFornecedor}, Telemovel={telemovelForn}, NIF={NIF_forn}, Morada={morada_forn}")
+            Insert_Fornecedor(nomeFornecedor, telemovelForn, NIF_forn, morada_forn)
+
+
+            fornecedores = Search_Fornecedor("")
+            print(f"Fornecedor inserido com sucesso: {nomeFornecedor}, {telemovelForn}, {NIF_forn}, {morada_forn}")
+
+        except Exception as e:
+            print(f"Erro ao inserir fornecedor: {e}")
+            return render_template('forms/novoFornecedor.html', error=str(e))
         
-
-
+        return render_template('tabelas/tabelaFornecimentos.html', fornecedores=fornecedores)
+    else:
+        return render_template('forms/novoFornecedor.html')
 
 @app.route('/nova-encomenda')
 def nova_encomenda():
@@ -340,10 +363,6 @@ def novoVinho():
 @app.route('/novaRolha')
 def novaRolha():
     return render_template('forms/novaRolha.html')
-
-@app.route('/novoFornecedor')
-def novoFornecedor():
-    return render_template('forms/novoFornecedor.html')
 
 @app.route('/encomendaDetalhes')
 def encomendasDetalhes():

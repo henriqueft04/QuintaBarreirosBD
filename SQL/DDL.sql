@@ -62,7 +62,7 @@ CREATE TABLE [QB].[fornecedor] (
   [NIF] varchar(20) PRIMARY KEY,
   [morada] varchar(255),
   [nome] varchar(255),
-  [telemovel] int,
+  [telemovel] bigint,
 )
 GO
 
@@ -73,7 +73,7 @@ CREATE TABLE [QB].[encomenda] (
   [valor] decimal,
   [notas] varchar(255),
   [data] date,
-  [numero] int PRIMARY KEY
+  [numero] int IDENTITY(1,1) PRIMARY KEY
 )
 GO
 

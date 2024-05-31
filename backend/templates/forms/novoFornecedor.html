@@ -1,7 +1,7 @@
 
 
 {% block content %}
-<form id="new-fornecedor-form" class="bg-white p-6 rounded-lg shadow-lg">
+<form id="new-fornecedor-form" class="bg-white p-6 rounded-lg shadow-lg" method="POST", hx-post="{{ url_for('novoFornecedor') }}">
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div >
             <label for="nomeFornecedor" class="block text-sm font-medium text-gray-700">Nome</label>
@@ -23,7 +23,7 @@
 
     <div class="mt-6 flex flex-col gap-y-4">
         <button type="reset" id="add-item" class="mt-4 px-4 py-2 status-button por-pagar ">Recomeçar</button>
-        <button type="submit" hx-post="/rotaParaSalvar" hx-target="#resultado" hx-swap="outerHTML" class="px-4 py-2 status-button qb close-modal">Salvar</button>
+        <button type="submit" hx-target="#tabela-fornecedores" hx-swap="outerHTML" class="px-4 py-2 status-button qb close-modal">Salvar</button>
     </div>
 </form>
 

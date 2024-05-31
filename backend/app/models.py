@@ -169,6 +169,16 @@ def Insert_Fornecimento(nome, tipo, quantidade, data):
     db.commit()
     cursor.close()
 
+def Insert_Fornecedor(nomeFornecedor, telemovelForn, NIF_forn, morada_forn):
+    db = get_db_connection()
+    cursor = db.cursor()
+
+    query = "{CALL QB.insert_fornecedor(?, ?, ?, ?)}"
+
+    cursor.execute(query, (nomeFornecedor, telemovelForn, NIF_forn, morada_forn))
+    db.commit()
+    cursor.close()
+
 def get_TipoVinho():
     
     query = """SELECT denominacao FROM QB.tipoVinho"""

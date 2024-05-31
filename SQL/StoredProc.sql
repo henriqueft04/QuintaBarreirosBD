@@ -1,15 +1,4 @@
-DROP PROC IF EXISTS QB.p_getNumberOfClients
-GO
-DROP PROC IF EXISTS QB.p_NumberOfBottlesPerClient
-GO
-DROP PROC IF EXISTS QB.p_DetalhesEcomendasPorCliente
-GO
-DROP PROC IF EXISTS QB.p_AdicionarCliente
-GO
-DROP PROCEDURE IF EXISTS QB.fornecimentos
-GO
-DROP PROCEDURE IF EXISTS QB.engarrafamentos
-GO
+
 
 CREATE PROC QB.p_getNumberOfClients
 AS
@@ -114,6 +103,70 @@ AS
 	END;
 go
 
+CREATE   PROC QB.insert_fornecimento
+    @nomeFornecedor varchar(255),
+    @tipoRolha varchar(255),
+    @quantidadeRolhas int,
+    @data DATE
+AS
+BEGIN
+    DECLARE @nif int;
+    DECLARE @material varchar(255);
+    DECLARE @formato varchar(255);
+    DECLARE @tipoRolhaId INT;
+    DECLARE @componenteId INT = 2;
+
+    -- obter o formato e o material das rolhas atraves do nome
+    SET @material = SUBSTRING(@tipoRolha, 1, CHARINDEX(' - ', @tipoRolha) - 1);
+    SET @formato = SUBSTRING(@tipoRolha, CHARINDEX(' - ', @tipoRolha) + 3, LEN(@tipoRolha) - CHARINDEX(' - ', @tipoRolha) - 2);
+
+    -- verificar se o fornecedor existe
+    SELECT @nif = NIF
+    FROM QB.fornecedor
+    WHERE nome = @nomeFornecedor
+
+    IF @nif IS NULL
+    BEGIN
+        PRINT 'Erro: Fornecedor não existe.';
+        RETURN;
+    END
+
+    -- obter id tipo de rolha a partir do material e do formato
+    SELECT @tipoRolhaId = id
+    FROM QB.tipoRolha
+    WHERE material = @material AND formato = @formato
+
+    if @tipoRolhaId IS NULL
+    BEGIN
+        PRINT 'Erro: Tipo de rolha não existe.';
+        RETURN;
+    END
+
+    BEGIN TRANSACTION
+
+    BEGIN TRY
+        BEGIN
+            -- Atualizar a quantidade
+            UPDATE QB.tipoRolha_Fornecedor
+            SET quantidade = quantidade + @quantidadeRolhas
+            WHERE NIF = @NIF AND id_tipoRolha = @tipoRolhaId;
+        END
+
+        UPDATE QB.componente
+        SET quantidade = quantidade + @quantidadeRolhas
+        WHERE id = @componenteId;
+
+        COMMIT TRANSACTION;
+        PRINT 'Fornecimento inserido com sucesso!';
+
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION ;
+    END CATCH
+END
+go
+
+
 CREATE PROCEDURE QB.engarrafamentos
 AS
 BEGIN
@@ -133,5 +186,59 @@ BEGIN
 END;
 go
 
+CREATE PROC QB.insert_fornecedor
+    @nomeFornecedor varchar(255),
+    @telemovelForn INT,
+    @NIF_forn INT,
+    @morada_forn varchar(255)
 
+AS
+BEGIN
+    SET NOCOUNT ON;
 
+    BEGIN TRY
+        BEGIN TRANSACTION
+        INSERT INTO QB.fornecedor (NIF, morada, nome, telemovel)
+        VALUES (@NIF_forn, @morada_forn, @nomeFornecedor, @telemovelForn)
+
+        COMMIT TRANSACTION
+    END TRY
+
+    BEGIN CATCH
+        ROLLBACK TRANSACTION
+
+        DECLARE @ErrorMessage NVARCHAR(4000), @ErrorSeverity INT, @ErrorState INT
+        SELECT @ErrorMessage = ERROR_MESSAGE(), @ErrorSeverity = ERROR_SEVERITY(), @ErrorState = ERROR_STATE()
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState)
+    END CATCH
+END
+GO
+
+CREATE OR ALTER PROC QB.deleteCuba
+    @codigo INT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF EXISTS (SELECT 1 FROM [QB].[cuba] WHERE [codigo] = @codigo)
+    BEGIN
+        BEGIN TRY
+
+            BEGIN TRANSACTION
+                DELETE FROM [QB].[cuba_engarrafamento] WHERE [codigo_Cuba] = @codigo;
+                DELETE FROM [QB].[cuba] WHERE [codigo] = @codigo;
+                COMMIT TRANSACTION;
+
+                PRINT 'cuba eliminada.';
+        END TRY
+        begin catch
+            ROLLBACK TRANSACTION;
+            PRINT 'erro ao eliminar a cuba.';
+        end catch
+    END
+    ELSE
+    BEGIN
+        PRINT 'cuba não encontrada.';
+    END
+end
+GO

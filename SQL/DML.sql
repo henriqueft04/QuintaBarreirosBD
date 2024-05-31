@@ -166,27 +166,27 @@ INSERT INTO QB.fornecedor (NIF, morada, nome, telemovel) VALUES
 (712983756, 'Rua da Cortiça', 'Rolhas3', 961234567),
 (837249200, 'Rua da República', 'Rolhas4', 961234567);
 
-INSERT INTO QB.encomenda (NIF_cliente, estadoPagamento, fatura, valor, notas, data, numero) VALUES
-(123456789, 1, 1, 250.50, 'Primeira encomenda', '2024-05-01', 1),
-(987654321, 1, 0, 150.75, 'Encomenda sem fatura', '2024-05-02', 2),
-(256986703, 0, 1, 300.00, 'Cliente frequente', '2024-05-03', 3),
-(234567890, 0, 1, 120.99, 'Nova encomenda', '2024-05-04', 4),
-(345678901, 1, 0, 175.50, 'Promoção especial', '2024-05-05', 5),
-(456789677, 1,1, 210.00, 'Encomenda grande', '2024-05-06', 6),
-(567890123, 1, 0, 50.25, 'Pequena encomenda', '2024-05-07', 7),
-(678901234, 0, 1, 400.75, 'Encomenda VIP', '2024-05-08', 8),
-(789012345, 0, 1, 225.00, 'Cliente antigo', '2024-05-09', 9),
-(890123456, 1, 0, 130.45, 'Encomenda rápida', '2024-05-10', 10),
-(901234567, 1, 1, 300.50, 'Encomenda de grande volume', '2024-05-11', 11),
-(234567880, 1, 0, 85.75, 'Encomenda para evento', '2024-05-12', 12),
-(345672901, 1, 1, 500.00, 'Encomenda mensal', '2024-05-13', 13),
-(456789657, 1, 0, 120.00, 'Encomenda pequena', '2024-05-14', 14),
-(567890133, 0, 1, 250.25, 'Encomenda urgente', '2024-05-15', 15),
-(678901434, 0, 0, 275.75, 'Encomenda especial', '2024-05-16', 16),
-(789012343, 1, 1, 150.00, 'Encomenda de rotina', '2024-05-17', 17),
-(890122456, 1, 0, 95.45, 'Encomenda de teste', '2024-05-18', 18),
-(901235567, 1, 1, 350.75, 'Encomenda grande', '2024-05-19', 19),
-(123457788, 0, 0, 220.99, 'Encomenda de promoção', '2024-05-20', 20);
+INSERT INTO QB.encomenda (NIF_cliente, estadoPagamento, fatura, valor, notas, data) VALUES
+(123456789, 1, 1, 250.50, 'Primeira encomenda', '2024-05-01'),
+(987654321, 1, 0, 150.75, 'Encomenda sem fatura', '2024-05-02'),
+(256986703, 0, 1, 300.00, 'Cliente frequente', '2024-05-03'),
+(234567890, 0, 1, 120.99, 'Nova encomenda', '2024-05-04'),
+(345678901, 1, 0, 175.50, 'Promoção especial', '2024-05-05'),
+(456789677, 1,1, 210.00, 'Encomenda grande', '2024-05-06'),
+(567890123, 1, 0, 50.25, 'Pequena encomenda', '2024-05-07'),
+(678901234, 0, 1, 400.75, 'Encomenda VIP', '2024-05-08'),
+(789012345, 0, 1, 225.00, 'Cliente antigo', '2024-05-09'),
+(890123456, 1, 0, 130.45, 'Encomenda rápida', '2024-05-10'),
+(901234567, 1, 1, 300.50, 'Encomenda de grande volume', '2024-05-11'),
+(234567880, 1, 0, 85.75, 'Encomenda para evento', '2024-05-12'),
+(345672901, 1, 1, 500.00, 'Encomenda mensal', '2024-05-13'),
+(456789657, 1, 0, 120.00, 'Encomenda pequena', '2024-05-14'),
+(567890133, 0, 1, 250.25, 'Encomenda urgente', '2024-05-15'),
+(678901434, 0, 0, 275.75, 'Encomenda especial', '2024-05-16'),
+(789012343, 1, 1, 150.00, 'Encomenda de rotina', '2024-05-17'),
+(890122456, 1, 0, 95.45, 'Encomenda de teste', '2024-05-18'),
+(901235567, 1, 1, 350.75, 'Encomenda grande', '2024-05-19'),
+(123457788, 0, 0, 220.99, 'Encomenda de promoção', '2024-05-20');
 
 INSERT INTO QB.stock (id_tipoVinho, id, quantidade, peso_liquido, peso_bruto, preco, dataEng) VALUES
 (101, 1001, 100, 700, 800, 25.50, '2021-12-10'),
