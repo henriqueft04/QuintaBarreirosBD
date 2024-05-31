@@ -119,6 +119,7 @@ def get_fornecimentos():
 def get_engarrafamentos(orderBy):
     query = "EXEC QB.engarrafamentos ?"
     params = (orderBy,)
+    print(f"QUERY: {query + str(params)}")
 
     db = get_db_connection()
     cursor = db.cursor()
@@ -131,7 +132,7 @@ def get_engarrafamentos(orderBy):
     total_engarrafamentos = cursor.fetchone()
 
     total_engarrafamentos = total_engarrafamentos[0] if total_engarrafamentos else 0
-
+    print(f"engarrafamentos: {engarrafamentos}")
     cursor.close()
     db.close()
 

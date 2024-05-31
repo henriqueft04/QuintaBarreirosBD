@@ -167,23 +167,51 @@ END
 go
 
 
-CREATE PROCEDURE QB.engarrafamentos
+CREATE OR ALTER PROCEDURE QB.engarrafamentos
+    @orderBy varchar(20) = NULL
 AS
 BEGIN
-	SELECT codigo_Cuba AS codigo_cuba, dataEng, litragemEng as litragem, quantidade, notacao, denominacao
-		FROM QB.cuba_engarrafamento
-		JOIN QB.engarrafamento
-			ON dataEng = dataEngarrafamento
-		JOIN QB.cuba
-			ON codigo_Cuba = cuba.codigo
-		JOIN QB.tipoVinho
-			ON tipoVinho.id = cuba.id_TipoVinho
+    SET NOCOUNT ON;
 
-	SELECT COUNT(*) AS total_engarrafamentos
-		FROM QB.engarrafamento;
+    IF @orderBy IS NULL OR @orderBy = ''
+    BEGIN
+        SET @orderBy = 'Mais Recente';
+    END
 
+    SELECT
+        codigo_Cuba AS codigo_cuba,
+        dataEng,
+        litragemEng as litragem,
+        quantidade,
+        notacao,
+        denominacao
+    FROM
+        QB.cuba_engarrafamento
+    JOIN
+        QB.engarrafamento
+        ON dataEng = dataEngarrafamento
+    JOIN
+        QB.cuba
+        ON codigo_Cuba = cuba.codigo
+    LEFT JOIN
+        QB.tipoVinho
+        ON tipoVinho.id = cuba.id_TipoVinho
+    ORDER BY
+        CASE
+            WHEN @orderBy = 'Maior Litragem' THEN litragemEng END DESC,
+        CASE
+            WHEN @orderBy = 'Menor Litragem' THEN litragemEng END,
+        CASE
+            WHEN @orderBy = 'Mais Recente' THEN dataEng END DESC,
+        CASE
+            WHEN @orderBy = 'Mais Antigo' THEN dataEng END;
 
+    SELECT
+        COUNT(*) AS total_engarrafamentos
+    FROM
+        QB.engarrafamento;
 END;
+
 go
 
 CREATE PROC QB.insert_fornecedor
