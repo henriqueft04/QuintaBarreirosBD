@@ -190,7 +190,7 @@ def Insert_Fornecedor(nomeFornecedor, telemovelForn, NIF_forn, morada_forn):
 
 def get_TipoVinho():
     
-    query = """SELECT denominacao FROM QB.tipoVinho"""
+    query = """SELECT denominacao, id FROM QB.tipoVinho"""
     db = get_db_connection()
     cursor = db.cursor()
     cursor.execute(query)

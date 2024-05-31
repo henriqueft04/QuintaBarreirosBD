@@ -85,7 +85,7 @@
                         <label for="item-1" class="block text-sm font-medium text-gray-700">Item</label>
                         <select id="item-1" name="items[]"   class="mt-1 border border-gray-200 p-1 rounded-lg  h-8 block w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
                             {% for vinho in tipos_vinho %}
-                            <option value="Vinho Tinto">{{ vinho.denominacao }}</option>
+                            <option value="{{vinho.id}}">{{ vinho.denominacao }}-{{vinho.id}}</option>
                             {% endfor %}
                             <!-- Adicione outros tipos de vinho aqui -->
                         </select>
