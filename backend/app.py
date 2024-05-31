@@ -373,13 +373,19 @@ def stock():
 
 @app.route('/cubas')
 def cubas():
-    query = "EXEC QB.cubaInfo"
+    orderBy = request.args.get('orderBy')
+
     db = get_db_connection()
     cursor = db.cursor()
+
+    query = f"EXEC QB.cubaInfo @orderBy = '{orderBy}'"
     cursor.execute(query)
+
     columns = [column[0] for column in cursor.description]
     cubas = [dict(zip(columns, row)) for row in cursor.fetchall()]
     db.close()
+    if orderBy is not None:
+        return render_template('tabelas/tabelaCubas.html', cubas=cubas)
     return render_template('cubas.html', cubas=cubas)
 
 @app.route('/cubaDelete', methods=['POST'])
