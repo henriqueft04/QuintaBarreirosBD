@@ -242,3 +242,72 @@ BEGIN
     END
 end
 GO
+
+CREATE OR ALTER PROC QB.insertEncomenda
+    @nomeCliente varchar(255),
+    @estadoPagamento bit,
+    @notas varchar(300),
+    @valor decimal,
+    @fatura bit,
+    @data DATE,
+    @items QB.tblItemType READONLY
+
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    BEGIN TRY
+        BEGIN TRANSACTION
+        DECLARE @nifCliente VARCHAR(20)
+        SELECT @nifCliente= NIF FROM [QB].[cliente] WHERE nome = @nomeCliente;
+
+        IF @nifCliente IS NULL
+        BEGIN
+            RAISERROR('Cliente não encontrado.', 16, 1);
+            ROLLBACK TRANSACTION;
+            RETURN;
+        END
+
+        INSERT INTO [QB].[encomenda] ([NIF_cliente], [estadoPagamento], [fatura], [valor], [notas], [data])
+        VALUES (@nifCliente, @estadoPagamento, @fatura, @valor, @notas, @data);
+
+        DECLARE @numero_encomenda INT = SCOPE_IDENTITY();
+
+        DECLARE @quantidadeItems INT, @id_stock INT, @dataEng DATE;
+
+        DECLARE item_cursor CURSOR FOR
+        SELECT quantidadeItems, id_stock, dataEng FROM @items;
+
+        WHILE @@FETCH_STATUS = 0
+        BEGIN
+            INSERT INTO [QB].[item] ([quantidadeItems], [id_stock], [dataEng], [numero_encomenda])
+            VALUES (@quantidadeItems, @id_stock, @dataEng, @numero_encomenda);
+
+            UPDATE [QB].[stock]
+            SET quantidade = quantidade - @quantidadeItems
+            WHERE id = @id_stock AND dataEng = @dataEng;
+
+            IF @@ROWCOUNT = 0
+            BEGIN
+                RAISERROR('Estoque insuficiente ou item não encontrado.', 16, 1);
+                ROLLBACK TRANSACTION;
+                RETURN;
+            END
+
+            FETCH NEXT FROM item_cursor INTO @quantidadeItems, @id_stock, @dataEng;
+        end
+
+        CLOSE item_cursor;
+        DEALLOCATE item_cursor;
+
+        COMMIT TRANSACTION;
+        PRINT 'encomenda inserida stock atualizado';
+
+    END TRY
+    BEGIN CATCH
+        ROLLBACK TRANSACTION;
+        PRINT 'Erro ao inserir a encomenda.';
+    END CATCH
+end
+go
+
