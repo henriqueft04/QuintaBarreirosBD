@@ -7,8 +7,31 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+    db = get_db_connection()
+    cursor = db.cursor()
 
-    return render_template('index.html')
+    count_query = """
+        SELECT COUNT(*) AS total_encomendas_ultima_semana, QB.cliente.nome
+        FROM QB.encomenda
+        INNER JOIN QB.cliente ON QB.encomenda.NIF_cliente = QB.cliente.NIF
+        WHERE data >= DATEADD(WEEK, -1, GETDATE())
+        group by QB.cliente.nome
+        """
+    
+    cursor.execute(count_query)
+    num_encomendas = cursor.fetchone()[0]
+
+    details_query = """
+        SELECT e.*, c.nome
+        FROM QB.encomenda e
+        INNER JOIN QB.cliente c ON e.NIF_cliente = c.NIF
+        WHERE e.data >= DATEADD(WEEK, -1, GETDATE())
+        """
+    
+    cursor.execute(details_query)
+    encomendas_detalhes = cursor.fetchall()
+
+    return render_template('index.html', num_encomendas=num_encomendas, encomendas=encomendas_detalhes)
 
 @app.route('/clientes')
 def clientes():
