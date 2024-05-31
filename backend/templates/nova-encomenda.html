@@ -81,27 +81,26 @@
             <h2 class="text-lg font-bold">Itens</h2>
             <div id="items-container" class="space-y-4 mt-4 mb-4">
                 <div class="item grid grid-cols-4 space-x-4 ">
-                    <div class="">
-                        <label for="item-1" class="block text-sm font-medium text-gray-700">Item</label>
-                        <select id="item-1" name="items[]"   class="mt-1 border border-gray-200 p-1 rounded-lg  h-8 block w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
-                            {% for vinho in tipos_vinho %}
-                            <option value="{{vinho.id}}">{{ vinho.denominacao }}-{{vinho.id}}</option>
-                            {% endfor %}
-                            <!-- Adicione outros tipos de vinho aqui -->
-                        </select>
-                    </div>
-                    <div class="">
-                        <label for="quantity-1" class="block text-sm font-medium text-gray-700">Quantidade Caixas <i class="fas fas fa-box-open"></i></label>
-                        <input type="number" id="quantity-1" name="quantities[]"  class="mt-1 border border-gray-200 p-1 rounded-lg  h-8 block w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
-                    </div>
-                    <div class="">
-                        <label for="quantity-2" class="block text-sm font-medium text-gray-700">Quantidade Garrafas <i class="fas fas fa-wine-bottle"></i></label>
-                        <input type="number" id="quantity-2" name="quantities[]"  class="mt-1 border border-gray-200 p-1 rounded-lg  h-8 block w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
-                    </div>
-                    <div class="">
-                        <label for="quantity-3" class="block text-sm font-medium text-gray-700">Quantidade Garrafões <i class="fa-solid fa-jug-detergent"></i></label>
-                        <input type="number" id="quantity-2" name="quantities[]"  class="mt-1 border border-gray-200 p-1 rounded-lg  h-8 block w-full h  shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
-                    </div>
+                <div>
+                    <label for="item-1" class="block text-sm font-medium text-gray-700">Item</label>
+                    <select id="item-1" name="items[]" class="mt-1 border border-gray-200 p-1 rounded-lg block w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                        {% for vinho in tipos_vinho %}
+                        <option value="{{vinho.id}}">{{ vinho.denominacao }}-{{vinho.id}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label for="quantity-caixas-1" class="block text-sm font-medium text-gray-700">Quantidade Caixas <i class="fas fas fa-box-open"></i></label>
+                    <input type="number" id="quantities_caixas[]" name="quantities_caixas[]" class="mt-1 border border-gray-200 p-1 rounded-lg block w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                </div>
+                <div>
+                    <label for="quantity-garrafas-1" class="block text-sm font-medium text-gray-700">Quantidade Garrafas <i class="fas fas fa-wine-bottle"></i></label>
+                    <input type="number" id="quantities_garrafas[]" name="quantities_garrafas[]" class="mt-1 border border-gray-200 p-1 rounded-lg block w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                </div>
+                <div>
+                    <label for="quantity-garrafoes-1" class="block text-sm font-medium text-gray-700">Quantidade Garrafões <i class="fa-solid fa-jug-detergent"></i></label>
+                    <input type="number" id="quantities_garrafoes[]" name="quantities_garrafoes[]" class="mt-1 border border-gray-200 p-1 rounded-lg block w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                </div>
                 </div>
             </div>
         </div>

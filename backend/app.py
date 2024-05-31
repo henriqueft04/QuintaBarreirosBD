@@ -1,6 +1,7 @@
-from flask import Flask, request, redirect, url_for, render_template
+from flask import Flask, request, redirect, url_for, render_template, flash
 from database.connection import get_db_connection 
 from app.models import *
+import json
 from datetime import datetime
 
 app = Flask(__name__)
@@ -435,6 +436,54 @@ def tabelaTipoVinho():
 @app.route('/tabelaEngarramentos')
 def tabelaEngarrafamentos():
     return render_template('tabelas/tabelaEngarrafamentos.html')
+
+
+@app.route('/inserir_encomenda', methods=['POST'])
+def inserir_encomenda():
+    nome = request.form.get('nome')
+    estado = request.form.get('estado')
+    notas = request.form.get('notas')
+    valor = request.form.get('valor')
+    data = request.form.get('data')
+    faturada = request.form.get('faturada')
+
+    items = request.form.getlist('items[]')
+    quantities_caixas = request.form.getlist('quantities_caixas[]')
+    quantities_garrafas = request.form.getlist('quantities_garrafas[]')
+    quantities_garrafoes = request.form.getlist('quantities_garrafoes[]')
+
+    estado_pagamento = 1 if estado == 'Pago' else 0
+    faturada_bit = 1 if faturada == 'Sim' else 0
+
+    # Prepare the items list
+    items_list = []
+    for i in range(len(items)):
+        items_list.append({"quantidadeItems": int(quantities_caixas[i]), "id_stock": int(items[i]), "dataEng": data})
+        items_list.append({"quantidadeItems": int(quantities_garrafas[i]), "id_stock": int(items[i]), "dataEng": data})
+        items_list.append({"quantidadeItems": int(quantities_garrafoes[i]), "id_stock": int(items[i]), "dataEng": data})
+
+    # Convert items list to JSON string
+    items_json = json.dumps(items_list)
+
+    db = get_db_connection()
+    cursor = db.cursor()
+
+    try:
+        # Call the stored procedure
+        cursor.execute("""
+            EXEC QB.insertEncomenda @nomeCliente=?, @estadoPagamento=?, @notas=?, @valor=?, @fatura=?, @data=?, @items=?
+        """, nome, estado_pagamento, notas, valor, faturada_bit, data, items_json)
+
+        db.commit()
+    except Exception as e:
+        db.rollback()
+        print(f'Erro ao inserir encomenda: {str(e)}')
+    finally:
+        cursor.close()
+        db.close()
+
+    return redirect(url_for('engarrafamentos'))
+
 
 if __name__ == "__main__":
     app.run(debug=True)
