@@ -36,7 +36,7 @@
                 </div>
             </td>
             <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                <button class="status-button {% if 'branco' in vinho.denominacao|lower %}pago{% else %}por-pagar{% endif %}">
+                <button class="status-button {% if 'branco' in vinho.denominacao|lower %}pago {% elif 'tinto' in vinho.denominacao|lower %}restaurante  {% else %}por-pagar{% endif %}">
                     {{ vinho.denominacao }}
                 </button>
             </td>
