@@ -1,6 +1,4 @@
 GO
-DROP PROCEDURE IF EXISTS QB.fornecimentos;
-GO
 
 CREATE OR ALTER PROCEDURE QB.fornecimentos
 AS
@@ -47,7 +45,7 @@ END;
 
 GO
 
-CREATE OR ALTER PROCEDURE GetEncomendasPaginadas
+CREATE OR ALTER PROCEDURE QB.GetEncomendasPaginadas
     @PageNumber INT,
     @RowsPerPage INT,
     @Ano INT = NULL,
@@ -100,8 +98,6 @@ END;
 
 GO 
 
-DROP PROCEDURE IF EXISTS QB.GetClientesPaginadas;
-GO
 
 CREATE OR ALTER PROCEDURE GetClientesPaginadas
     @PageNumber INT,
@@ -180,3 +176,14 @@ END;
 GO
 
 
+CREATE OR ALTER PROCEDURE QB.cubaInfo
+AS
+BEGIN
+	SET NOCOUNT ON;
+	DECLARE @cubas_totais INT;
+	SELECT @cubas_totais = COUNT(*) FROM QB.cuba;
+
+	SELECT @cubas_totais AS cubas_totais,codigo,volumeOcupado, volume, notacao + ' - ' + denominacao AS nomeVinho, dataArmazenado, descricao, refrigerada, termica
+	FROM QB.cuba
+		LEFT JOIN QB.tipoVinho tv on tv.id = cuba.id_tipoVinho
+END;

@@ -346,12 +346,14 @@ def stock():
 @app.route('/cubas')
 def cubas():
     query = """
-        SELECT * FROM QB.cuba
+        EXEC QB.cubaInfo
     """
     db = get_db_connection()
     cursor = db.cursor()
     cursor.execute(query)
-    cubas = cursor.fetchall()
+    columns = [column[0] for column in cursor.description]
+    cubas = [dict(zip(columns, row)) for row in cursor.fetchall()]
+
     db.close()
 
     return render_template('cubas.html', cubas=cubas)
