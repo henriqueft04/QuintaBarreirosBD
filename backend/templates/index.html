@@ -47,8 +47,8 @@
         <div class="sm:flex sm:items-center sm:justify-between">
             <div>
                 <div class="flex items-center gap-x-3">
-                    <h2 class="text-lg font-medium text-gray-800 dark:text-white">Clientes</h2>
-                    <span class="px-3 py-1 text-xs text-green-600 bg-green-100 rounded-full dark:bg-gray-800 dark:text-green-400">240 clientes</span>
+                    <h2 class="text-lg font-medium text-gray-800 dark:text-white">Encomendas</h2>
+                    <span class="px-3 py-1 text-xs text-green-600 bg-green-100 rounded-full dark:bg-gray-800 dark:text-green-400">{{ num_encomendas }} encomendas</span>
                 </div>
                 <p class="mt-1 text-sm text-gray-500 dark:text-gray-300">Estas pessoas compraram na ultima semana.</p>
             </div>
@@ -82,133 +82,8 @@
         <div class="flex flex-col mt-6">
             <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                 <div class="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-                    <div class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
-                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                            <thead class="bg-gray-50 dark:bg-gray-800">
-                                <tr>
-                                    <th scope="col" class="table-header">
-                                        <span class="table-header mr-2" style="padding: 0;">Cliente</span>
-                                        <i class="fa-solid fa-arrow-up-right-from-square"></i>
-                                    </th>
-                                    <th scope="col" class="table-header">
-                                        Estado
-                                    </th>
-                                    <th scope="col" class="table-header">
-                                        Notas
-                                    </th>
-                                    <th scope="col" class="table-header">Valor</th>
-                                    <th scope="col" class="table-header">Data</th>
-                                    <th scope="col" class="table-header">Número</th>
-                                    <th scope="col" class="table-header">Faturada</th>
-                                    <th scope="col" class="table-header flex">Total <i class="ml-1 fas fas fa-wine-bottle mt-1"></i></th>
-                                    <th scope="col" class="table-header">Editar</th>
-                                </tr>
-                            </thead>
-                            <tbody class="bg-white divide-y divide-gray-200 dark:divide-gray-700 dark:bg-gray-900">
-                                <tr>
-                                    <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                        <div class="flex flex-col justify-between">
-                                            <h2 class="font-medium text-gray-800 dark:text-white ">Alta Bêbado</h2>
-                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">1</p>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                        <button class="status-button pago">
-                                            Pago
-                                        </button>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div>
-                                            <p class="text-gray-700 dark:text-gray-200">Gostou bastante do frisante</h4>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>30</h1>
-                                            <span class="text-sm font-normal text-gray-500 dark:text-gray-400">€</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>2024-05-10</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>1</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>Sim</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap" >
-                                        <button   data-modal-target="detalhesDiv" hx-get="encomendaDetalhes" class="px-1 open-modal py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100 open-modal" hx-target="#modal-detalhesEnc">
-                                            <a class="space-x-1">1000</a>
-                                            <i class="fas fas fa-expand-alt text-gray-600"></i>
-                                        </button>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <button class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
-                                            <i class="fas fas fa-pencil-alt text-black"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-
-                                <tr class="bg-gray-50">
-                                    <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                        <div class="flex flex-col justify-between">
-                                            <h2 class="font-medium text-gray-800 dark:text-white ">Alta Bêbado</h2>
-                                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">1</p>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                                        <button class="status-button por-pagar ">
-                                            Por Pagar
-                                        </button>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div>
-                                            <p class="text-gray-700 dark:text-gray-200">Gostou bastante do frisante</h4>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>30</h1>
-                                            <span class="text-sm font-normal text-gray-500 dark:text-gray-400">€</span>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>2024-05-10</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>1</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <div class="flex items-center">
-                                            <h1>Sim</h1>
-                                        </div>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <button data-order-id="10" class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100 open-modal">
-                                            <a class="space-x-1">10</a>
-                                            <i class="fas fas fa-expand-alt text-gray-600"></i>
-                                        </button>
-                                    </td>
-                                    <td class="px-4 py-4 text-sm whitespace-nowrap">
-                                        <button class="px-1 py-1 text-gray-500 transition-colors duration-200 rounded-lg dark:text-gray-300 hover:bg-gray-100">
-                                            <i class="fas fas fa-pencil-alt text-black"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <!-- Modal -->  
+                    <div id="tabela-encomendas-container" class="overflow-hidden border border-gray-200 dark:border-gray-700 md:rounded-lg">
+                        {% include "tabelas/tabelaEncomendas.html" %} 
                     </div>
                 </div>
             </div>
