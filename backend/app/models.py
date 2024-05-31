@@ -122,11 +122,14 @@ def get_engarrafamentos():
     db = get_db_connection()
     cursor = db.cursor()
     cursor.execute(query)
+
     engarrafamentos = cursor.fetchall()
+    print(engarrafamentos)
+    cursor.nextset()
 
+    total_engarrafamentos = cursor.fetchall()
 
-    total_engarrafamentos = cursor.fetchone()[0]
-
+    total_engarrafamentos = total_engarrafamentos[0][0] if total_engarrafamentos else 0
 
     return engarrafamentos, total_engarrafamentos
 
@@ -213,3 +216,13 @@ def get_paginacao_clientes(search_param, page, per_page):
     return clients, per_page, page, total_pages
 
 
+def Get_Vinho(id_vinho):
+    db = get_db_connection()
+    cursor = db.cursor()
+
+    query = "SELECT * FROM QB.fn_detalhesVinhoID(?)"
+    cursor.execute(query, (id_vinho,))
+    vinho = cursor.fetchone()
+    print(vinho)
+
+    return vinho

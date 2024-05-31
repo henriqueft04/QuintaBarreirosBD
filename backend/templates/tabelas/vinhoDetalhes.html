@@ -32,38 +32,49 @@
         <tr>
             <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                 <div class="flex flex-col justify-between">
-                    <h2 class="font-medium text-gray-800 dark:text-white "></h2>
+                    <h2 class="font-medium text-gray-800 dark:text-white ">{{vinho.notacao}}</h2>
                 </div>
             </td>
             <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                <button class="status-button pago">
-                    
+                <button class="status-button {% if 'branco' in vinho.denominacao|lower %}pago{% else %}por-pagar{% endif %}">
+                    {{ vinho.denominacao }}
                 </button>
             </td>
+ 
             <td class="px-4 py-4 text-sm whitespace-nowrap">
                 <div class="flex items-center">
-                    <h1></h1>
+                    <h1>
+                    {{vinho.id}}
+                    </h1>
                 </div>
             </td>
             <td class="px-4 py-4 text-sm whitespace-nowrap">
                 <div class="flex items-center">
-                    <h1></h1>
+                    <h1>
+                    {{vinho.acidez}}
+                    </h1>
                     <span class="text-sm font-normal text-gray-500 dark:text-gray-400">%</span>
                 </div>
             </td>
             <td class="px-4 py-4 text-sm whitespace-nowrap">
                 <div class="flex items-center">
-                    <h1></h1>
+                    <h1>
+                    {{vinho.ano_colheita}}
+                    </h1>
                 </div>
             </td>
             <td class="px-4 py-4 text-sm whitespace-nowrap">
                 <div class="flex items-center">
-                    <h1></h1>
+                    <h1>
+                    {{vinho.teor_alcoolico}}
+                    </h1>
                 </div>
             </td>
             <td class="px-4 py-4 text-sm whitespace-nowrap">
                 <div class="flex items-center">
-                    <h1></h1>
+                    <h1>
+                    {{vinho.sub_regiao}}
+                    </h1>
                 </div>
             </td>
         </tr>
