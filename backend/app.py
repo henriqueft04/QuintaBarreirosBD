@@ -12,11 +12,9 @@ def index():
     cursor = db.cursor()
 
     count_query = """
-        SELECT COUNT(*) AS total_encomendas_ultima_semana, QB.cliente.nome
+        SELECT COUNT(*) AS total_encomendas_ultima_semana
         FROM QB.encomenda
-        INNER JOIN QB.cliente ON QB.encomenda.NIF_cliente = QB.cliente.NIF
-        WHERE data >= DATEADD(WEEK, -1, GETDATE())
-        group by QB.cliente.nome
+        WHERE data >= DATEADD(WEEK, -1, GETDATE());
         """
     
     cursor.execute(count_query)
