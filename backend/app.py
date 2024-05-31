@@ -120,6 +120,13 @@ def encomendaMultiplas():
     return render_template('tabelas/tabelaEncomendas.html', encomendas=encomendas)
 
 
+@app.route('/vinhoUnico', methods=['GET'])
+def vinhoUnico():
+    id_vinho = request.args.get('id')
+    vinho = Get_Vinho(id_vinho)
+    print(f"Vinho {id_vinho}: {vinho}")
+    return render_template('tabelas/vinhoDetalhes.html', vinho=vinho)
+
 
 @app.route('/fornecedores')
 def fornecedores():
@@ -223,7 +230,7 @@ def encomendas():
     total_pages = (total_records + per_page - 1) // per_page
 
     # Chamar a stored procedure
-    query = """EXEC GetEncomendasPaginadas @PageNumber=?, @RowsPerPage=?, @ano=?, @mes=?, @semana=?, @dia=?"""
+    query = """EXEC QB.GetEncomendasPaginadas @PageNumber=?, @RowsPerPage=?, @ano=?, @mes=?, @semana=?, @dia=?"""
     cursor.execute(query, (page, per_page, ano, mes, semana, dia))
     encomendas = cursor.fetchall()
     db.close()
@@ -305,7 +312,14 @@ def engarrafamentos():
 
 @app.route('/stock')
 def stock():
-    return render_template('stock.html')
+    query = """EXEC QB.stockInfo"""
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute(query)
+    stock = cursor.fetchall()
+    db.close()
+
+    return render_template('stock.html', stocks=stock)
 
 @app.route('/cubas')
 def cubas():

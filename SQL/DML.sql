@@ -100,6 +100,7 @@ INSERT INTO QB.engarrafamento (dataEng, litragemEng, quantidade) VALUES ('2022-0
 INSERT INTO QB.engarrafamento (dataEng, litragemEng, quantidade) VALUES ('2022-04-20', 500, 666);
 INSERT INTO QB.engarrafamento (dataEng, litragemEng, quantidade) VALUES ('2022-05-21', 250, 333);
 INSERT INTO QB.engarrafamento (dataEng, litragemEng, quantidade) VALUES ('2024-01-10', 500, 666);
+INSERT INTO QB.engarrafamento (dataEng, litragemEng, quantidade) VALUES ('2022-03-15', 500, 666);
 
 
 INSERT INTO QB.cuba_engarrafamento (codigo_Cuba, dataEngarrafamento) VALUES
@@ -111,7 +112,9 @@ INSERT INTO QB.cuba_engarrafamento (codigo_Cuba, dataEngarrafamento) VALUES
 (8, '2022-03-12'),
 (25, '2022-04-20'),
 (45, '2022-05-21'),
-(1, '2024-01-10');
+(1, '2024-01-10'),
+(6, '2022-03-15'),
+(10, '2022-02-02');
 
 
 INSERT INTO QB.cliente (NIF, morada, nome, telemovel, tipo) VALUES
@@ -204,7 +207,9 @@ INSERT INTO QB.stock (id_tipoVinho, id, quantidade, peso_liquido, peso_bruto, pr
 (101, 1003, 100, 200, 250, 50, '2022-03-15'),
 (101, 1003, 100, 200, 250, 50, '2023-07-20'),
 (101, 1003, 100, 200, 250, 50, '2024-01-10'),
-(105, 5003, 100, 150, 200, 50, '2024-01-10');
+(105, 5003, 100, 150, 200, 50, '2024-01-10'),
+(103, 3002,100, 200, 399, 20 ,'2022-03-15'),
+(103, 3002, 200, 419, 20, 4, '2022-02-02');
 
 INSERT INTO QB.item (quantidadeItems, id_stock, dataEng, numero_encomenda) VALUES
 (10, 1001,'2021-12-10', 1),
@@ -227,7 +232,9 @@ INSERT INTO QB.garrafa (id_tipoVinho, id_stock, dataEng) VALUES
 (103, 3003, '2022-02-02'),
 (104, 4002, '2022-02-10'),
 (105, 5002, '2022-03-12'),
-(105, 5002, '2024-01-10');
+(105, 5002, '2024-01-10'),
+(103, 3002, '2022-03-15'),
+(103, 3002, '2022-02-02');
 
 INSERT INTO QB.componente (id, quantidade) VALUES
 (1001, 100),
@@ -282,4 +289,6 @@ INSERT INTO QB.caixa (numGarrafas, id_stock, dataEng, id_stock_garrafa) VALUES
 (6, 1003, '2022-03-15', 1002),
 (6, 1003, '2023-07-20', 1002),
 (6, 1003, '2024-01-10', 1002),
-(12, 5003, '2024-01-10', 5002);
+(12, 5003, '2024-01-10', 5002),
+(6, 3003, '2022-03-15', 3002),
+(6, 3003, '2022-02-02', 3002);

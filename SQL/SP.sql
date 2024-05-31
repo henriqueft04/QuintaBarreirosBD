@@ -2,7 +2,7 @@ GO
 DROP PROCEDURE IF EXISTS QB.fornecimentos;
 GO
 
-CREATE PROCEDURE QB.fornecimentos
+CREATE OR ALTER PROCEDURE QB.fornecimentos
 AS
 	BEGIN
 		SELECT f.nome, f.morada, f.telemovel, tr.material, tr.formato, r.quantidade, f.NIF, c.quantidade AS quantidadeTotal
@@ -25,10 +25,8 @@ AS
 	END;
 GO
 
-DROP PROCEDURE IF EXISTS QB.engarrafamentos;
-GO
-
-CREATE PROCEDURE QB.engarrafamentos
+	
+CREATE OR ALTER PROCEDURE QB.engarrafamentos
 AS 
 BEGIN
 	SELECT codigo_Cuba AS codigo_cuba, dataEng, litragemEng as litragem, quantidade, notacao, denominacao
@@ -37,7 +35,7 @@ BEGIN
 			ON dataEng = dataEngarrafamento
 		JOIN QB.cuba
 			ON codigo_Cuba = cuba.codigo
-		JOIN QB.tipoVinho
+		LEFT JOIN QB.tipoVinho
 			ON tipoVinho.id = cuba.id_TipoVinho
 
 	SELECT COUNT(*) AS total_engarrafamentos
@@ -46,9 +44,10 @@ BEGIN
 	
 END;
 
+
 GO
 
-ALTER PROCEDURE GetEncomendasPaginadas
+CREATE OR ALTER PROCEDURE GetEncomendasPaginadas
     @PageNumber INT,
     @RowsPerPage INT,
     @Ano INT = NULL,
@@ -104,7 +103,7 @@ GO
 DROP PROCEDURE IF EXISTS QB.GetClientesPaginadas;
 GO
 
-CREATE PROCEDURE GetClientesPaginadas
+CREATE OR ALTER PROCEDURE GetClientesPaginadas
     @PageNumber INT,
     @RowsPerPage INT
 	AS
@@ -114,26 +113,58 @@ CREATE PROCEDURE GetClientesPaginadas
 		ORDER BY QB.cliente.nome DESC
 		OFFSET (@PageNumber - 1) * @RowsPerPage ROWS
 		FETCH NEXT @RowsPerPage ROWS ONLY;
+	END;
+
+	GO
+
+	CREATE OR ALTER PROCEDURE QB.GetTotalGarrafasCliente
+		@NIF_cliente NVARCHAR(50)
+	AS
+	BEGIN
+		SET NOCOUNT ON;
+
+		SELECT 
+			SUM(CASE 
+					WHEN RIGHT(QB.stock.id, 1) = '1' THEN quantidadeItems 
+					WHEN RIGHT(QB.stock.id, 1) = '2' THEN quantidadeItems 
+					WHEN RIGHT(QB.stock.id, 1) = '3' THEN quantidadeItems * numGarrafas 
+					ELSE 0 
+				END) AS TotalGarrafas
+		FROM QB.encomenda 
+		JOIN QB.item ON QB.item.numero_encomenda = QB.encomenda.numero
+		JOIN QB.stock ON QB.stock.id = QB.item.id_stock 
+		LEFT JOIN QB.caixa ON QB.caixa.id_stock = QB.stock.id
+		WHERE QB.encomenda.NIF_cliente = @NIF_cliente;
 END;
 
-GO
 
-CREATE PROCEDURE QB.GetTotalGarrafasCliente
-    @NIF_cliente NVARCHAR(50)
+
+GO
+CREATE OR ALTER PROCEDURE QB.stockInfo
 AS
 BEGIN
     SET NOCOUNT ON;
 
     SELECT 
+        tv.id AS id_tipoVinho, 
+        tv.notacao,
+        tv.denominacao, 
+        MAX(s.dataEng) AS dataEng,
+        SUM(CASE WHEN RIGHT(s.id, 1) = '1' THEN s.quantidade ELSE 0 END) AS total_garrafoes,
+        SUM(CASE WHEN RIGHT(s.id, 1) = '2' THEN s.quantidade ELSE 0 END) AS total_garrafas,
+        SUM(CASE WHEN RIGHT(s.id, 1) = '3' THEN s.quantidade ELSE 0 END) AS total_caixas,
         SUM(CASE 
-                WHEN RIGHT(QB.stock.id, 1) = '1' THEN quantidadeItems 
-                WHEN RIGHT(QB.stock.id, 1) = '2' THEN quantidadeItems 
-                WHEN RIGHT(QB.stock.id, 1) = '3' THEN quantidadeItems * numGarrafas 
+                WHEN RIGHT(s.id, 1) = '1' THEN s.quantidade 
+                WHEN RIGHT(s.id, 1) = '2' THEN s.quantidade 
+                WHEN RIGHT(s.id, 1) = '3' THEN s.quantidade * c.numGarrafas 
                 ELSE 0 
-            END) AS TotalGarrafas
-    FROM QB.encomenda 
-    JOIN QB.item ON QB.item.numero_encomenda = QB.encomenda.numero
-    JOIN QB.stock ON QB.stock.id = QB.item.id_stock 
-    LEFT JOIN QB.caixa ON QB.caixa.id_stock = QB.stock.id
-    WHERE QB.encomenda.NIF_cliente = @NIF_cliente;
+            END) AS total_garrafas_total
+    FROM QB.stock s
+    FULL JOIN QB.tipoVinho tv ON tv.id = s.id_tipoVinho
+    FULL JOIN QB.caixa c ON c.id_stock = s.id
+    GROUP BY 
+        tv.id, 
+        tv.notacao, 
+        tv.denominacao;
 END;
+GO

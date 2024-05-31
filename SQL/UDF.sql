@@ -1,7 +1,7 @@
 USE p8g4;
 GO
 
-ALTER FUNCTION QB.fn_AtualizaContagemEncomendas(@ano INT, @mes INT, @semana INT, @dia DATE)
+CREATE OR ALTER FUNCTION QB.fn_AtualizaContagemEncomendas(@ano INT, @mes INT, @semana INT, @dia DATE)
 RETURNS INT
 AS
 BEGIN
@@ -19,7 +19,7 @@ END;
 GO
 
 
-ALTER FUNCTION QB.fn_AtualizaContagemClientes(@SearchParam varchar(2048))
+CREATE OR ALTER FUNCTION QB.fn_AtualizaContagemClientes(@SearchParam varchar(2048))
 RETURNS INT
 AS
 BEGIN
@@ -32,3 +32,14 @@ BEGIN
     RETURN @TotalClientes;
 END;
 GO
+
+
+
+CREATE OR ALTER FUNCTION QB.fn_detalhesVinhoID(@id_vinho int)
+RETURNS TABLE
+AS 
+RETURN (
+    SELECT * 
+    FROM QB.tipoVinho
+    WHERE QB.tipoVinho.id = @id_vinho
+)
