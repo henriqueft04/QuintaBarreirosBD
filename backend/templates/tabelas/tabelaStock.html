@@ -17,10 +17,16 @@
         <tr>
             
             <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
-                <div class="flex flex-col justify-between">
-                    <h2 class="font-medium text-gray-800 dark:text-white ">{{stock.notacao}} - {{stock.denominacao}}</h2>
+                <button class="status-button {% if 'branco' in stock.denominacao|lower %}pago {% elif 'tinto' in stock.denominacao|lower %}restaurante  {% else %}por-pagar{% endif %}">
+                    <h2 class="font-medium text-gray-800 dark:text-white ">
+                        {% if stock.notacao %}
+                            {{ stock.notacao }} - {{ stock.denominacao }}
+                        {% else %}
+                            Sem Notação - {{ stock.denominacao }}
+                        {% endif %}
+                    </h2>
                     <p class="text-sm font-normal text-gray-600 dark:text-gray-400"></p>
-                </div>
+                </button>
             </td>
             <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
                 <div class="flex flex-col justify-between">

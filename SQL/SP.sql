@@ -138,12 +138,17 @@ CREATE OR ALTER PROCEDURE GetClientesPaginadas
 END;
 
 
-
 GO
+
+
 CREATE OR ALTER PROCEDURE QB.stockInfo
 AS
 BEGIN
     SET NOCOUNT ON;
+
+    -- Subconsulta para contar o total de tipos de vinho
+    DECLARE @total_tiposVinho INT;
+    SELECT @total_tiposVinho = COUNT(*) FROM QB.tipoVinho;
 
     SELECT 
         tv.id AS id_tipoVinho, 
@@ -156,15 +161,22 @@ BEGIN
         SUM(CASE 
                 WHEN RIGHT(s.id, 1) = '1' THEN s.quantidade 
                 WHEN RIGHT(s.id, 1) = '2' THEN s.quantidade 
-                WHEN RIGHT(s.id, 1) = '3' THEN s.quantidade * c.numGarrafas 
+                WHEN RIGHT(s.id, 1) = '3' THEN s.quantidade * ISNULL(c.numGarrafas, 0)
                 ELSE 0 
-            END) AS total_garrafas_total
+            END) AS total_garrafas_total,
+        @total_tiposVinho AS total_tiposVinho 
     FROM QB.stock s
-    FULL JOIN QB.tipoVinho tv ON tv.id = s.id_tipoVinho
-    FULL JOIN QB.caixa c ON c.id_stock = s.id
+    LEFT JOIN QB.tipoVinho tv ON tv.id = s.id_tipoVinho
+    LEFT JOIN QB.caixa c ON c.id_stock = s.id
     GROUP BY 
         tv.id, 
         tv.notacao, 
-        tv.denominacao;
+        tv.denominacao,
+        s.dataEng
+    ORDER BY 
+        tv.id,
+        s.dataEng;
 END;
 GO
+
+

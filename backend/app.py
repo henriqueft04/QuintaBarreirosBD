@@ -337,7 +337,8 @@ def stock():
     db = get_db_connection()
     cursor = db.cursor()
     cursor.execute(query)
-    stock = cursor.fetchall()
+    columns = [column[0] for column in cursor.description]
+    stock = [dict(zip(columns, row)) for row in cursor.fetchall()]
     db.close()
 
     return render_template('stock.html', stocks=stock)

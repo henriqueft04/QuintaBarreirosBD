@@ -224,5 +224,6 @@ def Get_Vinho(id_vinho):
     cursor.execute(query, (id_vinho,))
     vinho = cursor.fetchone()
     print(vinho)
+    
 
     return vinho
