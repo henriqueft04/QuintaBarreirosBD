@@ -11,9 +11,9 @@
             <label for="tipo" class="block text-sm font-medium text-gray-700">Tipo Rolha</label>
             <select id="tipo" name="tipo" class="mt-1 border border-gray-200 rounded-lg p-1 h-8 block w-full shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
                 <option value="">Selecione um tipo de rolha</option>
-                {% for rolha in tipos_rolhas %}
-                    <option value="{{ rolha.id }}">
-                        {{ rolha.material }} - {{ rolha.formato }}
+                {% for tipoRolha in tipos_rolhas %}
+                    <option value="{{ tipoRolha.id }}">
+                        {{ tipoRolha.material }} - {{ tipoRolha.formato }}
                     </option>
                 {% endfor %}
             </select>
