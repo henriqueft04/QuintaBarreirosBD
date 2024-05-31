@@ -328,7 +328,8 @@ def encomendas_total():
 
 @app.route('/engarrafamentos')
 def engarrafamentos():
-    engarrafamentos, total_engarrafamentos = get_engarrafamentos()
+    orderBy = request.args.get('orderBy')
+    engarrafamentos, total_engarrafamentos = get_engarrafamentos(orderBy)
     return render_template('engarrafamentos.html', engarrafamentos=engarrafamentos, total_engarrafamentos=total_engarrafamentos)
 
 @app.route('/stock')

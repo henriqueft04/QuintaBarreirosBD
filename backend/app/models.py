@@ -116,22 +116,27 @@ def get_fornecimentos():
 
     return fornecimentos, total_fornecedores, tipos_rolhas
 
-def get_engarrafamentos():
-    query = "{CALL QB.engarrafamentos}"
+def get_engarrafamentos(orderBy):
+    query = "EXEC QB.engarrafamentos ?"
+    params = (orderBy,)
 
     db = get_db_connection()
     cursor = db.cursor()
-    cursor.execute(query)
+
+    cursor.execute(query, params)
 
     engarrafamentos = cursor.fetchall()
-    print(engarrafamentos)
+
     cursor.nextset()
+    total_engarrafamentos = cursor.fetchone()
 
-    total_engarrafamentos = cursor.fetchall()
+    total_engarrafamentos = total_engarrafamentos[0] if total_engarrafamentos else 0
 
-    total_engarrafamentos = total_engarrafamentos[0][0] if total_engarrafamentos else 0
+    cursor.close()
+    db.close()
 
     return engarrafamentos, total_engarrafamentos
+
 
 
 def Search_Fornecedor(search_param):
