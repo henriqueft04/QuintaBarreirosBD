@@ -345,18 +345,25 @@ def stock():
 
 @app.route('/cubas')
 def cubas():
-    query = """
-        EXEC QB.cubaInfo
-    """
+    query = "EXEC QB.cubaInfo"
     db = get_db_connection()
     cursor = db.cursor()
     cursor.execute(query)
     columns = [column[0] for column in cursor.description]
     cubas = [dict(zip(columns, row)) for row in cursor.fetchall()]
-
     db.close()
-
     return render_template('cubas.html', cubas=cubas)
+
+@app.route('/cubaDelete', methods=['POST'])
+def cubaDelete():
+    cuba_id = request.form.get('codigo')
+    query = "EXEC QB.deleteCuba ?"
+    db = get_db_connection()
+    cursor = db.cursor()
+    cursor.execute(query, (cuba_id,))
+    db.commit()
+    db.close()
+    return redirect(url_for('cubas'))
 
 @app.route('/novaForm')
 def novaForm():
