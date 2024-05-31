@@ -20,10 +20,19 @@
                 </div>
             </td>
             <td class="px-4 py-4 text-sm whitespace-nowrap">
-                <div>
+                <button class="status-button 
+                                {% if 'simples' in fornecimento.formato|lower %}
+                                    cortiça 
+                                {% elif 'qb' in fornecimento.formato|lower %}
+                                    qb  
+                                {% elif 'carica' in fornecimento.formato|lower %}
+                                    carica 
+                                {% elif 'frizante' in fornecimento.formato|lower or 'frisante' in fornecimento.formato|lower %}
+                                    frisante 
+                                {% endif %}">
                     <h1>{{ fornecimento.material }}</h1>
                     <h1> {{ fornecimento.formato }}</h1>
-                </div>
+                </button>
             </td>
             <td class="px-4 py-4 text-sm whitespace-nowrap">
                 <div>

@@ -234,7 +234,7 @@ def novoFornecedor():
             print(f"Erro ao inserir fornecedor: {e}")
             return render_template('forms/novoFornecedor.html', error=str(e))
         
-        return render_template('tabelas/tabelaFornecimentos.html', fornecedores=fornecedores)
+        return render_template('/fornecedores', fornecedores=fornecedores)
     else:
         return render_template('forms/novoFornecedor.html')
 
@@ -443,7 +443,6 @@ def tabelaTipoVinho():
 def tabelaEngarrafamentos():
     return render_template('tabelas/tabelaEngarrafamentos.html')
 
-
 @app.route('/inserir_encomenda', methods=['POST'])
 def inserir_encomenda():
     nome = request.form.get('nome')
@@ -478,7 +477,7 @@ def inserir_encomenda():
         # Call the stored procedure
         cursor.execute("""
             EXEC QB.insertEncomenda @nomeCliente=?, @estadoPagamento=?, @notas=?, @valor=?, @fatura=?, @data=?, @items=?
-        """, nome, estado_pagamento, notas, valor, faturada_bit, data, items_json)
+        """, (nome, estado_pagamento, notas, valor, faturada_bit, data, items_json))
 
         db.commit()
     except Exception as e:
@@ -489,7 +488,6 @@ def inserir_encomenda():
         db.close()
 
     return redirect(url_for('engarrafamentos'))
-
 
 if __name__ == "__main__":
     app.run(debug=True)

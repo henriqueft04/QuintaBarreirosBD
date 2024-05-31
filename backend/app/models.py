@@ -97,24 +97,32 @@ def Get_Encomendas_Cliente(nif_cliente):
     
     return encomendas
 
-
-
-
-def get_fornecimentos():
-    query = "{CALL QB.fornecimentos}"
+def get_fornecimentos(nome_fornecedor=None):
+    query = "{CALL QB.fornecimentos(?)}"
+    params = (nome_fornecedor,)
 
     db = get_db_connection()
     cursor = db.cursor()
-    cursor.execute(query)
+    cursor.execute(query, params)
+    
+    # Primeiro conjunto de resultados
     fornecimentos = cursor.fetchall()
+    print("fornecimentos: ", fornecimentos)
 
     cursor.nextset()
+    
+    # Segundo conjunto de resultados
     total_fornecedores = cursor.fetchone()[0]
+    print("total fornecedores: ", total_fornecedores)
 
     cursor.nextset()
+    
+    # Terceiro conjunto de resultados
     tipos_rolhas = cursor.fetchall()
+    print("tipos_rolhas: ", tipos_rolhas)
 
     return fornecimentos, total_fornecedores, tipos_rolhas
+
 
 def get_engarrafamentos(orderBy):
     query = "EXEC QB.engarrafamentos ?"
