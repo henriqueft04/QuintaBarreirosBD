@@ -1,12 +1,50 @@
-from flask import Flask, request, redirect, url_for, render_template, flash
+from flask import Flask, request, redirect, url_for, render_template, flash, session
 from database.connection import get_db_connection 
 from app.models import *
 import json
+import os
 from datetime import datetime
 
 app = Flask(__name__)
+app.secret_key = os.urandom(24)
 
-@app.route('/')
+
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        print('POST request received')
+        username = request.form['username']
+        password = request.form['password']
+        print('username: %s' % username)
+        db = get_db_connection()
+        cursor = db.cursor()
+        query = """SELECT username,role FROM QB.utilizador WHERE username = ? AND password = ?"""
+        cursor.execute(query, (username, password))
+        user = cursor.fetchone()
+        print('user: %s' % user.username)
+        print('role: %s' % user.role)
+
+        if user:
+            session['username'] = user[0]
+            flash('Login efetuado com sucesso!', 'success')
+            return redirect(url_for('index'))
+        else:
+            flash('Credenciais inválidas. Tente novamente.', 'error')
+    print('merda')
+    return render_template('login.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    flash('Logout efetuado com sucesso!', 'success')
+    return redirect(url_for('login'))
+
+@app.route('/register')
+def register():
+    return render_template('register.html')
+    
+
+@app.route('/index')
 def index():
     db = get_db_connection()
     cursor = db.cursor()

@@ -172,6 +172,14 @@ CREATE TABLE [QB].[caixa] (
   [dataEng] date,
   [id_stock_garrafa] int
 )
+
+CREATE TABLE [QB].[utilizador] (
+	id INT PRIMARY KEY IDENTITY(1,1),
+  username NVARCHAR(50) NOT NULL,
+  password NVARCHAR(50) NOT NULL,
+	role NVARCHAR(50) NOT NULL
+);
+
 GO
 
 ALTER TABLE [QB].[casta_tipoVinho] ADD FOREIGN KEY ([id_casta]) REFERENCES [QB].[casta] ([id])
