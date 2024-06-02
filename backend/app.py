@@ -26,6 +26,7 @@ def login():
 
         if user:
             session['username'] = user[0]
+            session['role'] = user[1]
             flash('Login efetuado com sucesso!', 'success')
             return redirect(url_for('index'))
         else:
@@ -39,10 +40,44 @@ def logout():
     flash('Logout efetuado com sucesso!', 'success')
     return redirect(url_for('login'))
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
+    if request.method == 'POST':
+        username = request.form['username']
+        password = request.form['password']
+        password_confirm = request.form['password-confirm']
+        role = request.form['role']
+        print(f"username: {username}, password: {password}, password_confirm: {password_confirm}, role: {role}")
+
+        if password != password_confirm:
+            flash('As senhas não coincidem. Tente novamente.', 'error')
+            return redirect(url_for('register'))
+
+        db = get_db_connection()
+        cursor = db.cursor()
+        # Verificar se o usuário já existe
+        query = """SELECT * FROM QB.utilizador WHERE username = ?"""
+        cursor.execute(query, (username,))
+        user = cursor.fetchone()
+
+        if user:
+            flash('Usuário já existe. Tente novamente.', 'error')
+            return redirect(url_for('register'))
+        
+        # Inserir o novo usuário
+        insert_query = """INSERT INTO QB.utilizador (username, password, role) VALUES (?, ?, ?)"""
+        cursor.execute(insert_query, (username, password, role))
+        db.commit()
+
+        flash('Registro efetuado com sucesso! Faça login.', 'success')
+        return redirect(url_for('login'))
+
     return render_template('register.html')
-    
+
+@app.context_processor
+def inject_user():
+    print('session: %s' % session)
+    return dict(username=session.get('username'), role=session.get('role'))
 
 @app.route('/index')
 def index():
