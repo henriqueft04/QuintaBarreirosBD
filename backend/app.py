@@ -15,24 +15,40 @@ def login():
         print('POST request received')
         username = request.form['username']
         password = request.form['password']
-        print('username: %s' % username)
+
         db = get_db_connection()
         cursor = db.cursor()
-        query = """SELECT username,role FROM QB.utilizador WHERE username = ? AND password = ?"""
-        cursor.execute(query, (username, password))
-        user = cursor.fetchone()
-        print('user: %s' % user.username)
-        print('role: %s' % user.role)
 
-        if user:
-            session['username'] = user[0]
-            session['role'] = user[1]
-            flash('Login efetuado com sucesso!', 'success')
-            return redirect(url_for('index'))
+        # Fetch hashed password from the database
+        hashed_password_query = """SELECT QB.HashPassword(?)"""
+        cursor.execute(hashed_password_query, (password,))
+        hashed_password = cursor.fetchone()
+
+        if hashed_password:
+            hashed_password = hashed_password[0]
+            print('username: %s' % username)
+            print('hashed_password: %s' % hashed_password)
+
+            # Use the hashed password in the user query
+            query = """SELECT username, role FROM QB.utilizador WHERE username = ? AND password = ?"""
+            cursor.execute(query, (username, hashed_password))
+            user = cursor.fetchone()
+
+            if user:
+                print('user: %s' % user[0])
+                print('role: %s' % user[1])
+                session['username'] = user[0]
+                session['role'] = user[1]
+                flash('Login efetuado com sucesso!', 'success')
+                return redirect(url_for('index'))
+            else:
+                flash('Credenciais inválidas. Tente novamente.', 'error')
         else:
-            flash('Credenciais inválidas. Tente novamente.', 'error')
-    print('merda')
+            flash('Erro ao processar a senha.', 'error')
+
+    print('GET request or login failed')
     return render_template('login.html')
+
 
 @app.route('/logout')
 def logout():
@@ -47,7 +63,7 @@ def register():
         password = request.form['password']
         password_confirm = request.form['password-confirm']
         role = request.form['role']
-        print(f"username: {username}, password: {password}, password_confirm: {password_confirm}, role: {role}")
+        print(f"username: {username}, role: {role}")  # Avoid printing passwords
 
         if password != password_confirm:
             flash('As senhas não coincidem. Tente novamente.', 'error')
@@ -55,22 +71,37 @@ def register():
 
         db = get_db_connection()
         cursor = db.cursor()
-        # Verificar se o usuário já existe
-        query = """SELECT * FROM QB.utilizador WHERE username = ?"""
-        cursor.execute(query, (username,))
-        user = cursor.fetchone()
 
-        if user:
-            flash('Usuário já existe. Tente novamente.', 'error')
+        try:
+            # Verificar se o usuário já existe
+            query = """SELECT * FROM QB.utilizador WHERE username = ?"""
+            cursor.execute(query, (username,))
+            user = cursor.fetchone()
+
+            if user:
+                flash('Usuário já existe. Tente novamente.', 'error')
+                return redirect(url_for('register'))
+
+            # Hash the password
+            hashed_password = cursor.execute("""SELECT QB.HashPassword(?)""", (password,)).fetchone()[0]
+
+            # Inserir o novo usuário
+            insert_query = """INSERT INTO QB.utilizador (username, password, role) VALUES (?, ?, ?)"""
+            cursor.execute(insert_query, (username, hashed_password, role))
+            db.commit()
+
+            flash('Registro efetuado com sucesso! Faça login.', 'success')
+            return redirect(url_for('login'))
+
+        except Exception as e:
+            db.rollback()  # Rollback in case of error
+            print(f"Erro ao registrar o usuário: {e}")
+            flash('Erro ao registrar o usuário. Tente novamente.', 'error')
             return redirect(url_for('register'))
-        
-        # Inserir o novo usuário
-        insert_query = """INSERT INTO QB.utilizador (username, password, role) VALUES (?, ?, ?)"""
-        cursor.execute(insert_query, (username, password, role))
-        db.commit()
 
-        flash('Registro efetuado com sucesso! Faça login.', 'success')
-        return redirect(url_for('login'))
+        finally:
+            cursor.close()
+            db.close()  # Ensure the connection is closed
 
     return render_template('register.html')
 

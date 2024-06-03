@@ -43,3 +43,19 @@ RETURN (
     FROM QB.tipoVinho
     WHERE QB.tipoVinho.id = @id_vinho
 )
+
+GO
+
+CREATE OR ALTER FUNCTION QB.HashPassword(@Password NVARCHAR(50))
+	RETURNS NVARCHAR(50)
+	AS
+		BEGIN
+			DECLARE @HashThis NVARCHAR(4000)
+			DECLARE @Hash VARBINARY(32)
+
+			SET @HashThis = @Password
+			SET @Hash = HASHBYTES('SHA2_256', @HashThis)
+
+			RETURN CONVERT(NVARCHAR(50), @Hash, 1)
+		END
+GO

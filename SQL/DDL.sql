@@ -180,6 +180,7 @@ CREATE TABLE [QB].[utilizador] (
 	role NVARCHAR(50) NOT NULL
 );
 
+
 GO
 
 ALTER TABLE [QB].[casta_tipoVinho] ADD FOREIGN KEY ([id_casta]) REFERENCES [QB].[casta] ([id])
