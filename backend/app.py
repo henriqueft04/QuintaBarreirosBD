@@ -19,17 +19,13 @@ def login():
         db = get_db_connection()
         cursor = db.cursor()
 
-        # Fetch hashed password from the database
         hashed_password_query = """SELECT QB.HashPassword(?)"""
         cursor.execute(hashed_password_query, (password,))
         hashed_password = cursor.fetchone()
 
         if hashed_password:
             hashed_password = hashed_password[0]
-            print('username: %s' % username)
-            print('hashed_password: %s' % hashed_password)
 
-            # Use the hashed password in the user query
             query = """SELECT username, role FROM QB.utilizador WHERE username = ? AND password = ?"""
             cursor.execute(query, (username, hashed_password))
             user = cursor.fetchone()
@@ -73,30 +69,30 @@ def register():
         cursor = db.cursor()
 
         try:
-            # Verificar se o usuário já existe
+            # Verificar se o utilizador já existe
             query = """SELECT * FROM QB.utilizador WHERE username = ?"""
             cursor.execute(query, (username,))
             user = cursor.fetchone()
 
             if user:
-                flash('Usuário já existe. Tente novamente.', 'error')
+                flash('Utilizador já existe. Tente novamente.', 'error')
                 return redirect(url_for('register'))
 
             # Hash the password
             hashed_password = cursor.execute("""SELECT QB.HashPassword(?)""", (password,)).fetchone()[0]
 
-            # Inserir o novo usuário
+            # Inserir o novoutilizador 
             insert_query = """INSERT INTO QB.utilizador (username, password, role) VALUES (?, ?, ?)"""
             cursor.execute(insert_query, (username, hashed_password, role))
             db.commit()
 
-            flash('Registro efetuado com sucesso! Faça login.', 'success')
+            flash('Registo efetuado com sucesso! Faça login.', 'success')
             return redirect(url_for('login'))
 
         except Exception as e:
             db.rollback()  # Rollback in case of error
-            print(f"Erro ao registrar o usuário: {e}")
-            flash('Erro ao registrar o usuário. Tente novamente.', 'error')
+            print(f"Erro ao registar o utilizador: {e}")
+            flash('Erro ao registar o utilizador. Tente novamente.', 'error')
             return redirect(url_for('register'))
 
         finally:
