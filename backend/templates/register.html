@@ -11,6 +11,7 @@
             background-size: cover;
         }
     </style>
+    <link rel="icon" href="{{ url_for('static', filename='images/logo_red.png') }}">
 </head>
 <body>
     <div class="h-screen w-screen flex">
@@ -52,15 +53,6 @@
                             Já estou registado
                         </button>
                     </form>
-                    {% with messages = get_flashed_messages(with_categories=true) %}
-                        {% if messages %}
-                            <ul class="flashes">
-                                {% for category, message in messages %}
-                                <li class="{{ category }}">{{ message }}</li>
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
-                    {% endwith %}
                 </div>
             </div>
         </div>
