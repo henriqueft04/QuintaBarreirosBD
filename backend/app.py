@@ -180,6 +180,10 @@ def clientes_paginacao():
 
 @app.route('/clientesForm', methods=['GET', 'POST'])
 def clientesForm():
+    if 'username' not in session or session.get('role') == 'Consultor':
+        flash('Consultores não podem adicionar clientes.', 'error')
+        return redirect(url_for('clientes'))
+    else:
         if request.method == 'POST':
             try:
                 nif = request.form['nif']
@@ -481,8 +485,9 @@ def novaForm():
 
     if 'username' not in session or session.get('role') == 'Consultor':
         flash('Consultores não podem adicionar encomendas.', 'error')
-        return redirect(url_for('index'))
+        return redirect(url_for('encomendas'))
     tipos_vinho = get_TipoVinho()
+    print("estou cá")
 
     return render_template('forms/novaForm.html', tipos_vinho=tipos_vinho)
 
@@ -533,6 +538,11 @@ def tabelaTipoVinho():
 @app.route('/tabelaEngarramentos')
 def tabelaEngarrafamentos():
     return render_template('tabelas/tabelaEngarrafamentos.html')
+
+@app.route('/alertContainer')
+def alertContainer():
+    messages = get_flashed_messages(with_categories=True)
+    return render_template('alertContainer.html', messages=messages)
 
 @app.route('/inserir_encomenda', methods=['POST'])
 def inserir_encomenda():
