@@ -31,6 +31,7 @@ BEGIN
     END
 
 END;
+GO
 
 	
 CREATE OR ALTER PROCEDURE QB.engarrafamentos
@@ -81,6 +82,7 @@ GO
 
 
 GO
+
 
 CREATE OR ALTER PROCEDURE QB.GetEncomendasPaginadas
     @PageNumber INT,

@@ -11,8 +11,10 @@
             background-size: cover;
         }
     </style>
+    <link rel="icon" href="{{ url_for('static', filename='images/logo_red.png') }}">
 </head>
 <body>
+
     <div class="h-screen flex">
             <div class="w-1/2 image-container half-page">
             <!-- Image will be displayed as background -->
@@ -37,18 +39,11 @@
                         <div>
                     </form>
 
-                    {% with messages = get_flashed_messages(with_categories=true) %}
-                        {% if messages %}
-                            <ul class="flashes">
-                                {% for category, message in messages %}
-                                <li class="{{ category }}">{{ message }}</li>
-                                {% endfor %}
-                            </ul>
-                        {% endif %}
-                    {% endwith %}
                 </div>
             </div>
+            {% include './alertContainer.html' %}
         </div>
+        
 </body>
 
 <script src="https://unpkg.com/htmx.org"></script>

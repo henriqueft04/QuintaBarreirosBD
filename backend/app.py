@@ -208,7 +208,7 @@ def clientes_paginacao():
 @app.route('/clientesForm', methods=['GET', 'POST'])
 def clientesForm():
     if 'username' not in session or session.get('role') == 'Consultor':
-        flash('Consultores não podem adicionar clientes.', 'error')
+        flash('É necessário ser Administrador para adicionar clientes.', 'error')
         return render_template('alertContainer.html')
     else:
         if request.method == 'POST':
@@ -280,7 +280,7 @@ def novoFornecimento():
     print("Entrou no novo fornecimento")
     print(request.method)
     if 'username' not in session or session.get('role') == 'Consultor':
-        flash('Consultores não podem adicionar fornecimentos.', 'error')
+        flash('É necessário ser Administrador para adicionar fornecimentos.', 'error')
         return render_template('alertContainer.html')
     try:
         if request.method == 'POST':
@@ -320,7 +320,7 @@ def novoFornecimento():
 @app.route('/novoFornecedor')
 def novoFornecedor():
     if 'username' not in session or session.get('role') == 'Consultor':
-        flash('Consultores não podem adicionar fornecedores.', 'error')
+        flash('É necessário ser Administrador para adicionar fornecedores.', 'error')
         return render_template('alertContainer.html')
     if request.method == 'POST':
         try:
@@ -349,7 +349,7 @@ def novoFornecedor():
 @app.route('/nova-encomenda')
 def nova_encomenda():
     if 'username' not in session or session.get('role') == 'Consultor':
-        flash('Consultores não podem adicionar encomendas.', 'error')
+        flash('É necessário ser Administrador para adicionar encomendas.', 'error')
         return redirect('encomendas')
     print("nova encomenda")
      
@@ -505,7 +505,7 @@ def cubas():
 def cubaDelete():
     print("entrou")
     if 'username' not in session or session.get('role') == 'Consultor':
-        flash('Consultores não podem remover cubas.', 'error')
+        flash('É necessário ser Administrador para remover cubas.', 'error')
         return redirect(url_for('encomendas'))
     
     cuba_id = request.form.get('codigo')
@@ -526,7 +526,7 @@ def cubaDelete():
 def novaForm():
 
     if 'username' not in session or session.get('role') == 'Consultor':
-        flash('Consultores não podem adicionar encomendas.', 'error')
+        flash('É necessário ser Administrador para adicionar encomendas.', 'error')
         return render_template('alertContainer.html')
     tipos_vinho = get_TipoVinho()
     print("estou cá")
@@ -537,7 +537,7 @@ def novaForm():
 def novoEngarrafamento():
     
     if 'username' not in session or session.get('role') == 'Consultor':
-        flash('Consultores não podem adicionar engarrafamentos.', 'error')
+        flash('É necessário ser Administrador para adicionar engarrafamentos.', 'error')
         return render_template('alertContainer.html')
     return render_template('forms/novoEngarrafamento.html')
 
@@ -545,21 +545,21 @@ def novoEngarrafamento():
 def novaCuba():
     
     if 'username' not in session or session.get('role') == 'Consultor':
-        flash('Consultores não podem adicionar cubas.', 'error')
+        flash('É necessário ser Administrador para adicionar cubas.', 'error')
         return render_template('alertContainer.html')
     return render_template('forms/novaCuba.html')
 
 @app.route('/novoVinho')
 def novoVinho():
     if 'username' not in session or session.get('role') == 'Consultor':
-        flash('Consultores não podem adicionar novos vinhos.', 'error')
+        flash('É necessário ser Administrador para adicionar novos vinhos.', 'error')
         return redirect(url_for('cuba'))
     return render_template('forms/novoVinho.html')
 
 @app.route('/novaRolha')
 def novaRolha():
     if 'username' not in session or session.get('role') == 'Consultor':
-        flash('Consultores não podem adicionar novas Rolhas.', 'error')
+        flash('É necessário ser Administrador para adicionar novas Rolhas.', 'error')
         return redirect(url_for('cuba'))
     return render_template('forms/novaRolha.html')
 

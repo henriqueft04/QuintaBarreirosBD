@@ -1,13 +1,13 @@
 
 
-CREATE PROC QB.p_getNumberOfClients
+CREATE OR ALTER PROC QB.p_getNumberOfClients
 AS
     BEGIN
         SELECT COUNT(*) AS TotalClientes FROM QB.cliente
     END;
 GO
 
-CREATE PROC QB.p_NumberOfBottlesPerClient
+CREATE OR ALTER PROC QB.p_NumberOfBottlesPerClient
 AS
     BEGIN
         SELECT QB.cliente.NIF AS ClienteNIF,
@@ -21,7 +21,7 @@ AS
     END
 GO
 
-CREATE PROC QB.p_DetalhesEcomendasPorCliente
+CREATE OR ALTER PROC QB.p_DetalhesEcomendasPorCliente
     @NIF_cliente VARCHAR(50)
 AS
     BEGIN
@@ -47,7 +47,7 @@ GO
 
 
 
-CREATE PROC QB.p_AdicionarCliente
+CREATE OR ALTER PROC QB.p_AdicionarCliente
     @nif INT,
     @morada VARCHAR(255),
     @nome VARCHAR(255),
@@ -75,7 +75,7 @@ BEGIN
 END
 go
 
-CREATE PROCEDURE QB.fornecimentos
+CREATE OR ALTER PROCEDURE QB.fornecimentos
     (@nomeFornecedor VARCHAR(255) = NULL)
 AS
 	BEGIN
@@ -103,7 +103,7 @@ AS
 	END;
 go
 
-CREATE   PROC QB.insert_fornecimento
+CREATE OR ALTER PROC QB.insert_fornecimento
     @nomeFornecedor varchar(255),
     @tipoRolha varchar(255),
     @quantidadeRolhas int,
@@ -193,7 +193,7 @@ BEGIN
     JOIN
         QB.cuba
         ON codigo_Cuba = cuba.codigo
-    LEFT JOIN
+    FULL JOIN
         QB.tipoVinho
         ON tipoVinho.id = cuba.id_TipoVinho
     ORDER BY
@@ -214,7 +214,7 @@ END;
 
 go
 
-CREATE PROC QB.insert_fornecedor
+CREATE OR ALTER PROC QB.insert_fornecedor
     @nomeFornecedor varchar(255),
     @telemovelForn INT,
     @NIF_forn INT,
