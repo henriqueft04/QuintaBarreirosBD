@@ -23,27 +23,6 @@ AS
 	END;
 GO
 
-	
-CREATE OR ALTER PROCEDURE QB.engarrafamentos
-AS 
-BEGIN
-	SELECT codigo_Cuba AS codigo_cuba, dataEng, litragemEng as litragem, quantidade, notacao, denominacao
-		FROM QB.cuba_engarrafamento
-		JOIN QB.engarrafamento 
-			ON dataEng = dataEngarrafamento
-		JOIN QB.cuba
-			ON codigo_Cuba = cuba.codigo
-		LEFT JOIN QB.tipoVinho
-			ON tipoVinho.id = cuba.id_TipoVinho
-
-	SELECT COUNT(*) AS total_engarrafamentos
-		FROM QB.engarrafamento;
-
-	
-END;
-
-
-GO
 
 CREATE OR ALTER PROCEDURE QB.GetEncomendasPaginadas
     @PageNumber INT,

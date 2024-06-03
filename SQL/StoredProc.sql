@@ -190,7 +190,7 @@ BEGIN
     JOIN
         QB.engarrafamento
         ON dataEng = dataEngarrafamento
-    JOIN
+    FULL JOIN
         QB.cuba
         ON codigo_Cuba = cuba.codigo
     LEFT JOIN
