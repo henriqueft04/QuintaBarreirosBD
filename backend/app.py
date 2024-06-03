@@ -1,4 +1,4 @@
-from flask import Flask, request, redirect, url_for, render_template, flash, session
+from flask import Flask, request, redirect, url_for, render_template, flash, session,get_flashed_messages
 from database.connection import get_db_connection 
 from app.models import *
 import json
@@ -311,7 +311,9 @@ def novoFornecedor():
 
 @app.route('/nova-encomenda')
 def nova_encomenda():
-
+    if 'username' not in session or session.get('role') == 'Consultor':
+        flash('Consultores não podem adicionar encomendas.', 'error')
+        return redirect(url_for('index'))
     tipos_vinho = get_TipoVinho()
 
     return render_template('nova-encomenda.html', tipos_vinho=tipos_vinho)
@@ -462,6 +464,9 @@ def cubas():
 
 @app.route('/cubaDelete', methods=['POST'])
 def cubaDelete():
+    if 'username' not in session or session.get('role') == 'Consultor':
+        flash('Consultores não podem remover cubas.', 'error')
+        return redirect(url_for('cubas'))
     cuba_id = request.form.get('codigo')
     query = "EXEC QB.deleteCuba ?"
     db = get_db_connection()
@@ -474,24 +479,39 @@ def cubaDelete():
 @app.route('/novaForm')
 def novaForm():
 
+    if 'username' not in session or session.get('role') == 'Consultor':
+        flash('Consultores não podem adicionar encomendas.', 'error')
+        return redirect(url_for('index'))
     tipos_vinho = get_TipoVinho()
 
     return render_template('forms/novaForm.html', tipos_vinho=tipos_vinho)
 
 @app.route('/novoEngarrafamento')
 def novoEngarrafamento():
+    if 'username' not in session or session.get('role') == 'Consultor':
+        flash('Consultores não podem adicionar engarrafamentos.', 'error')
+        return redirect(url_for('index'))
     return render_template('forms/novoEngarrafamento.html')
 
 @app.route('/novaCuba')
 def novaCuba():
+    if 'username' not in session or session.get('role') == 'Consultor':
+        flash('Consultores não podem adicionar cubas.', 'error')
+        return redirect(url_for('cuba'))
     return render_template('forms/novaCuba.html')
 
 @app.route('/novoVinho')
 def novoVinho():
+    if 'username' not in session or session.get('role') == 'Consultor':
+        flash('Consultores não podem adicionar novos vinhos.', 'error')
+        return redirect(url_for('cuba'))
     return render_template('forms/novoVinho.html')
 
 @app.route('/novaRolha')
 def novaRolha():
+    if 'username' not in session or session.get('role') == 'Consultor':
+        flash('Consultores não podem adicionar novas Rolhas.', 'error')
+        return redirect(url_for('cuba'))
     return render_template('forms/novaRolha.html')
 
 @app.route('/encomendaDetalhes')
