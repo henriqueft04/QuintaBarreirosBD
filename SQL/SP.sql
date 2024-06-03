@@ -1,46 +1,83 @@
 GO
 
-CREATE OR ALTER PROCEDURE QB.fornecimentos
+ALTER PROCEDURE QB.fornecimentos
+    @nomeFornecedor VARCHAR(255) = NULL
 AS
-	BEGIN
-		SELECT f.nome, f.morada, f.telemovel, tr.material, tr.formato, r.quantidade, f.NIF, c.quantidade AS quantidadeTotal
-		FROM QB.fornecedor AS f
-		JOIN QB.tipoRolha_Fornecedor AS r
-			ON f.NIF = r.NIF
-		JOIN QB.tipoRolha AS tr
-			ON tr.id = r.id_tipoRolha
-		JOIN QB.rolha 
-			ON rolha.id_tipoRolha = tr.id
-		JOIN QB.componente AS c
-			ON c.id = rolha.id_componente;
+BEGIN
+    IF @nomeFornecedor IS NOT NULL
+    BEGIN
+        SELECT f.nome, f.morada, f.telemovel, tr.material, tr.formato, r.quantidade, f.NIF, c.quantidade AS quantidadeTotal
+        FROM QB.fornecedor AS f
+        JOIN QB.tipoRolha_Fornecedor AS r ON f.NIF = r.NIF
+        JOIN QB.tipoRolha AS tr ON tr.id = r.id_tipoRolha
+        JOIN QB.rolha ON rolha.id_tipoRolha = tr.id
+        JOIN QB.componente AS c ON c.id = rolha.id_componente
+        WHERE f.nome LIKE '%' + @nomeFornecedor + '%';
+    END
+    ELSE
+    BEGIN
+        SELECT f.nome, f.morada, f.telemovel, tr.material, tr.formato, r.quantidade, f.NIF, c.quantidade AS quantidadeTotal
+        FROM QB.fornecedor AS f
+        JOIN QB.tipoRolha_Fornecedor AS r ON f.NIF = r.NIF
+        JOIN QB.tipoRolha AS tr ON tr.id = r.id_tipoRolha
+        JOIN QB.rolha ON rolha.id_tipoRolha = tr.id
+        JOIN QB.componente AS c ON c.id = rolha.id_componente
 
-		SELECT COUNT(*) AS total_fornecedores
-		FROM QB.fornecedor;
+        SELECT COUNT(*) AS total_fornecedores FROM QB.fornecedor;
+        SELECT f.nome, tr.material, tr.formato
+        FROM QB.fornecedor AS f
+        JOIN QB.tipoRolha_fornecedor AS r ON f.NIF = r.NIF
+        JOIN QB.tipoRolha AS tr ON tr.id = r.id_tipoRolha
+    END
 
-		SELECT tr.material, tr.formato, tr.id
-		FROM QB.tipoRolha AS tr;
-
-	END;
-GO
+END;
 
 	
 CREATE OR ALTER PROCEDURE QB.engarrafamentos
-AS 
+    @orderBy varchar(20) = NULL
+AS
 BEGIN
-	SELECT codigo_Cuba AS codigo_cuba, dataEng, litragemEng as litragem, quantidade, notacao, denominacao
-		FROM QB.cuba_engarrafamento
-		JOIN QB.engarrafamento 
-			ON dataEng = dataEngarrafamento
-		JOIN QB.cuba
-			ON codigo_Cuba = cuba.codigo
-		LEFT JOIN QB.tipoVinho
-			ON tipoVinho.id = cuba.id_TipoVinho
+    SET NOCOUNT ON;
 
-	SELECT COUNT(*) AS total_engarrafamentos
-		FROM QB.engarrafamento;
+    IF @orderBy IS NULL OR @orderBy = ''
+    BEGIN
+        SET @orderBy = 'Mais Recente';
+    END
 
-	
+    SELECT
+        codigo_Cuba AS codigo_cuba,
+        dataEng,
+        litragemEng as litragem,
+        quantidade,
+        notacao,
+        denominacao
+    FROM
+        QB.cuba_engarrafamento
+    JOIN
+        QB.engarrafamento
+        ON dataEng = dataEngarrafamento
+    JOIN
+        QB.cuba
+        ON codigo_Cuba = cuba.codigo
+    LEFT JOIN
+        QB.tipoVinho
+        ON tipoVinho.id = cuba.id_TipoVinho
+    ORDER BY
+        CASE
+            WHEN @orderBy = 'Maior Litragem' THEN litragemEng END DESC,
+        CASE
+            WHEN @orderBy = 'Menor Litragem' THEN litragemEng END,
+        CASE
+            WHEN @orderBy = 'Mais Recente' THEN dataEng END DESC,
+        CASE
+            WHEN @orderBy = 'Mais Antigo' THEN dataEng END;
+
+    SELECT
+        COUNT(*) AS total_engarrafamentos
+    FROM
+        QB.engarrafamento;
 END;
+GO
 
 
 GO
@@ -176,14 +213,39 @@ END;
 GO
 
 
-CREATE OR ALTER PROCEDURE QB.cubaInfo
+
+
+CREATE OR ALTER  PROCEDURE QB.cubaInfo
+    @orderBy varchar(20) = NULL
 AS
 BEGIN
 	SET NOCOUNT ON;
+
+	IF @orderBy IS NULL OR @orderBy = ''
+    BEGIN
+        SET @orderBy = 'ID';
+    END
+
 	DECLARE @cubas_totais INT;
 	SELECT @cubas_totais = COUNT(*) FROM QB.cuba;
 
 	SELECT @cubas_totais AS cubas_totais,codigo,volumeOcupado, volume, notacao + ' - ' + denominacao AS nomeVinho, dataArmazenado, descricao, refrigerada, termica
 	FROM QB.cuba
 		LEFT JOIN QB.tipoVinho tv on tv.id = cuba.id_tipoVinho
+    ORDER BY
+        CASE
+            WHEN @orderBy = 'Maior Litragem' THEN volumeOcupado END DESC,
+         CASE
+            WHEN @orderBy = 'Menor Litragem' THEN volumeOcupado END,
+        CASE
+            WHEN @orderBy = 'Mais Recente' THEN dataArmazenado END DESC,
+        CASE
+            WHEN @orderBy = 'Mais Antigo' THEN dataArmazenado END,
+	    CASE
+            WHEN @orderBy = 'ID' THEN codigo END;
+
+
 END;
+go
+
+

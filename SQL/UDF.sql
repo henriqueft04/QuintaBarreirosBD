@@ -1,6 +1,7 @@
 USE p8g4;
 GO
 
+-- UDF
 CREATE OR ALTER FUNCTION QB.fn_AtualizaContagemEncomendas(@ano INT, @mes INT, @semana INT, @dia DATE)
 RETURNS INT
 AS

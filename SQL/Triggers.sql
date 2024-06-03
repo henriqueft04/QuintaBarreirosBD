@@ -1,6 +1,7 @@
 use p8g4
 GO
 
+-- trigger
 CREATE TRIGGER trg_AtualizarEncomendas
 
 ON QB.encomenda

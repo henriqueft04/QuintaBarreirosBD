@@ -271,23 +271,23 @@ BEGIN
 end
 GO
 
-CREATE OR ALTER PROC QB.insertEncomenda
-    @nomeCliente varchar(255),
-    @estadoPagamento bit,
-    @notas varchar(300),
-    @valor decimal,
-    @fatura bit,
+CREATE OR ALTER  PROCEDURE QB.insertEncomenda
+    @nomeCliente VARCHAR(255),
+    @estadoPagamento BIT,
+    @notas VARCHAR(300),
+    @valor DECIMAL,
+    @fatura BIT,
     @data DATE,
-    @items QB.tblItemType READONLY
-
+    @items NVARCHAR(MAX)
 AS
 BEGIN
     SET NOCOUNT ON;
 
     BEGIN TRY
-        BEGIN TRANSACTION
-        DECLARE @nifCliente VARCHAR(20)
-        SELECT @nifCliente= NIF FROM [QB].[cliente] WHERE nome = @nomeCliente;
+        BEGIN TRANSACTION;
+
+        DECLARE @nifCliente VARCHAR(20);
+        SELECT @nifCliente = NIF FROM [QB].[cliente] WHERE nome = @nomeCliente;
 
         IF @nifCliente IS NULL
         BEGIN
@@ -301,13 +301,18 @@ BEGIN
 
         DECLARE @numero_encomenda INT = SCOPE_IDENTITY();
 
+        DECLARE @json NVARCHAR(MAX) = @items;
         DECLARE @quantidadeItems INT, @id_stock INT, @dataEng DATE;
 
-        DECLARE item_cursor CURSOR FOR
-        SELECT quantidadeItems, id_stock, dataEng FROM @items;
+        DECLARE @i INT = 0;
+        DECLARE @itemCount INT = JSON_VALUE(@json, '$.length');
 
-        WHILE @@FETCH_STATUS = 0
+        WHILE @i < @itemCount
         BEGIN
+            SET @quantidadeItems = JSON_VALUE(@json, CONCAT('$[', @i, '].quantidadeItems'));
+            SET @id_stock = JSON_VALUE(@json, CONCAT('$[', @i, '].id_stock'));
+            SET @dataEng = JSON_VALUE(@json, CONCAT('$[', @i, '].dataEng'));
+
             INSERT INTO [QB].[item] ([quantidadeItems], [id_stock], [dataEng], [numero_encomenda])
             VALUES (@quantidadeItems, @id_stock, @dataEng, @numero_encomenda);
 
@@ -322,20 +327,25 @@ BEGIN
                 RETURN;
             END
 
-            FETCH NEXT FROM item_cursor INTO @quantidadeItems, @id_stock, @dataEng;
-        end
-
-        CLOSE item_cursor;
-        DEALLOCATE item_cursor;
+            SET @i = @i + 1;
+        END
 
         COMMIT TRANSACTION;
-        PRINT 'encomenda inserida stock atualizado';
-
+        PRINT 'Encomenda inserida e estoque atualizado';
     END TRY
     BEGIN CATCH
-        ROLLBACK TRANSACTION;
-        PRINT 'Erro ao inserir a encomenda.';
+        IF @@TRANCOUNT > 0
+        BEGIN
+            ROLLBACK TRANSACTION;
+        END
+        DECLARE @ErrorMessage NVARCHAR(4000);
+        DECLARE @ErrorSeverity INT;
+        DECLARE @ErrorState INT;
+
+        SELECT @ErrorMessage = ERROR_MESSAGE(), @ErrorSeverity = ERROR_SEVERITY(), @ErrorState = ERROR_STATE();
+
+        RAISERROR (@ErrorMessage, @ErrorSeverity, @ErrorState);
     END CATCH
-end
+END;
 go
 
