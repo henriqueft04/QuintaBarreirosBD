@@ -182,7 +182,7 @@ def clientes_paginacao():
 def clientesForm():
     if 'username' not in session or session.get('role') == 'Consultor':
         flash('Consultores não podem adicionar clientes.', 'error')
-        return redirect(url_for('clientes'))
+        return render_template('alertContainer.html')
     else:
         if request.method == 'POST':
             try:
@@ -252,6 +252,9 @@ def searchFornecedores():
 def novoFornecimento():
     print("Entrou no novo fornecimento")
     print(request.method)
+    if 'username' not in session or session.get('role') == 'Consultor':
+        flash('Consultores não podem adicionar fornecimentos.', 'error')
+        return render_template('alertContainer.html')
     try:
         if request.method == 'POST':
             fornecimentos, total_fornecedores, tipos_rolhas = get_fornecimentos()
@@ -287,8 +290,11 @@ def novoFornecimento():
         print(f"ERRO: {e}")
         return render_template('forms/novoFornecimento.html', error=str(e))
 
-@app.route('/novoFornecedor', methods=['GET', 'POST'])
+@app.route('/novoFornecedor')
 def novoFornecedor():
+    if 'username' not in session or session.get('role') == 'Consultor':
+        flash('Consultores não podem adicionar fornecedores.', 'error')
+        return render_template('alertContainer.html')
     if request.method == 'POST':
         try:
             nomeFornecedor = request.form['nomeFornecedor']
@@ -317,7 +323,9 @@ def novoFornecedor():
 def nova_encomenda():
     if 'username' not in session or session.get('role') == 'Consultor':
         flash('Consultores não podem adicionar encomendas.', 'error')
-        return redirect(url_for('index'))
+        return redirect('encomendas')
+    print("nova encomenda")
+     
     tipos_vinho = get_TipoVinho()
 
     return render_template('nova-encomenda.html', tipos_vinho=tipos_vinho)
@@ -468,16 +476,23 @@ def cubas():
 
 @app.route('/cubaDelete', methods=['POST'])
 def cubaDelete():
+    print("entrou")
     if 'username' not in session or session.get('role') == 'Consultor':
         flash('Consultores não podem remover cubas.', 'error')
-        return redirect(url_for('cubas'))
+        return redirect(url_for('encomendas'))
+    
     cuba_id = request.form.get('codigo')
-    query = "EXEC QB.deleteCuba ?"
-    db = get_db_connection()
-    cursor = db.cursor()
-    cursor.execute(query, (cuba_id,))
-    db.commit()
-    db.close()
+    if cuba_id:
+        query = "EXEC QB.deleteCuba ?"
+        db = get_db_connection()
+        cursor = db.cursor()
+        cursor.execute(query, (cuba_id,))
+        db.commit()
+        db.close()
+        flash('Cuba removida com sucesso.', 'success')
+    else:
+        flash('Erro ao tentar remover a cuba.', 'error')
+    
     return redirect(url_for('cubas'))
 
 @app.route('/novaForm')
@@ -485,7 +500,7 @@ def novaForm():
 
     if 'username' not in session or session.get('role') == 'Consultor':
         flash('Consultores não podem adicionar encomendas.', 'error')
-        return redirect(url_for('encomendas'))
+        return render_template('alertContainer.html')
     tipos_vinho = get_TipoVinho()
     print("estou cá")
 
@@ -493,16 +508,18 @@ def novaForm():
 
 @app.route('/novoEngarrafamento')
 def novoEngarrafamento():
+    
     if 'username' not in session or session.get('role') == 'Consultor':
         flash('Consultores não podem adicionar engarrafamentos.', 'error')
-        return redirect(url_for('index'))
+        return render_template('alertContainer.html')
     return render_template('forms/novoEngarrafamento.html')
 
 @app.route('/novaCuba')
 def novaCuba():
+    
     if 'username' not in session or session.get('role') == 'Consultor':
         flash('Consultores não podem adicionar cubas.', 'error')
-        return redirect(url_for('cuba'))
+        return render_template('alertContainer.html')
     return render_template('forms/novaCuba.html')
 
 @app.route('/novoVinho')

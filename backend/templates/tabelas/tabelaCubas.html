@@ -69,13 +69,22 @@
             </td>
 
             <td class="px-4 py-4 text-sm font-medium whitespace-nowrap">
+                {% if role == 'Administrador' %}
                 <button class="text-lg open-delete-modal" 
                         data-modal-target="confirm-delete"
                         data-cuba-id="{{ cuba.codigo }}"
-                        hx-get="/deleteCuba?codigo={{cuba.codigo}}">
+                        data-role="{{ role }}">
                     <i class="fas fas fas fa-trash text-red-400"></i>
                 </button>
+                {% else %}
+                <button class="text-lg text-gray-400 open-alert-modal"
+                        data-modal-target="alert-container"
+                        data-role="{{ role }}">
+                    <i class="fas fas fas fa-trash text-red-400"></i>
+                </button>
+                {% endif %}
             </td>
+
 
         </tr>
         {% endfor %}
@@ -93,23 +102,30 @@
         </div>
     </div>
 </div>
-</div>
+
 
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const openModalButtons = document.querySelectorAll('.open-delete-modal');
+    const openDeleteModalButtons = document.querySelectorAll('.open-delete-modal');
+    const openAlertModalButtons = document.querySelectorAll('.open-alert-modal');
     const closeModalButton = document.getElementById('close-modal');
     const confirmDeleteButton = document.getElementById('confirm-delete-btn');
     const modal = document.getElementById('confirm-delete');
     const cubaIdSpan = document.getElementById('cuba-id-span');
     let currentCubaId = null;
 
-    openModalButtons.forEach(button => {
+    openDeleteModalButtons.forEach(button => {
         button.addEventListener('click', () => {
             currentCubaId = button.getAttribute('data-cuba-id');
             cubaIdSpan.textContent = currentCubaId; // Set the ID in the modal
             modal.classList.remove('hidden');
+        });
+    });
+
+    openAlertModalButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            alert('Consultores não podem remover cubas.');
         });
     });
 
@@ -137,7 +153,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
-
 
 
 {% endblock %}
