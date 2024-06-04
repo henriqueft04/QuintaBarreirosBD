@@ -31,6 +31,10 @@ pip install -r backend/requirements.txt
 ```
 python backend/app.py
 ```
+
+## Demo
+https://youtu.be/ameYtxM-Pw8?si=nmC15kzUjyJjZP6c
+
 ## Evaluation
 To be determined
 
