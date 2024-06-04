@@ -27,7 +27,17 @@ linux/Mac -> source venv/bin/activate
 ```
 pip install -r backend/requirements.txt
 ```
-### 5. Correr o projeto 
+### 5. Criar config.py na pasta backend/database
+```
+DATABASE_CONFIG = {
+    'server': 'tcp:mednat.ieeta.pt\SQLSERVER,8101',
+    'database': 'p8g4',
+    'username': 'your_username',
+    'password': 'your_password',
+    'driver': 'ODBC Driver 17 for SQL Server'
+}
+```
+### 6. Correr o projeto 
 ```
 python backend/app.py
 ```
