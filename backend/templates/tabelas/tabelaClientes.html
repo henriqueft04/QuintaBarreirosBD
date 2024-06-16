@@ -56,7 +56,7 @@
             </td>
             <td class="px-4 py-4 text-sm whitespace-nowrap">
                 <div class="flex items-center">
-                    <h1>{{ cliente.num_garrafas }}</h1>
+                    <h1>{% if cliente.num_garrafas != none %} {{ cliente.num_garrafas }} {% else %} 0 {% endif %}</h1>
                 </div>
             </td>
             <td class="px-4 py-4 text-sm whitespace-nowrap">

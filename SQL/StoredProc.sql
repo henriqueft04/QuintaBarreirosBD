@@ -41,18 +41,21 @@ CREATE OR ALTER PROCEDURE GetClientesPaginadas
         BEGIN
             SET NOCOUNT ON;
 
-            SELECT 
-                SUM(CASE 
-                        WHEN RIGHT(QB.stock.id, 0) = '1' THEN quantidadeItems 
-                        WHEN RIGHT(QB.stock.id, 0) = '2' THEN quantidadeItems 
-                        WHEN RIGHT(QB.stock.id, 0) = '3' THEN quantidadeItems * numGarrafas 
-                        ELSE -1 
-                    END) AS TotalGarrafas
-            FROM QB.encomenda 
-            JOIN QB.item ON QB.item.numero_encomenda = QB.encomenda.numero
-            JOIN QB.stock ON QB.stock.id = QB.item.id_stock 
-            LEFT JOIN QB.caixa ON QB.caixa.id_stock = QB.stock.id
-            WHERE QB.encomenda.NIF_cliente = @NIF_cliente;
+            SELECT DISTINCT
+                sum(
+                    case 
+                        when right(s.id, 1) = '1' then i.quantidadeitems 
+                        when right(s.id, 1) = '2' then i.quantidadeitems 
+                        when right(s.id, 1) = '3' then i.quantidadeitems * coalesce(caixa.numgarrafas, 1) 
+                        else 0
+                    end
+                ) as total_garrafas
+                from qb.cliente as c
+                left join qb.encomenda as e on c.nif = e.nif_cliente
+                left join qb.item as i on e.numero = i.numero_encomenda
+                left join qb.stock as s on i.id_stock = s.id
+                left join qb.caixa as caixa on caixa.id_stock = s.id
+            WHERE e.NIF_cliente = @NIF_cliente;
         END;
 
 
@@ -156,7 +159,7 @@ CREATE OR ALTER PROC QB.p_DetalhesEcomendasPorCliente
     @NIF_cliente VARCHAR(50)
     AS
         BEGIN
-            SELECT
+            SELECT DISTINCT
                 c.nome AS ClienteNome,
                 e.numero AS NumeroEncomenda,
                 e.data AS DataEncomenda,
@@ -167,10 +170,10 @@ CREATE OR ALTER PROC QB.p_DetalhesEcomendasPorCliente
                 v.denominacao AS Denominacao,
                 i.quantidadeItems AS QuantidadeItems
             FROM QB.cliente as c
-            INNER JOIN QB.encomenda e on c.NIF = e.NIF_cliente
-            INNER JOIN QB.item i on e.numero = i.numero_encomenda
-            JOIN QB.stock s on i.id_stock = s.id
-            JOIN QB.tipoVinho v on s.id_tipoVinho = v.id
+            JOIN QB.encomenda e on c.NIF = e.NIF_cliente
+            left JOIN QB.item i on e.numero = i.numero_encomenda
+            left JOIN QB.stock s on i.id_stock = s.id
+            left JOIN QB.tipoVinho v on s.id_tipoVinho = v.id
             WHERE c.NIF = @NIF_cliente
             ORDER BY ClienteNome
         END
