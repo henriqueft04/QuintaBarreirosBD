@@ -46,7 +46,7 @@ python backend/app.py
 https://youtu.be/ameYtxM-Pw8?si=nmC15kzUjyJjZP6c
 
 ## Evaluation
-To be determined
+17.4
 
 ## Authors
 * [Henrique Teixeira] - [@henriqueft04]
