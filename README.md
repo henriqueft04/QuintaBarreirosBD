@@ -2,7 +2,7 @@
 Gestão de stocks e de clientes de uma Adega
 
 ## Nota 
-O projeto foi submetido a alterações, devido a isso a demo será diferente da apresentada.
+A análise de requisitos no relatório não é uma análise de requisitos, está errada. O projeto foi submetido a alterações, devido a isso a demo será diferente da apresentada.
 Foi implementado mais o login, com a palavra-passe encriptada atraves de hash.
 
 ## Setup do Projeto
